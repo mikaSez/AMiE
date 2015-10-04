@@ -10,21 +10,21 @@
                     <table class="table table-inner table-vmiddle">
                         <thead>
                         <tr>
+							<th align="center"><h4><strong>Nom</strong></h4></th>
                             <th align="center"><h4><strong>Prénom</strong></h4></th>
-                            <th align="center"><h4><strong>Nom</strong></h4></th>
                             <th align="center"><h4><strong>Mail</strong></h4></th>
                             <th align="center"><h4><strong>Entreprise d'accueil</strong></h4></th>
                             <th align="center"><h4><strong>Embauché ?</strong></h4></th>
                             <th align="center"><h4><strong>Contrat</strong></h4></th>
                             <th align="center"><h4><strong>Salaire (brut)</strong></h4></th>
-                            <th><h4></h4></th>
+                            <th align="center"><h4><h4></th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for miagiste in miagistes %}
                             <tr>
-                                <td>{{ miagiste.prenom }}</td>
                                 <td>{{ miagiste.nom }}</td>
+                                <td>{{ miagiste.prenom }}</td>
                                 <td>{{ miagiste.mail }}</td>
                                 <td align="center">{{ miagiste.entAccueil }}</td>
                                 <td align="center">{{ miagiste.embauche }}</td>
@@ -148,9 +148,13 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-offset-9 col-sm-4">
-                            <button type="submit"
+                            <button type="submit" name="submitAction" value="rechercher"
                                     class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
                                 Rechercher
+                            </button>
+							<button type="submit" name="submitAction" value="exporter"
+                                    class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
+                                Exporter
                             </button>
                         </div>
                     </div>

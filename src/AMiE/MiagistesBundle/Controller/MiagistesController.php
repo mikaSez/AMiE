@@ -8,6 +8,7 @@ use AMiE\MiagistesBundle\Form\Type\FormulaireSearchType;
 use AMiE\MiagistesBundle\Form\Type\FormulaireType;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use AMiE\HomeBundle\Entity\Notification;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 
 class MiagistesController extends CoreController
@@ -19,20 +20,25 @@ class MiagistesController extends CoreController
         $recherche = new FormulaireSearch();
         $formRech = $this->createForm(new FormulaireSearchType(), $recherche);
         $requete = $this->get('request');
-
-        if ($requete->getMethod() == 'POST') {
-            $formRech->bind($requete);
+		$miagistes = $em->getRepository('AMiEMiagistesBundle:Formulaire')->findAll();
+		
+		if ($this->getRequest()->request->get('submitAction') == 'rechercher')
+		{
+			$formRech->bind($requete);
             $recherche = $formRech->getData();
             $query = $this->getDoctrine()->getRepository('AMiEMiagistesBundle:Formulaire')->search($recherche);
-            $results = $query->getResult();
-
-            return $this->render('AMiEMiagistesBundle:Miagistes:recherche.html.twig', array(
-                'layout' => $layout,
-                'miagistes' => $results,
-                'formRech' => $formRech->createView()
-            ));
-        }
-        $miagistes = $em->getRepository('AMiEMiagistesBundle:Formulaire')->findAll();
+            $miagistes = $query->getResult();
+		}
+		if ($this->getRequest()->request->get('submitAction') == 'exporter')
+		{
+			$formRech->bind($requete);
+            $recherche = $formRech->getData();
+            $query = $this->getDoctrine()->getRepository('AMiEMiagistesBundle:Formulaire')->search($recherche);
+            $miagistes = $query->getResult();
+			$response = $this->exportexcel($miagistes);
+			return $response;
+		}		
+		
         return $this->render('AMiEMiagistesBundle:Miagistes:recherche.html.twig', array(
             'layout' => $layout,
             'miagistes' => $miagistes,
@@ -299,7 +305,79 @@ class MiagistesController extends CoreController
 
         return $graph;
     }
+	
+	public function exportexcel($miagistes)
+	{
+	   $user = $this->get('security.context')->getToken()->getUser();
+	// ask the service for a Excel5
+       $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
+       $phpExcelObject->getProperties()->setCreator($user->getUsername())
+           ->setLastModifiedBy($user->getUsername())
+           ->setTitle("export_miagistes")
+    //       ->setSubject("Office 2005 XLSX Test Document")
+    //      ->setDescription("Test document for Office 2005 XLSX, generated using PHP classes.")
+    //       ->setKeywords("office 2005 openxml php")
+    //       ->setCategory("Test result file");
+	;
+		$column = 'A';
+		$fields = array('Nom', 'Prenom', 'Mail', 'Rue', 'CodePostal', 'Ville', 'Numero', 'EntAccueil', 'AnneePromo', 'Embauche', 'EntActuelle', 'EntrepriseAutre',
+						'TypeContrat', 'TypeContratAutre', 'NiveauSalaire', 'RaisonNonEmbauche', 'RaisonAutre', 'SituationNonEmbauche', 'SituationAutre',
+						'Metier', 'MetAutre', 'Secteur', 'SectAutre');
+		$columnName = array('Nom', 'Prénom', 'Mail', 'Rue', 'Code Postal', 'Ville', 'Numéro', 'Entreprise d\'accueil', 'Annee promotion M2', 'Embauché ou non ?', 'Par l\'entreprise d\'accueil ?', 'Par une autre entreprise', 'Type de contrat', 'Autre type de contrat', 'Niveau de salaire', 'Raisons de non embauche', 'Autres raisons de non embauche', 'Situation si non embauché', 'Autre situation si non embauché', 'Métier', 'Autre métier', 'Secteur', 'Autre secteur');
+	    
+		$styleTitre = array('font'=>array(
+                                'bold'=>true,
+                                'size'=>14,
+                                'name'=>'Calibri',
+                                'color'=>array('rgb'=>'000000')),
+                  'alignment'=>array('horizontal'=>\PHPExcel_Style_Alignment::HORIZONTAL_CENTER),
+		);
+		
+		$styleData = array('font'=>array(
+                                'bold'=>true,
+                                'size'=>11,
+                                'name'=>'Calibri',
+                                'color'=>array('rgb'=>'000000')),
+                  'alignment'=>array('horizontal'=>\PHPExcel_Style_Alignment::HORIZONTAL_CENTER),
+		);
+		
+		for($j = 0; $j < sizeof($fields); $j++) {
+			$row = 2;
+			for ($i = 0; $i < sizeof($miagistes); $i++) {
+				$get = 'get'.$fields[$j];
+				$phpExcelObject->setActiveSheetIndex(0)
+					->setCellValue($column.'1', $columnName[$j])
+					->setCellValue($column.$row, $miagistes[$i]->$get())
+					->getStyle($column.'1')->applyFromArray($styleTitre)
+					;
+				$row++;
+			} 
+			$column++;
+		}
+       $phpExcelObject->getActiveSheet()->setTitle('Miagistes');
+		
+		for($let = 'A'; $let < $column; $let++) { 
+	   $phpExcelObject->getActiveSheet()->getColumnDimension($let)->setAutoSize(true);
+	   }
+
+        // create the writer
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+        // create the response
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        // adding headers
+		$datetime = gmdate('dmYHi');
+        $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'export_miagistes_'.$datetime.'.xls'
+        );
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+
+        return $response;
+	}
 }
 
 ?>
