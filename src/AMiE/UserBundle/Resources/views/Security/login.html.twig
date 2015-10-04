@@ -1,0 +1,54 @@
+{% extends "AMiEUserBundle::layout.html.twig" %}
+
+{% block title "Connexion" %}
+
+    {% block head "Se connecter" %}
+
+        {% block fos_user_content %}
+            {% if error %}
+                <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+            {% endif %}
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Formulaire de connexion</h2>
+                    </div>
+                    <div class="card-body card-padding">
+
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <label class="required"
+                                       for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                                <input class="form-control input-lg" type="text" id="username" name="_username"
+                                       value="{{ last_username }}" required="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="fg-line">
+                                <label class="required"
+                                       for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                                <input class="form-control input-lg" type="password" id="password" name="_password"
+                                       required="required"/>
+                            </div>
+                        </div>
+                        <div class="checkbox m-b-15">
+                            <input type="checkbox" id="remember_me" name="_remember_me"
+                                   value="on"/>
+                            <i class="input-helper"></i>
+                            <label class="c-black f-500 m-b-20" for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-10 col-sm-1">
+                        <button class="btn btn-primary btn-sm m-t-10 waves-effect waves-button waves-float waves-effect waves-button waves-float"
+                                type="submit" id="_submit" name="_submit"
+                                value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">Connexion
+                        </button>
+                    </div>
+                </div>
+            </form>
+        {% endblock fos_user_content %}

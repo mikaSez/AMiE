@@ -1,0 +1,54 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title %}{{ actualite.titre }}{% endblock title %}
+
+{% block head %}Afficher une actualité{% endblock head %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bgm-orange">
+        <h2>{{ actualite.titre|title }} <small>Postée le <time>{{ actualite.addedDate|localizeddate('full', 'none') }}</time> par {{ actualite.addedBy }}
+        {% if actualite.updatedDate is not empty or actualite.updatedBy is not empty %}| Modifiée le <time>{{ actualite.updatedDate|localizeddate('full', 'none') }}</time> par {{ actualite.updatedBy }}{% endif %}</small></h2>
+
+        <ul class="actions actions-alt">
+            <li class="dropdown">
+                <a href="" data-toggle="dropdown" aria-expanded="false">
+                    <i class="glyphicon glyphicon-option-vertical"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+
+                    <li>
+                        <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Afficher cette actualité" onclick="">
+                        <i class="glyphicon glyphicon-upload"></i>&nbsp;&nbsp;Afficher
+                        </a>
+                    </li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <li>
+                        <a href="{{ path('amie_actualites_modifier', { 'id': actualite.id}) }}" title="Modifier cette actualité" onclick="">
+                        <i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Modifier
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('amie_actualites_supprimer', { 'id': actualite.id}) }}" title="Supprimer cette actualité" onclick="if(confirm('Attention action irrémédiable ! Confirmer la suppression ?')) return true; else return false;">
+                        <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body card-padding">
+
+    {% if image is not null %}
+        <img src="{{ asset('uploads/news/' ~ image.path) }}" alt="{{ image.alt }}"/>
+        <br/>
+    {% endif %}
+
+    <h2>{{ actualite.contenu|nl2br }} </h2>
+        
+    </div>
+</div>
+{% endblock content %}

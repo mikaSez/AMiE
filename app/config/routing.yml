@@ -1,0 +1,23 @@
+amie_user:
+    resource: "@AMiEUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+amie_offresemplois:
+    resource: "@AMiEOffreEmploiBundle/Resources/config/routing.yml"
+    prefix:   /offresemplois
+
+amie_actualites:
+    resource: "@AMiEActualitesBundle/Resources/config/routing.yml"
+    prefix:   /actualites
+
+amie_entreprises:
+    resource: "@AMiEEntreprisesBundle/Resources/config/routing.yml"
+    prefix:   /entreprises
+
+amie_miagistes:
+    resource: "@AMiEMiagistesBundle/Resources/config/routing.yml"
+    prefix:   /miagistes
+
+amie_home:
+    resource: "@AMiEHomeBundle/Resources/config/routing.yml"
+    prefix:   /

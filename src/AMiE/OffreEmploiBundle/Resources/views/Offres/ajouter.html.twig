@@ -1,0 +1,147 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title %}{{ action }} une offre{% endblock %}
+
+{% block head %}{{ action }} une offre d'emploi{% endblock %}
+
+{% if action == 'Ajouter' %}
+    {% set array = { 'action': action } %}
+{% else %}
+    {% set array = { 'action': action, 'id': offre.id } %}
+{% endif %}
+
+{% block content %}
+<form action="{{ path('amie_offresemplois_' ~ action|lower, array) }}" method="post" {{ form_enctype(formDoc) }}>
+    <div class="card">
+        <div class="card-header"><h2>Détails de l'offre</h2></div>
+        <div class="card-body card-padding">
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.titre, 'Titre *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.titre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Titre'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.descriptif, 'Descriptif de l\'offre *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.descriptif, { 'attr': {'rows': 4, 'class': 'form-control auto-size'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.lieuTravail, 'Adresse du lieu de travail *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.lieuTravail, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Lieu de travail'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    <div class="select">
+                        {{ form_label(formOffre.departement, 'Département *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                        {{ form_widget(formOffre.departement, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    <div class="select">
+                        {{ form_label(formOffre.typePoste, 'Type de poste *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                        {{ form_widget(formOffre.typePoste, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    <div class="select">
+                        {{ form_label(formOffre.typeContrat, 'Type de contrat *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                        {{ form_widget(formOffre.typeContrat, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.xpExigee, 'Expérience exigée *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.xpExigee, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Expérience'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.dureeValidite, 'Pendant combien de temps cette offre est valide *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.dureeValidite, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Durée de validité'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    <div class="select">
+                        {{ form_label(formOffre.urgence, 'Niveau d\'urgence de l\'offre *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                        {{ form_widget(formOffre.urgence, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.salaire, 'Salaire estimé par an', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.salaire, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Salaire'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h2>Contact entreprise</h2></div>
+        <div class="card-body card-padding">
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.contactNom, 'Nom de la personne à contacter *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.contactNom, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Nom'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.contactMail, 'Mail de la personne à contacter *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.contactMail, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Mail'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.contactTel, 'Téléphone de la personne à contacter', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.contactTel, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Téléphone'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h2>Document à joindre à l'offre</h2></div>
+        <div class="card-body card-padding">
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formDoc.titre, 'Titre du document', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formDoc.titre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Titre'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formDoc.descriptif, 'Descriptif du document', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formDoc.descriptif, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Courte description'} }) }}
+                </div>
+            </div>
+            {{ form_label(formDoc.file, 'Fichier de présentation de l\'offre', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}&nbsp;&nbsp;
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <span class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
+                    <span class="fileinput-new">Sélectionnez un fichier</span>
+                    <span class="fileinput-exists">Changer le fichier</span>
+                    <input type="hidden" value="" name="...">
+                    {{ form_widget(formDoc.file, { 'attr': {'style': 'cursor:pointer'} }) }}
+                </span>
+                <span class="fileinput-filename"></span>
+                <a title="Supprimer le fichier" href="#" class="close fileinput-exists" data-dismiss="fileinput">×</a>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(formOffre) }}
+    {{ form_rest(formDoc) }}
+    <div class="row">
+        <div class="col-sm-offset-10 col-sm-1">
+            <button type="submit" class="btn btn-primary btn-sm m-t-10 waves-effect waves-button waves-float">{{ action }}</button>
+        </div>
+    </div>
+</form>
+{% endblock content %}

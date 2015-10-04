@@ -1,0 +1,7 @@
+parameters:
+#    a_mi_e_offre_emploi.example.class: AMiE\OffreEmploiBundle\Example
+
+services:
+#    a_mi_e_offre_emploi.example:
+#        class: %a_mi_e_offre_emploi.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

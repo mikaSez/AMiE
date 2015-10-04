@@ -1,0 +1,122 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Messagerie" %}
+
+{% block head "Messagerie" %}
+
+{% block content %}
+<div class="card m-b-0" id="messages-main">
+    <a href="{{ path('amie_home_creationconversation') }}" class="btn bgm-red btn-float waves-effect waves-button waves-float" id="ms-compose" title="Ecrire un nouveau message">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+
+    {% if conversationActuelle is defined and conversationActuelle is not null %}
+        {% if app.user.id == conversationActuelle.idUtilisateur1 %}
+            {% set pictureActuelle = 'default' %}
+        {% else %}
+            {% set pictureActuelle = 'default' %}
+        {% endif %}
+    
+        <div class="ms-menu">
+            <div class="listview lv-user m-t-20">
+                <div class="lv-item media active">
+                        <div class="lv-avatar pull-left">
+                            <img src="{{ asset('bundles/amiehome/images/profile-pics/' ~ pictureActuelle ~ '.jpg') }}" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="lv-title">{{ usersName[conversationActuelle.id] }}</div>
+                        </div>
+                    </a>
+                </div>
+                {% for conversation in conversations %}
+                    {% if conversation.id != conversationActuelle.id %}
+                        {% if app.user.id == conversation.idUtilisateur1 %}
+                            {% set picture = 'default' %}
+                        {% else %}
+                            {% set picture = 'default' %}
+                        {% endif %}
+                        <div class="lv-item media">
+                            <a href="{{ path('amie_home_messagerie', { 'idConversation': conversation.id}) }}" title="Voir cette conversation">
+                                <div class="lv-avatar pull-left">
+                                    <img src="{{ asset('bundles/amiehome/images/profile-pics/' ~ picture ~ '.jpg') }}" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <div class="lv-title">{{ usersName[conversation.id] }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+    {% endif %}
+    
+    <div class="ms-body">
+        {% if conversationActuelle is defined and conversationActuelle is not null %}
+        <div class="listview lv-message">
+            <div class="lv-header-alt bgm-white">
+                <div id="ms-menu-trigger">
+                    <div class="line-wrap">
+                        <div class="line top"></div>
+                        <div class="line center"></div>
+                        <div class="line bottom"></div>
+                    </div>
+                </div>
+
+                <div class="lvh-label hidden-xs">
+                    <div class="lv-avatar pull-left">
+                        <img src="{{ asset('bundles/amiehome/images/profile-pics/' ~ pictureActuelle ~ '.jpg') }}" alt="">
+                    </div>
+                    <span class="c-black">{{ userCorrespondant.prenom }} {{ userCorrespondant.nom }} ({{ userCorrespondant.username }})</span>
+                </div>
+                
+                <ul class="lv-actions actions">
+                    <li>
+                        <a href="{{ path('amie_home_messagerie_supprimer', { 'idConversation': conversationActuelle.id}) }}" title="Supprimer cette conversation" onclick="if(confirm('Etes vous sûr de vouloir supprimer cette conversation ?')) return true; else return false;">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="lv-body">
+                {% for message in messages %}
+                {% if app.user.id == message.idEnvoyeur %}
+                    {% set position = 'right' %}
+                    {% set picture = 'default' %}
+                {% else %}
+                    {% set position = 'left' %}
+                    {% set picture = 'default' %}
+                {% endif %}
+                <div class="lv-item media {{ position }}">
+                    <div class="lv-avatar pull-{{ position }}">
+                        <img src="{{ asset('bundles/amiehome/images/profile-pics/' ~ picture ~ '.jpg') }}" alt="">
+                    </div>
+                    <div class="media-body">
+                        <div class="ms-item">
+                            {{ message.contenu }}
+                        </div>
+                        <small class="ms-date">
+                            <i class="glyphicon glyphicon-time"></i>
+                            {{ message.sentDate|date("d/m/Y") }} à {{ message.sentDate|date("H:i") }}
+                        </small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="lv-footer ms-reply">
+                {% if conversationActuelle is defined and conversationActuelle is not null %}
+                <form action="{{ path('amie_home_messagerie_envoi', { 'idConversation': conversationActuelle.id}) }}" method="post">
+                    <textarea name="message" data-autosize-on="true" class="auto-size" placeholder="Votre réponse..." style="overflow: hidden; word-wrap: break-word; height: 43px;"></textarea>
+
+                    <button type="submit" title="Envoyer le message"><i class="glyphicon glyphicon-send"></i></button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+parameters:
+#    amie_home.example.class: AMiE\HomeBundle\Example
+
+services:
+#    amie_home.example:
+#        class: %amie_home.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    amie_home.form.type.enregistrement:
+        class: AMiE\HomeBundle\Form\Type\EnregistrementType
+        tags:
+            - { name: form.type, alias: enregistrement }

@@ -1,0 +1,14 @@
+{% extends "SymfonyTwigBundle:Exception:error.html.twig" %}
+
+{% block title %}Erreur {{ status_code }}{% endblock %}
+
+{% block head %}Erreur {{ status_code }}{% endblock %}
+
+{% block content %}
+<div class="four-zero">
+    {{ status_text }}
+    <footer>
+        <a href="{{ path('amie_home_home') }}"><i class="glyphicon glyphicon-home"></i></a>
+    </footer>
+</div>
+{% endblock %}

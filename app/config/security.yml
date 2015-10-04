@@ -1,0 +1,84 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_ADMIN_ENT:   ROLE_ADMIN
+        ROLE_ADMIN_ETU:   ROLE_ADMIN
+        ROLE_SUPER_ENT: 
+            - ROLE_ADMIN
+            - ROLE_ADMIN_ENT
+        ROLE_SUPER_ADMIN_TEMP: 
+            - ROLE_ADMIN
+        ROLE_SUPER_ADMIN: 
+            - ROLE_USER
+            - ROLE_ADMIN
+            - ROLE_ALLOWED_TO_SWITCH
+            - ROLE_ADMIN_ENT
+            - ROLE_ADMIN_ETU
+            - ROLE_SUPER_ADMIN_TEMP
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt))/
+            security: false
+        main:
+            pattern: .*
+            form_login:
+                provider:               fos_userbundle
+                csrf_provider:          form.csrf_provider
+                login_path:             fos_user_security_login
+                use_forward:            false # protection contre retour arrière
+                check_path:             fos_user_security_check
+                failure_path:           null # redirige vers la page de login
+                default_target_path:    /
+                remember_me:            true
+            remember_me:
+                key:        %secret%
+                lifetime:   500000000000 # temps pendant lequel on se souvient de l'user
+                path:       /
+                domain:     ~
+            logout:
+                path:   fos_user_security_logout
+                target: / # on revient à la racine après la déconnexion
+            anonymous:   true
+            switch_user: true
+
+    access_control:
+        - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/inscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/compte, role: ROLE_ADMIN }
+        - { path: ^/messagerie, role: ROLE_ADMIN }
+        - { path: ^/envoi, role: ROLE_ADMIN }
+        - { path: ^/notifications, role: ROLE_ADMIN }
+        - { path: ^/actualites/ajoutactualite, role: ROLE_SUPER_ADMIN }
+        - { path: ^/actualites$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/actualites/actualite/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/actualites/.*, role: ROLE_ADMIN }
+        - { path: ^/entreprises/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/entreprises/fiche/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/entreprises/graphiques, role: ROLE_SUPER_ADMIN }
+        - { path: ^/entreprises/.*, role: ROLE_ADMIN }
+        - { path: ^/miagistes/graphiques, role: ROLE_SUPER_ADMIN }
+        - { path: ^/miagistes/formulaire, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/miagistes/.*, role: ROLE_ADMIN }
+        - { path: ^/offresemplois/ajouteroffre, roles: [ROLE_SUPER_ENT, ROLE_SUPER_ADMIN] }
+        - { path: ^/offresemplois$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/offresemplois/recherche$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/offresemplois/offre/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/offresemplois/.*, role: ROLE_ADMIN }
+        - { path: ^/ent/.*, role: ROLE_SUPER_ADMIN }
+        - { path: ^/etu/.*, role: ROLE_SUPER_ADMIN }
+        - { path: ^/resp/.*, role: ROLE_SUPER_ADMIN }
+        - { path: ^/modifier/.*, role: ROLE_ADMIN }
+        - { path: ^/gestion/.*, role: ROLE_SUPER_ADMIN }
+        - { path: ^/supprimer/.*, role: ROLE_SUPER_ADMIN }
+        - { path: ^/afficher/.*, role: ROLE_SUPER_ADMIN }
+        - { path: ^/.*, role: ROLE_SUPER_ADMIN }

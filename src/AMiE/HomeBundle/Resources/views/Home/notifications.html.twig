@@ -1,0 +1,56 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Notifications" %}
+
+{% block head "Notifications" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bgm-orange">
+        <h2>Trace des notifications</h2>
+    </div>
+    <div class="card-body m-t-0">
+        {% if notifications is not defined %}
+            <br/><p class="lead">&nbsp;&nbsp;Aucune activité sur le site pour le moment...</p><br/>
+        {% elseif notifications is empty or users is empty %}
+            <br/><p class="lead">&nbsp;&nbsp;Aucune activité sur le site pour le moment...</p><br/>
+        {% else %}
+        <table class="table table-inner table-vmiddle">
+            <thead>
+                <tr>
+                    <th><h2>Date</h2></th>
+                    <th><h2>Action</h2></th>
+                    <th><h2>Descriptif</h2></th>
+                    <th><h2>Elément(s) impacté(s)</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for notification in notifications %}
+                <tr>
+                    <td>{{ notification.postedDate|date("d/m/Y") }}</td>
+                    <td>{{ notification.action }}</td>
+                    <td>{{ notification.descriptif }}</td>
+                    <td>
+                        {% if notification.idUser is not null %}
+                            Utilisateur&nbsp;&nbsp;&nbsp;&nbsp;{{ users[notification.id].username }}&nbsp;&nbsp;(n° {{ users[notification.id].id }})<br/>
+                        {% endif %}
+                        {% if notification.idOffre is not null %}
+                            Offre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            "{{ offres[notification.id].titre }}"&nbsp;&nbsp;(n° {{ offres[notification.id].id }})
+                        {% elseif notification.idActualite is not null %}
+                            Actualite&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            "{{ actualites[notification.id].titre }}"&nbsp;&nbsp;(n° {{ actualites[notification.id].id }})
+                        {% elseif notification.idFormulaire is not null %}
+                            Formulaire&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            "{{ formulaires[notification.id].nom }}{{ formulaires[notification.id].prenom }}"&nbsp;&nbsp;(n° {{ formulaires[notification.id].id }})
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

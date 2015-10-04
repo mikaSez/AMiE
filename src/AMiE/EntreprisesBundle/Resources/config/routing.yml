@@ -1,0 +1,19 @@
+amie_entreprises_recherche:
+    path:     /
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:recherche }
+
+amie_entreprises_graphiques:
+    path:     /graphiques
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:graphiques }
+
+amie_entreprises_fiche:
+    path:     /fiche/{slug}/{id}
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:fiche }
+    requirements:
+        id: \d+
+
+amie_entreprises_supprimerentreprise:
+    path:     /supprimer/{id}
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:supprimerentreprise }
+    requirements:
+        id: \d+

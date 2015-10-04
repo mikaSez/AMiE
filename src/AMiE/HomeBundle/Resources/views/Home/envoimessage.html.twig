@@ -1,0 +1,40 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Envoi d'un nouveau message" %}
+
+{% block head "Envoi d'un nouveau message" %}
+
+{% block content %}
+<form action="{{ path('amie_home_creationconversation') }}" method="post">
+    <div class="card">
+        <div class="card-header">
+            <h2>Envoyer un nouveau message</h2>
+        </div>
+        <div class="card-body card-padding">
+            <div class="form-group">
+                <div class="fg-line">
+                    <div class="select">
+                        <select class="form-control" name="correspondant">
+                            <option value="0">Personne à qui envoyer le message</option>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.prenom }} {{ user.nom }} ({{ user.username }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <p class="c-black f-500 m-t-20 m-b-20">Contenu de votre message</p>
+            <div class="form-group">
+                <div class="fg-line">
+                    <textarea name="contenu" class="form-control auto-size" rows="4" placeholder="Qu'avez-vous en tête ?" data-autosize-on="true" style="overflow: hidden; word-wrap: break-word; height: 43px;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-11 col-sm-1">
+            <button type="submit" class="btn btn-primary btn-sm m-t-10 waves-effect waves-button waves-float">Envoyer</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

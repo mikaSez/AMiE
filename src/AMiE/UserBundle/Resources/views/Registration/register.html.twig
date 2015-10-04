@@ -1,0 +1,9 @@
+{% extends "AMiEUserBundle::layout.html.twig" %}
+
+{% block title "Enregistrement" %}
+
+    {% block head "Création de compte" %}
+
+        {% block fos_user_content %}
+            {% include "AMiEUserBundle:Registration:register_content.html.twig" %}
+        {% endblock fos_user_content %}

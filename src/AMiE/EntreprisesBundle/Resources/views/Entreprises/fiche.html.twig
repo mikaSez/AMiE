@@ -1,0 +1,63 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Fiche" %}
+
+    {% block head "Fiche Entreprise" %}
+
+        {% block content %}
+            <div class="card">
+                <div class="card-header bgm-orange">
+                    <h2>{{ entreprise.nom }}</h2>
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <ul class="actions actions-alt">
+                            <li class="dropdown">
+                                <a href="" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-option-vertical"></i>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a href="{{ path('amie_entreprises_supprimerentreprise', { 'id': entreprise.id}) }}"
+                                           title="Supprimer cette entreprise"
+                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="card-body card-padding">
+                    <div class="form-group">
+                        <h3>Informations</h3>
+
+                        <div class="fg-line" style="padding-left: 40px;">
+                            <strong class="text-uppercase">Rue, voie :</strong> {{ entreprise.rue }}<br/>
+                            <strong class="text-uppercase">Code postal :</strong> {{ entreprise.codePostal }}<br/>
+                            <strong class="text-uppercase">Ville :</strong> {{ entreprise.ville }}<br/>
+                            <strong class="text-uppercase">Numéro de téléphone :</strong> {{ entreprise.numero }}<br/>
+                            <strong class="text-uppercase">Adresse email :</strong> {{ entreprise.email }}<br/><br/>
+                            <strong class="text-uppercase">Secteur d'activités de l'entreprise
+                                :</strong> {{ entreprise.secteur }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body card-padding">
+                    <div class="form-group">
+                        <h3>Offres postées</h3>
+						{%  for offre in offres %}
+                            <div class="fg-line" style="padding-left: 40px;">
+                                <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}"
+                                   title="Acceder à l'offre">{{ offre.titre|title }}</a>
+                            </div>
+                {%  else %}
+				<div class="fg-line" style="padding-left: 40px;">
+                                Aucune offre postée.
+                            </div>
+                {%  endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}

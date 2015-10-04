@@ -1,0 +1,84 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Gestion" %}
+
+    {% block head "Gestion des utilisateurs" %}
+
+        {% block content %}
+            <div class="card">
+                <div class="card-body m-t-0">
+                    <table class="table table-inner table-vmiddle">
+                        <thead>
+                        <tr>
+                            <th align="center"><h4><strong>Prénom</strong></h4></th>
+                            <th align="center"><h4><strong>Nom</strong></h4></th>
+                            <th align="center"><h4><strong>Mail</strong></h4></th>
+                            <th align="center"><h4><strong>Type utilisateur</strong></h4></th>
+                            <th><h4></h4></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for utilisateur in utilisateurs %}
+                            <tr>
+                                <td>{{ utilisateur.prenom }}</td>
+                                <td>{{ utilisateur.nom }}</td>
+                                <td>{{ utilisateur.email }}</td>
+                                <td>{{ utilisateur.typeUt }}</td>
+
+                                <td>
+                            <ul class="actions">
+                                <li>
+                                    <a href="{{ path('amie_user_afficheruser', { 'id': utilisateur.id}) }}"
+                                       title="Afficher cet utilisateur" onclick="">
+                                        <i class="glyphicon glyphicon-upload"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('amie_user_responsable', {'id': utilisateur.id}) }}"
+                                       title="Passer cet utilisateur responsable" onclick="">
+                                        <i class="glyphicon glyphicon-star"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('amie_user_etudiant', {'id': utilisateur.id}) }}"
+                                       title="Passer cet utilisateur étudiant" onclick="">
+                                        <i class="glyphicon glyphicon-education"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('amie_user_entreprise', {'id': utilisateur.id}) }}"
+                                       title="Passer cet utilisateur entreprise" onclick="">
+                                        <i class="glyphicon glyphicon-briefcase"></i>
+                                    </a>
+                                </li>
+                                {% if utilisateur.enabled == '1' %}
+                                    <a href="{{ path('amie_user_desactiver', { 'id': utilisateur.id}) }}" title="Désactiver cet utilisateur" onclick="if(confirm('Êtes vous sûr de désactiver cet utilisateur ?')) return true; else return false;">
+                                        <i class="glyphicon glyphicon-eye-close"></i>
+                                    </a>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ path('amie_user_activer', { 'id': utilisateur.id}) }}" title="Ré-activer cet utilisateur" onclick="if(confirm('Êtes vous sûr de réactiver cet utilisateur ?')) return true; else return false;">
+                                            <i class="glyphicon glyphicon-eye-open"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('amie_user_supprimeruser', { 'id': utilisateur.id}) }}"
+                                           title="Supprimer cette utilisateur"
+                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                </ul>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">Aucun résultat.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endblock %}

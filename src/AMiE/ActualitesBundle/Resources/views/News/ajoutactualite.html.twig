@@ -1,0 +1,51 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Ajouter une actualité" %}
+
+    {% block head "Ajouter une actualité" %}
+
+        {% block content %}
+            <form action="{{ path('amie_actualites_ajoutactualite') }}" method="POST" {{ form_enctype(formActu) }}>
+                <div class="card">
+                    <div class="card-header"><h2>Détails de l'actualité</h2></div>
+                    <div class="card-body card-padding">
+                        <div class="form-group">
+                            <div class="fg-line">
+                                {{ form_label(formActu.titre, 'Titre *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                {{ form_widget(formActu.titre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Titre'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="fg-line">
+                                {{ form_label(formActu.contenu, 'Contenu *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                {{ form_widget(formActu.contenu, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Contenu'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Ajouter une image</h2></div>
+                    <div class="card-body card-padding">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                <span class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
+                    <span class="fileinput-new">Sélectionnez un fichier</span>
+                    <span class="fileinput-exists">Changer le fichier</span>
+                    <input type="hidden" value="" name="...">
+                    {{ form_widget(formImage.file, { 'attr': {'class': 'form-control'} }) }}
+                </span>
+                            <span class="fileinput-filename"></span>
+                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput">×</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-offset-10 col-sm-1">
+                        <button type="submit"
+                                class="btn btn-primary btn-sm m-t-10 waves-effect waves-button waves-float">Valider
+                        </button>
+                    </div>
+                </div>
+            </form>
+        {% endblock %}

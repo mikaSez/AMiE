@@ -1,0 +1,72 @@
+fos_user_security:
+    resource: routing/security.yml
+    prefix:   /
+
+fos_user_profile:
+    resource: routing/profil.yml
+    prefix:   /compte
+
+fos_user_register:
+    resource: routing/inscription.yml
+    prefix:   /inscription
+
+fos_user_resetting:
+    resource: routing/resetting.yml
+    prefix:   /resetting
+
+fos_user_change_password:
+    resource: routing/change_mot_de_passe.yml
+    prefix:   /compte
+
+amie_user_gestion:
+    path:     /gestion
+    defaults: { _controller: AMiEUserBundle:User:gestion }
+
+amie_user_supprimeruser:
+    path:     /supprimer/{id}
+    defaults: { _controller: AMiEUserBundle:User:supprimeruser }
+    requirements:
+        id: \d+
+
+amie_user_responsable:
+    path:     /resp/{id}
+    defaults: { _controller: AMiEUserBundle:User:responsable }
+    requirements:
+        id: \d+
+
+amie_user_etudiant:
+    path:     /etu/{id}
+    defaults: { _controller: AMiEUserBundle:User:etudiant }
+    requirements:
+        id: \d+
+
+amie_user_entreprise:
+    path:     /ent/{id}
+    defaults: { _controller: AMiEUserBundle:User:entreprise }
+    requirements:
+        id: \d+
+
+amie_user_modifieruser:
+    path:     /modifier/{id}
+    defaults: { _controller: AMiEUserBundle:User:modifieruser }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_user_afficheruser:
+    path:     /afficher/{id}
+    defaults: { _controller: AMiEUserBundle:User:afficheruser }
+    requirements:
+        id: \d+
+
+amie_user_desactiver:
+    path:     /activer/{id}
+    defaults: { _controller: AMiEUserBundle:User:desactiver }
+    requirements:
+        id: \d+
+
+amie_user_activer:
+    path:     /desactiver/{id}
+    defaults: { _controller: AMiEUserBundle:User:activer }
+    requirements:
+        id: \d+

@@ -1,0 +1,160 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Recherche" %}
+
+    {% block head "Recherche Miagistes" %}
+
+        {% block content %}
+            <div class="card">
+                <div class="card-body m-t-0">
+                    <table class="table table-inner table-vmiddle">
+                        <thead>
+                        <tr>
+                            <th align="center"><h4><strong>Prénom</strong></h4></th>
+                            <th align="center"><h4><strong>Nom</strong></h4></th>
+                            <th align="center"><h4><strong>Mail</strong></h4></th>
+                            <th align="center"><h4><strong>Entreprise d'accueil</strong></h4></th>
+                            <th align="center"><h4><strong>Embauché ?</strong></h4></th>
+                            <th align="center"><h4><strong>Contrat</strong></h4></th>
+                            <th align="center"><h4><strong>Salaire (brut)</strong></h4></th>
+                            <th><h4></h4></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for miagiste in miagistes %}
+                            <tr>
+                                <td>{{ miagiste.prenom }}</td>
+                                <td>{{ miagiste.nom }}</td>
+                                <td>{{ miagiste.mail }}</td>
+                                <td align="center">{{ miagiste.entAccueil }}</td>
+                                <td align="center">{{ miagiste.embauche }}</td>
+                                <td align="center">{{ miagiste.typeContrat }}</td>
+                                <td align="center">{{ miagiste.niveauSalaire }}</td>
+
+                                <td>
+                                    <ul class="actions">
+                                        <li>
+                                            <a href="{{ path('amie_miagistes_fiche', { 'id': miagiste.id}) }}"
+                                               title="Afficher ce miagiste" onclick="">
+                                                <i class="glyphicon glyphicon-upload"></i>
+                                            </a>
+                                        </li>
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <li>
+                                            <a href="{{ path('amie_miagistes_modifierformulaire', { 'id': miagiste.id}) }}"
+                                               title="Modifier ce miagiste" onclick="">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('amie_miagistes_supprimerformulaire', { 'id': miagiste.id}) }}"
+                                               title="Supprimer ce miagiste"
+                                               onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">Aucun résultat.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bgm-orange">
+                    <h2><i class="glyphicon glyphicon-search" style="display: inline"></i> Recherche avancée</h2>
+                </div>
+                <form action="{{ path('amie_miagistes_recherche') }}" method="POST">
+                    <div class="card-body card-padding">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.nom, 'Rechercher par nom', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.prenom, 'Rechercher par prénom', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.prenom, { 'attr': {'class': 'form-control', 'placeholder': 'Prénom'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.embauche, 'Rechercher si embauché ou non', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.embauche, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.entAccueil, 'Rechercher par entreprise d\'accueil', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.entAccueil, { 'attr': {'class': 'form-control', 'placeholder': 'Entreprise'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.niveauSalaireMin, 'Rechercher par salaire minimum', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.niveauSalaireMin, { 'attr': {'class': 'form-control', 'placeholder': 'Minimum'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.niveauSalaireMax, 'Rechercher par salaire maximum', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.niveauSalaireMax, { 'attr': {'class': 'form-control', 'placeholder': 'Maximum'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.typeContrat, 'Rechercher par type de contrat', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.typeContrat, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.secteur, 'Rechercher par secteur', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.secteur, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form_label(formRech.metier, 'Rechercher par métier', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                    {{ form_widget(formRech.metier, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-offset-9 col-sm-4">
+                            <button type="submit"
+                                    class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
+                                Rechercher
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <br/>
+            </div>
+        {% endblock %}

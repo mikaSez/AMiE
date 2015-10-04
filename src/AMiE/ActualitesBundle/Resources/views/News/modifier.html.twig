@@ -1,0 +1,60 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Modifier une actualité" %}
+
+{% block head "Modifier une actualité" %}
+
+{% block content %}
+<form action="{{ path('amie_actualites_modifier', { 'id': actualite.id }) }}" method="POST" {{ form_enctype(formImage) }}>
+    <div class="card">
+        <div class="card-header"><h2>Détails de l'actualité</h2></div>
+        <div class="card-body card-padding">
+			<div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formActu.titre, 'Titre *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formActu.titre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Titre'} }) }}
+                </div>
+            </div>
+			<div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formActu.contenu, 'Contenu *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formActu.contenu, { 'attr': {'rows': 4, 'class': 'form-control auto-size', 'placeholder': 'Contenu'} }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header"><h2>Ajouter une image</h2></div>
+        <div class="card-body card-padding">
+            <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formImage.titre, 'Titre du document', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formImage.titre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Titre'} }) }}
+                </div>
+            </div>
+            <p>{{ form_label(formImage.file, 'Image de l\'actualité', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}</p>
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="line-height: 150px;"></div>
+                <div>
+                    <span class="btn btn-info btn-file waves-effect">
+                        <span class="fileinput-new">Sélectionnez une image</span>
+                        <span class="fileinput-exists">Changer</span>
+                        <input type="hidden" value="" name="...">
+                        {{ form_widget(formImage.file, { 'attr': {'style': 'cursor:pointer'} }) }}
+                    </span>
+                    <a href="#" class="btn btn-danger fileinput-exists waves-effect" data-dismiss="fileinput">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form_rest(formActu) }}
+    {{ form_rest(formImage) }}
+
+    <div class="row">
+        <div class="col-sm-offset-10 col-sm-1">
+            <button type="submit" class="btn btn-primary btn-sm m-t-10 waves-effect waves-button waves-float">Valider</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

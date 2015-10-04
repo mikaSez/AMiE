@@ -1,0 +1,7 @@
+parameters:
+#    amie_actualites.example.class: AMiE\ActualitesBundle\Example
+
+services:
+#    amie_actualites.example:
+#        class: %amie_actualites.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

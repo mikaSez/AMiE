@@ -1,0 +1,33 @@
+amie_home_home:
+    path:     /
+    defaults: { _controller: AMiEHomeBundle:Home:index }
+
+amie_home_messagerie_sans_conversation:
+    path:     /messagerie
+    defaults: { _controller: AMiEHomeBundle:Home:messagerie }
+
+amie_home_messagerie:
+    path:     /messagerie/{idConversation}
+    defaults: { _controller: AMiEHomeBundle:Home:messagerie }
+    requirements:
+        idConversation: \d+
+
+amie_home_creationconversation:
+    path:     /messagerie/creationconversation
+    defaults: { _controller: AMiEHomeBundle:Home:creationconversation }
+
+amie_home_messagerie_envoi:
+    path:     /envoi/{idConversation}
+    defaults: { _controller: AMiEHomeBundle:Home:envoimessage }
+    requirements:
+        idConversation: \d+
+
+amie_home_messagerie_supprimer:
+    path:     /envoi/supprimer/{idConversation}
+    defaults: { _controller: AMiEHomeBundle:Home:supprimermessage }
+    requirements:
+        idConversation: \d+
+
+amie_home_notifications:
+    path:     /notifications
+    defaults: { _controller: AMiEHomeBundle:Home:notifications }

@@ -1,0 +1,73 @@
+amie_offresemplois_offres:
+    path:     /{actif}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:index, actif: actif }
+    requirements:
+            actif: actif|inactif|tous
+
+amie_offresemplois_ajouter:
+    path:     /ajouter
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:ajouter }
+    requirements: 
+        _method: GET|POST
+
+amie_offresemplois_recherche:
+    path:     /recherche/{actif}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:recherche, actif: actif }
+    requirements: 
+        _method: GET|POST
+        actif: actif|inactif|tous
+
+amie_offresemplois_desactiver:
+    path:     /desactiver/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:desactiver }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_activer:
+    path:     /activer/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:activer }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_supprimer:
+    path:     /supprimer/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:supprimer }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_modifier:
+    path:     /modifier/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:modifier }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_modifierdescriptif:
+    path:     /modifierdescriptif/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:modifierdescriptif }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_modifiercontact:
+    path:     /modifiercontact/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:modifiercontact }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_modifiertype:
+    path:     /modifiertype/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:modifiertype }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_offresemplois_offre:
+    path:     /offre/{slug}/{id}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:offre }
+    requirements:
+        id: \d+

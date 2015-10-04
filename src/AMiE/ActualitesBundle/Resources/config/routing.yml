@@ -1,0 +1,42 @@
+amie_actualites_news:
+    path:     /{actif}
+    defaults: { _controller: AMiEActualitesBundle:News:index, actif: actif }
+    requirements:
+        actif: actif|inactif|tous
+
+amie_actualites_ajouter:
+    path:     /ajouter
+    defaults: { _controller: AMiEActualitesBundle:News:ajouter }
+    requirements:
+        _method: GET|POST
+
+amie_actualites_desactiver:
+    path:     /desactiver/{id}
+    defaults: { _controller: AMiEActualitesBundle:News:desactiver }
+    requirements:
+        id: \d+
+
+amie_actualites_activer:
+    path:     /activer/{id}
+    defaults: { _controller: AMiEActualitesBundle:News:activer }
+    requirements:
+        id: \d+
+
+amie_actualites_supprimer:
+    path:     /supprimer/{id}
+    defaults: { _controller: AMiEActualitesBundle:News:supprimer }
+    requirements:
+        id: \d+
+
+amie_actualites_modifier:
+    path:     /modifier/{id}
+    defaults: { _controller: AMiEActualitesBundle:News:modifier }
+    requirements:
+        id: \d+
+        _method: GET|POST
+
+amie_actualites_actualite:
+    path:     /actualite/{slug}/{id}
+    defaults: { _controller: AMiEActualitesBundle:News:actualite}
+    requirements:
+        id: \d+

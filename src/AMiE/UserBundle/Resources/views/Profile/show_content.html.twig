@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header bgm-orange">
+        <h2>{{ user.username }}</h2>
+    </div>
+
+    <div class="card-body card-padding">
+        <div class="form-group">
+            <h3>Coordoonnées</h3>
+
+            <div class="fg-line" style="padding-left: 40px;">
+                <strong class="text-uppercase">Nom :</strong> {{ user.nom }}<br/>
+                {% if user.typeUt == 'Entreprise' %}
+                    <strong class="text-uppercase">Siret :</strong> {{ user.siret }}<br/>
+                {% endif %}
+                {% if user.typeUt == 'Etudiant' or user.typeUt == 'Responsable' %}
+                    <strong class="text-uppercase">Prénom :</strong> {{ user.prenom }}<br/>
+                {% endif %}
+                <strong class="text-uppercase">Rue, voie :</strong> {{ user.rue }}<br/>
+                <strong class="text-uppercase">Code postal :</strong> {{ user.codePostal }}<br/>
+                <strong class="text-uppercase">Ville :</strong> {{ user.ville }}<br/>
+                <strong class="text-uppercase">Numéro de téléphone :</strong> {{ user.numero }}<br/>
+                <strong class="text-uppercase">Adresse email :</strong> {{ user.email }}<br/>
+            </div>
+        </div>
+        {% if user.typeUt != 'Responsable' %}
+            <div class="form-group">
+                <h3>Informations professionnelles</h3>
+
+                <div class="fg-line" style="padding-left: 40px;">
+                    <strong class="text-uppercase">Secteur d'activités :</strong> {{ user.secteur }}<br/>
+                    {% if user.secteur == 'Autre' %}
+                        <strong class="text-uppercase">Autre :</strong> {{ user.sectAutre }}<br/>
+                    {% endif %}
+                    {% if user.typeUt == 'Etudiant' %}
+                        <strong class="text-uppercase">Métier :</strong> {{ user.metier }}<br/>
+                        {% if user.metier == 'Autre' %}
+                            <strong class="text-uppercase">Autre :</strong> {{ user.metAutre }}<br/>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+</div>

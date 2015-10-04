@@ -1,0 +1,11 @@
+fos_user_profile_show: 
+    pattern: / 
+    defaults : { _controller :AMiEUserBundle:Profile:show }
+    requirements: 
+        _method: GET
+
+fos_user_profile_edit: 
+    pattern: /edit
+    defaults : { _controller :AMiEUserBundle:Profile:edit }
+    requirements: 
+        _method: GET|POST

@@ -1,0 +1,118 @@
+{% extends "AMiEHomeBundle::layout.html.twig" %}
+
+{% block title "Fiche" %}
+
+    {% block head "Fiche Miagiste" %}
+
+        {% block content %}
+            <div class="card">
+                <div class="card-header bgm-orange">
+                    <h2>{{ formulaire.prenom }} {{ formulaire.nom }}</h2>
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <ul class="actions actions-alt">
+                            <li class="dropdown">
+                                <a href="" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-option-vertical"></i>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a href="{{ path('amie_miagistes_modifierformulaire', { 'id': formulaire.id}) }}"
+                                           title="Modifier ce miagiste" onclick="">
+                                            <i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Modifier
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('amie_miagistes_supprimerformulaire', { 'id': formulaire.id}) }}"
+                                           title="Supprimer ce miagiste"
+                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="card-body card-padding">
+                    <div class="form-group">
+                        <h3>Coordoonnées</h3>
+
+                        <div class="fg-line" style="padding-left: 40px;">
+                            <strong class="text-uppercase">Rue, voie :</strong> {{ formulaire.rue }}<br/>
+                            <strong class="text-uppercase">Code postal :</strong> {{ formulaire.codePostal }}<br/>
+                            <strong class="text-uppercase">Ville :</strong> {{ formulaire.ville }}<br/>
+                            <strong class="text-uppercase">Numéro de téléphone :</strong> {{ formulaire.numero }}<br/>
+                            <strong class="text-uppercase">Adresse email :</strong> {{ formulaire.mail }}<br/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h3>Insertion professionnelle</h3>
+
+                        <div class="fg-line" style="padding-left: 40px;">
+                            <strong class="text-uppercase">Entreprise d'accueil durant l'apprentissage
+                                :</strong> {{ formulaire.entAccueil }}<br/>
+                            <strong class="text-uppercase">Année de promotion M2 :</strong> {{ formulaire.anneePromo }}
+                            <br/>
+                            <strong class="text-uppercase">Embauché (sous contrat de travail)
+                                :</strong> {{ formulaire.embauche }}<br/>
+                            {% if formulaire.embauche == 'Oui' %}
+                                <strong class="text-uppercase">Type de contrat :</strong> {{ formulaire.typeContrat }}
+                                <br/>
+                            {% endif %}
+                            {% if formulaire.typeContratAutre == 'Autre' %}
+                                <strong class="text-uppercase">Autre :</strong> {{ formulaire.typeContratAutre }}<br/>
+                            {% endif %}
+                            {% if formulaire.entActuelle == 'Oui' or formulaire.entActuelle == 'Non' %}
+                                <strong class="text-uppercase">Par l'entreprise d'accueil
+                                    :</strong> {{ formulaire.entActuelle }}<br/>
+                            {% endif %}
+                            {% if formulaire.entActuelle == 'Non' %}
+                                <strong class="text-uppercase">Raisons si non embauché par l'entreprise d'accueil
+                                    :</strong> {{ formulaire.raisonNonEmbauche }}<br/>
+                            {% endif %}
+                            {% if formulaire.raisonNonEmbauche == 'Autres raisons' %}
+                                <strong class="text-uppercase">Autres raisons :</strong> {{ formulaire.raisonAutre }}
+                                <br/>
+                            {% endif %}
+                            {% if formulaire.entActuelle == 'Non' and formulaire.embauche == 'Oui' %}
+                                <strong class="text-uppercase">Entreprise si embauché par une autre
+                                    :</strong> {{ formulaire.entrepriseAutre }}<br/>
+                            {% endif %}
+                            {% if formulaire.embauche == 'Oui' %}
+                                <strong class="text-uppercase">Niveau de salaire brut prévu (en €)
+                                    :</strong> {{ formulaire.niveauSalaire }}<br/>
+                            {% endif %}
+                            {% if formulaire.embauche == 'Non' %}
+                                <strong class="text-uppercase">Situation actuelle si non embauché
+                                    :</strong> {{ formulaire.situationNonEmbauche }}<br/>
+                            {% endif %}
+                            {% if formulaire.situationNonEmbauche == 'Autre situation' %}
+                                <strong class="text-uppercase">Autre situation
+                                    :</strong> {{ formulaire.situationAutre }}<br/>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if formulaire.embauche == 'Oui' %}
+                        <div class="form-group">
+                            <h3>Embauché : son entreprise, son métier</h3>
+
+                            <div class="fg-line" style="padding-left: 40px;">
+                                <strong class="text-uppercase">Secteur d'activités de l'entreprise
+                                    :</strong> {{ formulaire.secteur }}<br/>
+                                {% if formulaire.secteur == 'Autre' %}
+                                    <strong class="text-uppercase">Autre :</strong> {{ formulaire.sectAutre }}<br/>
+                                {% endif %}
+                                <strong class="text-uppercase">Métier dans l'entreprise
+                                    :</strong> {{ formulaire.metier }}<br/>
+                                {% if formulaire.metier == 'Autre' %}
+                                    <strong class="text-uppercase">Autre :</strong> {{ formulaire.metAutre }}<br/>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endblock %}

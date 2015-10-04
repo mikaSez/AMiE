@@ -1,0 +1,9 @@
+{% extends "AMiEUserBundle::layout.html.twig" %}
+
+{% block title "Edition profil" %}
+
+    {% block head "Editer son profil" %}
+
+        {% block fos_user_content %}
+            {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+        {% endblock fos_user_content %}

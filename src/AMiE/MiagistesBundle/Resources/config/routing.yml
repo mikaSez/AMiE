@@ -1,0 +1,32 @@
+amie_miagistes_recherche:
+    path:     /
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:recherche }
+
+amie_miagistes_graphiques:
+    path:     /graphiques
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:graphiques }
+
+amie_miagistes_fiche:
+    path:     /fiche/{id}
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:fiche }
+    requirements:
+        id: \d+
+
+amie_miagistes_formulaire:
+    path:     /formulaire
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:formulaire }
+    requirements: 
+        _method: GET|POST
+
+amie_miagistes_supprimerformulaire:
+    path:     /supprimer/{id}
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:supprimerformulaire }
+    requirements:
+        id: \d+
+
+amie_miagistes_modifierformulaire:
+    path:     /modifier/{id}
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:modifierformulaire }
+    requirements:
+        _method: GET|POST
+        id: \d+

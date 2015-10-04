@@ -1,0 +1,7 @@
+parameters:
+#    a_mi_e_miagistes.example.class: AMiE\MiagistesBundle\Example
+
+services:
+#    a_mi_e_miagistes.example:
+#        class: %a_mi_e_miagistes.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
