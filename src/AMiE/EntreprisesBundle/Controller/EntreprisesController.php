@@ -8,6 +8,7 @@ use AMiE\UserBundle\Form\Type\UserSearchType;
 use AMiE\UserBundle\Entity\User;
 use AMiE\UserBundle\Entity\UserRepository;
 use Ob\HighchartsBundle\Highcharts\Highchart;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class EntreprisesController extends CoreController
 {
@@ -18,22 +19,39 @@ class EntreprisesController extends CoreController
         $recherche = new UserSearch();
         $formRech = $this->createForm(new UserSearchType(), $recherche);
         $requete = $this->get('request');
+		$query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->searchAllEntreprises();
+        $entreprises = $query->getResult();
 
-        if ($requete->getMethod() == 'POST') {
+   /*     if ($requete->getMethod() == 'POST') {
             $formRech->bind($requete);
             $recherche = $formRech->getData();
             $query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->search($recherche);
-            $results = $query->getResult();
+            $entreprises = $query->getResult();
 
             return $this->render('AMiEEntreprisesBundle:Entreprises:recherche.html.twig', array(
                 'layout' => $layout,
-                'entreprises' => $results,
+                'entreprises' => $entreprises,
                 'formRech' => $formRech->createView()
             ));
-        }
+        } */
+		if ($this->getRequest()->request->get('submitAction') == 'rechercher')
+		{
+            $formRech->bind($requete);
+            $recherche = $formRech->getData();
+            $query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->search($recherche);
+            $entreprises = $query->getResult();
+		}
+		if ($this->getRequest()->request->get('submitAction') == 'exporter')
+		{
+            $formRech->bind($requete);
+            $recherche = $formRech->getData();
+            $query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->search($recherche);
+            $entreprises = $query->getResult();
+			$response = $this->exportexcel($entreprises);
+			return $response;
+		}	
 
-        $query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->searchAllEntreprises();
-        $entreprises = $query->getResult();
+
 
         return $this->render('AMiEEntreprisesBundle:Entreprises:recherche.html.twig', array(
             'layout' => $layout,
@@ -164,6 +182,78 @@ class EntreprisesController extends CoreController
 
         return $graph;
     }
+	
+	public function exportexcel($entreprises)
+	{
+	   $user = $this->get('security.context')->getToken()->getUser();
+	// ask the service for a Excel5
+       $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+       $phpExcelObject->getProperties()->setCreator($user->getUsername())
+           ->setLastModifiedBy($user->getUsername())
+           ->setTitle("export_entreprises")
+    //       ->setSubject("Office 2005 XLSX Test Document")
+    //      ->setDescription("Test document for Office 2005 XLSX, generated using PHP classes.")
+    //       ->setKeywords("office 2005 openxml php")
+    //       ->setCategory("Test result file");
+	;
+		$column = 'A';
+		$fields = array('Nom', 'Siret', 'Email', 'Numero', 'Rue', 'CodePostal', 'Ville', 'Metier', 'MetAutre', 'Secteur', 'SectAutre');
+		$columnName = array('Nom', 'Siret', 'Numéro', 'Mail', 'Rue', 'Code Postal', 'Ville', 'Métier', 'Autre métier', 'Secteur', 'Autre secteur');
+	    
+		$styleTitre = array('font'=>array(
+                                'bold'=>true,
+                                'size'=>14,
+                                'name'=>'Calibri',
+                                'color'=>array('rgb'=>'000000')),
+                  'alignment'=>array('horizontal'=>\PHPExcel_Style_Alignment::HORIZONTAL_CENTER),
+		);
+		
+		$styleData = array('font'=>array(
+                                'bold'=>true,
+                                'size'=>11,
+                                'name'=>'Calibri',
+                                'color'=>array('rgb'=>'000000')),
+                  'alignment'=>array('horizontal'=>\PHPExcel_Style_Alignment::HORIZONTAL_CENTER),
+		);
+		
+		for($j = 0; $j < sizeof($fields); $j++) {
+			$row = 2;
+			for ($i = 0; $i < sizeof($entreprises); $i++) {
+				$get = 'get'.$fields[$j];
+				$phpExcelObject->setActiveSheetIndex(0)
+					->setCellValue($column.'1', $columnName[$j])
+					->setCellValue($column.$row, $entreprises[$i]->$get())
+					->getStyle($column.'1')->applyFromArray($styleTitre)
+					;
+				$row++;
+			} 
+			$column++;
+		}
+       $phpExcelObject->getActiveSheet()->setTitle('Entreprises');
+		
+		for($let = 'A'; $let < $column; $let++) { 
+	   $phpExcelObject->getActiveSheet()->getColumnDimension($let)->setAutoSize(true);
+	   }
+
+        // create the writer
+        $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel5');
+        // create the response
+        $response = $this->get('phpexcel')->createStreamedResponse($writer);
+        // adding headers
+		$datetime = gmdate('dmYHi');
+        $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'export_entreprises_'.$datetime.'.xls'
+        );
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+
+        return $response;
+	}
+	
 }
 
 ?>
