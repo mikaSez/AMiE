@@ -9,7 +9,7 @@ class FormulaireRepository extends EntityRepository
 {
     public function search(FormulaireSearch $search)
     {
-
+	
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('AMiE\MiagistesBundle\Entity\Formulaire', 'f');
 

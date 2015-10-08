@@ -302,7 +302,15 @@
                     </div>
                 </form>
             </div>
-        </div>
+			<div class="row">
+                <div class="col-sm-offset-8 col-sm-4">
+					<button type="submit" name="submitAction" value="postuler" class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float"
+						onClick="window.location='mailto:{{ offre.contactMail }}?subject=[Postulation] {{ offre.titre|title }}';" value="contact">
+                        Postuler à cette offre par mail
+                    </button>
+                </div>
+           </div> 
+		</div>
     </div>
 </div>
 {% endblock %}
