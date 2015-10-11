@@ -7,6 +7,18 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class FormulaireRepository extends EntityRepository
 {
+	public function searchAll()
+	{
+	    $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('AMiE\MiagistesBundle\Entity\Formulaire', 'f');
+
+        $query = 'SELECT f.* FROM Formulaire f WHERE 1 ';
+		
+		$request = $this->getEntityManager()->createNativeQuery($query, $rsm); 
+
+        return $request;
+	}
+
     public function search(FormulaireSearch $search)
     {
 	

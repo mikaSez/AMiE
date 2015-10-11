@@ -21,6 +21,12 @@
                                 {{ form_widget(formMiag.prenom, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Prénom'} }) }}
                             </div>
                         </div>
+						<div class="form-group">
+                            <div class="fg-line">
+                                {{ form_label(formMiag.dateNaissance, 'Date de naissance *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                {{ form_widget(formMiag.dateNaissance, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Date'} }) }}
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="fg-line">
                                 {{ form_label(formMiag.rue, 'Rue, voie *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
@@ -51,7 +57,12 @@
                                 {{ form_widget(formMiag.mail, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Adresse mail'} }) }}
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <div class="fg-line">
+                                {{ form_label(formMiag.anneePromo, 'Année de promotion *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                                {{ form_widget(formMiag.anneePromo, { 'attr': {'class': 'form-control input-lg', 'placeholder': ''} }) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -62,12 +73,6 @@
                             <div class="fg-line">
                                 {{ form_label(formMiag.entAccueil, 'Entreprise où vous avez effectué l\'apprentissage *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
                                 {{ form_widget(formMiag.entAccueil, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Entreprise'} }) }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="fg-line">
-                                {{ form_label(formMiag.anneePromo, 'Année de promotion *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                                {{ form_widget(formMiag.anneePromo, { 'attr': {'class': 'form-control input-lg', 'placeholder': ''} }) }}
                             </div>
                         </div>
                         <div class="form-group">

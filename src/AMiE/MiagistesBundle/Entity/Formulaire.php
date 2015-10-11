@@ -17,7 +17,10 @@ class Formulaire
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $nom;
+    protected $nom;    /**
+     * @ORM\Column(type="date")
+     */
+    protected $dateNaissance;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -148,6 +151,17 @@ class Formulaire
     public function setNom($nom)
     {
         $this->nom = $nom;
+    }
+	
+	public function getDateNaissance()
+    {
+
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance($date)
+    {
+        $this->dateNaissance = $date;
     }
 
     public function getRue()

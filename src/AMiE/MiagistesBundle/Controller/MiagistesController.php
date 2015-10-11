@@ -9,6 +9,7 @@ use AMiE\MiagistesBundle\Form\Type\FormulaireType;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use AMiE\HomeBundle\Entity\Notification;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 
 class MiagistesController extends CoreController
@@ -20,7 +21,9 @@ class MiagistesController extends CoreController
         $recherche = new FormulaireSearch();
         $formRech = $this->createForm(new FormulaireSearchType(), $recherche);
         $requete = $this->get('request');
-		$miagistes = $em->getRepository('AMiEMiagistesBundle:Formulaire')->findAll();
+	//	$miagistes = $em->getRepository('AMiEMiagistesBundle:Formulaire')->findAll();
+        $query = $this->getDoctrine()->getRepository('AMiEMiagistesBundle:Formulaire')->searchAll();
+        $miagistes = $query->getResult();
 		
 		if ($this->getRequest()->request->get('submitAction') == 'rechercher')
 		{
@@ -38,7 +41,7 @@ class MiagistesController extends CoreController
 			$response = $this->exportexcel($miagistes);
 			return $response;
 		}		
-		
+	
         return $this->render('AMiEMiagistesBundle:Miagistes:recherche.html.twig', array(
             'layout' => $layout,
             'miagistes' => $miagistes,
@@ -163,6 +166,174 @@ class MiagistesController extends CoreController
             'formMiagModif' => $formMiagModif->createView(),
         ));
     }
+	
+	public function modifiercoordonneesAction(Formulaire $f)
+    {
+        $em = $this->getDoctrine()->getManager();
+		$layout = $this->getLayout($em);
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $requete = $this->get('request');
+        if($requete->isMethod('POST'))
+		{
+            if(!empty($_POST['rue']))
+			{
+                $f->setRue(($_POST['rue']));
+			}
+			if(!empty($_POST['codePostal']))
+			{
+                $f->setCodePostal(($_POST['codePostal']));
+			}
+			if(!empty($_POST['ville']))
+			{
+                $f->setVille(($_POST['ville']));
+			}
+			if(!empty($_POST['numero']))
+			{
+                $f->setNumero(($_POST['numero']));
+			}
+			if(!empty($_POST['mail']))
+			{
+                $f->setMail(($_POST['mail']));
+			}
+			if(!empty($_POST['anneePromo']))
+			{
+                $f->setAnneePromo(($_POST['anneePromo']));
+			}
+                $em->persist($f);
+                $em->flush();
+
+                $notification = new Notification();
+                $notification->setAction('Modification d\'un formulaire Miagiste')
+                    ->setDescriptif('L\'utilisateur '.$user->getUsername().' a modifié le formulaire de : '.$f->getPrenom().$f->getNom())
+                    ->setIdUser($user->getId())
+                    ->setIdOffre($f->getId());
+                $em->persist($notification);
+                $em->flush();
+            
+        }
+
+        return $this->render('AMiEMiagistesBundle:Miagistes:fiche.html.twig', array(
+            'layout' => $layout,
+            'formulaire' => $f
+        ));
+    }
+
+    public function modifierinsertionAction(Formulaire $f)
+    {
+        $em = $this->getDoctrine()->getManager();
+		$layout = $this->getLayout($em);
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $requete = $this->get('request');
+        if($requete->isMethod('POST'))
+		{
+            if(!empty($_POST['entAccueil']))
+			{
+                $f->setEntAccueil(($_POST['entAccueil']));
+			}
+			if(!empty($_POST['embauche']))
+			{
+                $f->setEmbauche(($_POST['embauche']));
+			}
+			if(!empty($_POST['typeContrat']))
+			{
+                $f->setTypeContrat(($_POST['typeContrat']));
+			}
+			if(!empty($_POST['typeContratAutre']))
+			{
+                $f->setTypeContratAutre(($_POST['typeContratAutre']));
+			}
+			if(!empty($_POST['entActuelle']))
+			{
+                $f->setEntActuelle(($_POST['entActuelle']));
+			}
+			if(!empty($_POST['raisonNonEmbauche']))
+			{
+                $f->setRaisonNonEmbauche(($_POST['raisonNonEmbauche']));
+			}			
+			if(!empty($_POST['raisonAutre']))
+			{
+                $f->setRaisonAutre(($_POST['raisonAutre']));
+			}			
+			if(!empty($_POST['entrepriseAutre']))
+			{
+                $f->setEntrepriseAutre(($_POST['entrepriseAutre']));
+			}			
+			if(!empty($_POST['niveauSalaire']))
+			{
+                $f->setNiveauSalaire(($_POST['niveauSalaire']));
+			}			
+			if(!empty($_POST['situationNonEmbauche']))
+			{
+                $f->setSituationNonEmbauche(($_POST['situationNonEmbauche']));
+			}			
+			if(!empty($_POST['situationAutre']))
+			{
+                $f->setSituationAutre(($_POST['situationAutre']));
+			}			
+                $em->persist($f);
+                $em->flush();
+
+                $notification = new Notification();
+                $notification->setAction('Modification d\'un formulaire Miagiste')
+                    ->setDescriptif('L\'utilisateur '.$user->getUsername().' a modifié le formulaire de : '.$f->getPrenom().$f->getNom())
+                    ->setIdUser($user->getId())
+                    ->setIdOffre($f->getId());
+                $em->persist($notification);
+                $em->flush();
+            
+        }
+
+        return $this->render('AMiEMiagistesBundle:Miagistes:fiche.html.twig', array(
+            'layout' => $layout,
+            'formulaire' => $f
+        ));
+    }
+
+    public function modifierembaucheAction(Formulaire $f)
+    {
+        $em = $this->getDoctrine()->getManager();
+		$layout = $this->getLayout($em);
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $requete = $this->get('request');
+        if($requete->isMethod('POST'))
+		{
+            if(!empty($_POST['secteur']))
+			{
+                $f->setSecteur(($_POST['secteur']));
+			}
+			if(!empty($_POST['sectAutre']))
+			{
+                $f->setSectAutre(($_POST['sectAutre']));
+			}
+			if(!empty($_POST['metier']))
+			{
+                $f->setMetier(($_POST['metier']));
+			}
+			if(!empty($_POST['metAutre']))
+			{
+                $f->setMetAutre(($_POST['metAutre']));
+			}
+                $em->persist($f);
+                $em->flush();
+
+                $notification = new Notification();
+                $notification->setAction('Modification d\'un formulaire Miagiste')
+                    ->setDescriptif('L\'utilisateur '.$user->getUsername().' a modifié le formulaire de : '.$f->getPrenom().$f->getNom())
+                    ->setIdUser($user->getId())
+                    ->setIdOffre($f->getId());
+                $em->persist($notification);
+                $em->flush();
+            
+        }
+
+        return $this->render('AMiEMiagistesBundle:Miagistes:fiche.html.twig', array(
+            'layout' => $layout,
+            'formulaire' => $f
+        ));
+	}
 
     public function graphiqueTypeContrat()
     {

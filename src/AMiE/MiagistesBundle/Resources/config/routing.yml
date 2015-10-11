@@ -30,3 +30,24 @@ amie_miagistes_modifierformulaire:
     requirements:
         _method: GET|POST
         id: \d+
+
+amie_miagistes_modifiercoordonnees:
+    path:     /modifiercoordonnees/{id}
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:modifiercoordonnees }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_miagistes_modifierinsertion:
+    path:     /modifierinsertion/{id}
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:modifierinsertion }
+    requirements:
+        _method: GET|POST
+        id: \d+
+
+amie_miagistes_modifierembauche:
+    path:     /modifierembauche/{id}
+    defaults: { _controller: AMiEMiagistesBundle:Miagistes:modifierembauche }
+    requirements:
+        _method: GET|POST
+        id: \d+

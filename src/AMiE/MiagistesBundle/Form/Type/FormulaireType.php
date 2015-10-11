@@ -12,6 +12,7 @@ class FormulaireType extends AbstractType
     {
         $builder->add('nom', 'text', array('max_length' => 255, 'required' => true))
             ->add('prenom', 'text', array('max_length' => 255, 'required' => true))
+            ->add('dateNaissance', 'date', array('required' => true))
             ->add('rue', 'text', array('max_length' => 255, 'required' => true))
             ->add('codePostal', 'text', array('max_length' => 10, 'required' => true))
             ->add('ville', 'text', array('max_length' => 60, 'required' => true))
