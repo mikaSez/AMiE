@@ -1,46 +1,131 @@
-<div class="card">
-    <div class="card-header bgm-orange">
-        <h2>{{ user.username }}</h2>
-    </div>
-
-    <div class="card-body card-padding">
-        <div class="form-group">
-            <h3>Coordoonnées</h3>
-
-            <div class="fg-line" style="padding-left: 40px;">
-                <strong class="text-uppercase">Nom :</strong> {{ user.nom }}<br/>
-                {% if user.typeUt == 'Entreprise' %}
-                    <strong class="text-uppercase">Siret :</strong> {{ user.siret }}<br/>
-                {% endif %}
-                {% if user.typeUt == 'Etudiant' or user.typeUt == 'Responsable' %}
-                    <strong class="text-uppercase">Prénom :</strong> {{ user.prenom }}<br/>
-                {% endif %}
-                <strong class="text-uppercase">Rue, voie :</strong> {{ user.rue }}<br/>
-                <strong class="text-uppercase">Code postal :</strong> {{ user.codePostal }}<br/>
-                <strong class="text-uppercase">Ville :</strong> {{ user.ville }}<br/>
-                <strong class="text-uppercase">Numéro de téléphone :</strong> {{ user.numero }}<br/>
-                <strong class="text-uppercase">Adresse email :</strong> {{ user.email }}<br/>
-            </div>
-        </div>
-        {% if user.typeUt != 'Responsable' %}
-            <div class="form-group">
-                <h3>Informations professionnelles</h3>
-
-                <div class="fg-line" style="padding-left: 40px;">
-                    <strong class="text-uppercase">Secteur d'activités :</strong> {{ user.secteur }}<br/>
-                    {% if user.secteur == 'Autre' %}
-                        <strong class="text-uppercase">Autre :</strong> {{ user.sectAutre }}<br/>
-                    {% endif %}
-                    {% if user.typeUt == 'Etudiant' %}
-                        <strong class="text-uppercase">Métier :</strong> {{ user.metier }}<br/>
-                        {% if user.metier == 'Autre' %}
-                            <strong class="text-uppercase">Autre :</strong> {{ user.metAutre }}<br/>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
-
-    </div>
-
+<div class="card" id="profile-main">
+	<div class="card-header bgm-orange">
+		<h2>{{ user.username }}</h2>
+	</div>
+	<div class="clearfix">
+		<div class="pmb-block">
+			<div class="pmbb-header">
+				<h2><i class="glyphicon glyphicon-earphone m-r-5"></i>Coordonnées</h2>
+			</div>
+			<div class="pmbb-body p-l-30">
+				<div class="pmbb-view">
+					<dl class="dl-horizontal">
+						<dt>
+							Nom
+						</dt>
+						<dd>
+							{{ user.nom }}
+						</dd>
+					</dl>
+					{% if user.typeUt == 'Entreprise' %}
+					<dl class="dl-horizontal">
+						<dt>
+							Siret
+						</dt>
+						<dd>
+							{{ user.siret }}
+						</dd>
+					</dl>
+					{% endif %}
+					{% if user.typeUt == 'Etudiant' or user.typeUt == 'Responsable' %}
+					<dl class="dl-horizontal">
+						<dt>
+							Prénom
+						</dt>
+						<dd>
+							{{ user.prenom }}
+						</dd>
+					</dl>
+					{% endif %}
+					<dl class="dl-horizontal">
+						<dt>
+							Rue, voie
+						</dt>
+						<dd>
+							{{ user.rue }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Code postal
+						</dt>
+						<dd>
+							{{ user.codePostal }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Ville
+						</dt>
+						<dd>
+							{{ user.ville }}
+						</dd>
+					</dl>					
+					<dl class="dl-horizontal">
+						<dt>
+							Numéro de téléphone
+						</dt>
+						<dd>
+							{{ user.numero }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Adresse email
+						</dt>
+						<dd>
+							{{ user.email }}
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="pmb-block">
+			<div class="pmbb-header">
+				<h2><i class="glyphicon glyphicon-globe m-r-5"></i>Informations professionnelles</h2>
+			</div>
+			<div class="pmbb-body p-l-30">
+				<div class="pmbb-view">
+					<dl class="dl-horizontal">
+						<dt>
+							Secteur d'activités
+						</dt>
+						<dd>
+							{{ user.secteur }}
+						</dd>
+					</dl>
+					{% if user.secteur == 'Autre' %}
+					<dl class="dl-horizontal">
+						<dt>
+							Autre secteur
+						</dt>
+						<dd>
+							{{ user.sectAutre }}
+						</dd>
+					</dl>
+					{% endif %}
+					{% if user.typeUt == 'Etudiant' %}
+					<dl class="dl-horizontal">
+						<dt>
+							Métier
+						</dt>
+						<dd>
+							{{ user.metier }}
+						</dd>
+					</dl>
+					{% if user.metier == 'Autre' %}
+					<dl class="dl-horizontal">
+						<dt>
+							Autre métier
+						</dt>
+						<dd>
+							{{ user.metAutre }}
+						</dd>
+					</dl>
+					{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
