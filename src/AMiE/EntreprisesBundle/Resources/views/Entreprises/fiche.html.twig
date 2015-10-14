@@ -2,62 +2,108 @@
 
 {% block title "Fiche" %}
 
-    {% block head "Fiche Entreprise" %}
+{% block head %}Consultation de l'entreprise {{ entreprise.nom }}{% endblock %}
 
-        {% block content %}
-            <div class="card">
-                <div class="card-header bgm-orange">
-                    <h2>{{ entreprise.nom }}</h2>
-
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <ul class="actions actions-alt">
-                            <li class="dropdown">
-                                <a href="" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="glyphicon glyphicon-option-vertical"></i>
-                                </a>
-
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <a href="{{ path('amie_entreprises_supprimerentreprise', { 'id': entreprise.id}) }}"
-                                           title="Supprimer cette entreprise"
-                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
-                                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    {% endif %}
-                </div>
-                <div class="card-body card-padding">
-                    <div class="form-group">
-                        <h3>Informations</h3>
-
-                        <div class="fg-line" style="padding-left: 40px;">
-                            <strong class="text-uppercase">Rue, voie :</strong> {{ entreprise.rue }}<br/>
-                            <strong class="text-uppercase">Code postal :</strong> {{ entreprise.codePostal }}<br/>
-                            <strong class="text-uppercase">Ville :</strong> {{ entreprise.ville }}<br/>
-                            <strong class="text-uppercase">Numéro de téléphone :</strong> {{ entreprise.numero }}<br/>
-                            <strong class="text-uppercase">Adresse email :</strong> {{ entreprise.email }}<br/><br/>
-                            <strong class="text-uppercase">Secteur d'activités de l'entreprise
-                                :</strong> {{ entreprise.secteur }}
-                        </div>
+{% block content %}
+<div class="card" id="profile-main">
+	<div class="card-header bgm-orange">
+		<h2>{{ entreprise.nom }}</h2>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <ul class="actions actions-alt">
+            <li class="dropdown">
+                <a href="" data-toggle="dropdown" aria-expanded="false">
+                    <i class="glyphicon glyphicon-option-vertical"></i>
+                </a>
+				<ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="{{ path('amie_entreprises_supprimerentreprise', { 'id': entreprise.id}) }}"
+                            title="Supprimer cette entreprise"
+                            onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+							<i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
+						</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        {% endif %}
+	</div>
+	<div class="clearfix">
+		<div class="pmb-block">
+			<div class="pmbb-header">
+				<h2><i class="glyphicon glyphicon-earphone m-r-5"></i>Coordonnées</h2>
+			</div>
+			<div class="pmbb-body p-l-30">
+				<div class="pmbb-view">
+					<dl class="dl-horizontal">
+						<dt>
+							Rue, voie
+						</dt>
+						<dd>
+							{{ entreprise.rue }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Code postal
+						</dt>
+						<dd>
+							{{ entreprise.codePostal }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Ville
+						</dt>
+						<dd>
+							{{ entreprise.ville }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Numéro de téléphone
+						</dt>
+						<dd>
+							{{ entreprise.numero }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Adresse email
+						</dt>
+						<dd>
+							{{ entreprise.email }}
+						</dd>
+					</dl>
+					<dl class="dl-horizontal">
+						<dt>
+							Secteur d'activités
+						</dt>
+						<dd>
+							{{ entreprise.secteur }}
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="pmb-block">
+			<div class="pmbb-header">
+				<h2><i class="glyphicon glyphicon-globe m-r-5"></i>Offres postées</h2>
+			</div>
+			<div class="pmbb-body p-l-30">
+				<div class="pmbb-view">
+					{%  for offre in offres %}
+                    <div class="fg-line" style="padding-left: 40px;">
+                        <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}"
+                            title="Acceder à l'offre">{{ offre.titre|title }}</a>
                     </div>
-                </div>
-                <div class="card-body card-padding">
-                    <div class="form-group">
-                        <h3>Offres postées</h3>
-						{%  for offre in offres %}
-                            <div class="fg-line" style="padding-left: 40px;">
-                                <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}"
-                                   title="Acceder à l'offre">{{ offre.titre|title }}</a>
-                            </div>
-                {%  else %}
-				<div class="fg-line" style="padding-left: 40px;">
-                                Aucune offre postée.
-                            </div>
-                {%  endfor %}
+					{%  else %}
+					<div class="fg-line" style="padding-left: 40px;">
+                         Aucune offre postée.
                     </div>
-                </div>
-            </div>
-        {% endblock %}
+					{%  endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
