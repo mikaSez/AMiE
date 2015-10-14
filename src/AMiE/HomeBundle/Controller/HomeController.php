@@ -16,6 +16,17 @@ class HomeController extends CoreController
             $em->persist($notification);
             $em->flush();
         }
+		
+		// suppression des anciennes offres
+		$dateOld = new \Datetime();
+		date_sub($dateOld, date_interval_create_from_date_string('1 year'));
+		$query = $this->getDoctrine()->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findOld($dateOld);
+		$offresOld = $query->getResult();
+		for($i = 0; $i < sizeof($offresOld); $i++)
+		{
+			$em->remove($offresOld[$i]);
+			$em->flush();
+		}
 
         $layout = $this->getLayout($em);
         $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'), 4);

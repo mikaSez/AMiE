@@ -21,6 +21,17 @@ class OffresController extends CoreController
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
+		
+		// suppression des offres datant de plus d'un an
+		$dateOld = new \Datetime();
+		date_sub($dateOld, date_interval_create_from_date_string('1 year'));
+		$query = $this->getDoctrine()->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findOld($dateOld);
+		$offresOld = $query->getResult();
+		for($i = 0; $i < sizeof($offresOld); $i++)
+		{
+			$em->remove($offresOld[$i]);
+			$em->flush();
+		}
 
         switch ($actif){
             case 'actif':
@@ -37,7 +48,7 @@ class OffresController extends CoreController
                 $actif = 'actif';
                 break;
         }
-
+		
         return $this->render('AMiEOffreEmploiBundle:Offres:index.html.twig', array(
             'layout'            => $layout,
             'actif'             => $actif,

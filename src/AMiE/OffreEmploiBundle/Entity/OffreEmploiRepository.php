@@ -32,4 +32,14 @@ class OffreEmploiRepository extends EntityRepository
 
         return $request;
     }
+	
+	public function findOld($date)
+	{
+        $query = 'SELECT o FROM AMiE\OffreEmploiBundle\Entity\OffreEmploi o WHERE o.addedDate <= :date';
+        $request = $this->getEntityManager()->createQuery($query);
+
+        $request->setParameters(array('date' => $date));
+
+        return $request;	
+	}
 }

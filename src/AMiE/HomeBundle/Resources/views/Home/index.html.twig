@@ -23,7 +23,9 @@ Bienvenue sur AMiE, {{ app.user.username|title }} !
                 </small>
             </h3>
             <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" title="Acceder à l'offre">{{ offre.descriptif|length > 50 ? offre.descriptif|slice(0, 50) ~ '...' : offre.descriptif }}</a>
-        {% endfor %}
+        {% else %}
+			Aucune offre postée actuellement.
+		{% endfor %}
     </div>
 </div>
 <div class="card">
@@ -39,7 +41,9 @@ Bienvenue sur AMiE, {{ app.user.username|title }} !
                 </small>
             </h3>
             <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Acceder à l'actualité">{{ actualite.contenu|length > 50 ? actualite.contenu|slice(0, 50) ~ '...' : actualite.contenu }}</a>
-        {% endfor %}
+        {% else %}
+			Aucune annonce postée actuellement.
+		{% endfor %}
     </div>
 </div>
 {% endblock %}
