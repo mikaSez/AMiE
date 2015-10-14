@@ -80,6 +80,7 @@
 				</div>
 			</div>
 		</div>
+		{% if user.typeUt == 'Etudiant' or user.typeUt == 'Entreprise' %}
 		<div class="pmb-block">
 			<div class="pmbb-header">
 				<h2><i class="glyphicon glyphicon-globe m-r-5"></i>Informations professionnelles</h2>
@@ -127,5 +128,6 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 </div>
