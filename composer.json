@@ -22,7 +22,8 @@
         "friendsofsymfony/user-bundle": "*",
 		"ob/highcharts-bundle": "1.*",
         "cocur/slugify": "^1.1",
-		"liuggio/excelbundle": "~2.0"
+		"liuggio/excelbundle": "~2.0",
+        "white-october/pagerfanta-bundle": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [

@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Ob\HighchartsBundle\ObHighchartsBundle(),
             new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
 			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+			new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,6 +1,6 @@
 amie_actualites_news:
-    path:     /{actif}
-    defaults: { _controller: AMiEActualitesBundle:News:index, actif: actif }
+    path:     /{actif}/{page}
+    defaults: { _controller: AMiEActualitesBundle:News:index, actif: actif, page: 1 }
     requirements:
         actif: actif|inactif|tous
 

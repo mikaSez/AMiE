@@ -9,24 +9,74 @@ use AMiE\ActualitesBundle\Form\Type\ImageType;
 
 use AMiE\HomeBundle\Entity\Notification;
 
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+
 class NewsController extends CoreController
 {
-    public function indexAction($actif)
+    public function indexAction($actif, $page)
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
+		$maxPerPage = 2;
         switch ($actif){
             case 'actif':
                 $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($actualites));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 break;
             case 'inactif':
                 $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'F'), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($actualites));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 break;
             case 'tous':
                 $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array(), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($actualites));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 break;
             default:
                 $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($actualites));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 $actif = 'actif';
                 break;
         }
@@ -38,7 +88,7 @@ class NewsController extends CoreController
         return $this->render('AMiEActualitesBundle:News:index.html.twig', array(
             'layout'                => $layout,
             'actif'                 => $actif,
-            'actualites'            => $actualites,
+            'actualites'            => $pagerfanta,
             'images'                => $imagesArray
         ));
     }

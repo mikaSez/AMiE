@@ -60,8 +60,8 @@ security:
         - { path: ^/notifications, role: ROLE_ADMIN }
         - { path: ^/actualites/ajoutactualite, role: ROLE_SUPER_ADMIN }
         - { path: ^/actualites$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/actualites/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/actualites/actualite/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/actualites/.*, role: ROLE_ADMIN }
         - { path: ^/entreprises/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/entreprises/fiche/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/entreprises/graphiques, role: ROLE_SUPER_ADMIN }
