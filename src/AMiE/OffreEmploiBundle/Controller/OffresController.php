@@ -15,12 +15,18 @@ use AMiE\OffreEmploiBundle\Form\RechercheType;
 
 use AMiE\HomeBundle\Entity\Notification;
 
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+
 class OffresController extends CoreController
 {
-    public function indexAction($actif)
+    public function indexAction($actif, $page)
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
+		$maxPerPage = 2;
 		
 		// suppression des offres datant de plus d'un an
 		$dateOld = new \Datetime();
@@ -36,15 +42,59 @@ class OffresController extends CoreController
         switch ($actif){
             case 'actif':
                 $offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($offres));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 break;
             case 'inactif':
                 $offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findBy(array('actif' => 'F'), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($offres));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 break;
             case 'tous':
                 $offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findBy(array(), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($offres));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 break;
             default:
                 $offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'));
+				$pagerfanta = new Pagerfanta(new ArrayAdapter($offres));
+				$pagerfanta->setMaxPerPage($maxPerPage);
+		
+				try 
+				{
+					$pagerfanta->setCurrentPage($page);
+				} 
+				catch(NotValidCurrentPageException $e) 
+				{
+					throw new NotFoundHttpException();
+				}
                 $actif = 'actif';
                 break;
         }
@@ -52,7 +102,7 @@ class OffresController extends CoreController
         return $this->render('AMiEOffreEmploiBundle:Offres:index.html.twig', array(
             'layout'            => $layout,
             'actif'             => $actif,
-            'offres'            => $offres
+            'offres'            => $pagerfanta
         ));
     }
 

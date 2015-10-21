@@ -15,6 +15,12 @@
     <div class="card">
         <div class="card-header"><h2>Détails de l'offre</h2></div>
         <div class="card-body card-padding">
+		    <div class="form-group">
+                <div class="fg-line">
+                    {{ form_label(formOffre.entreprise, 'Entreprise *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
+                    {{ form_widget(formOffre.entreprise, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Entreprise'} }) }}
+                </div>
+            </div>
             <div class="form-group">
                 <div class="fg-line">
                     {{ form_label(formOffre.titre, 'Titre *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
@@ -61,12 +67,6 @@
                 <div class="fg-line">
                     {{ form_label(formOffre.xpExigee, 'Expérience exigée *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
                     {{ form_widget(formOffre.xpExigee, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Expérience'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(formOffre.dureeValidite, 'Pendant combien de temps cette offre est valide *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(formOffre.dureeValidite, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Durée de validité'} }) }}
                 </div>
             </div>
             <div class="form-group">

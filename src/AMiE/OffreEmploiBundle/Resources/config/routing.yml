@@ -1,8 +1,8 @@
 amie_offresemplois_offres:
-    path:     /{actif}
-    defaults: { _controller: AMiEOffreEmploiBundle:Offres:index, actif: actif }
+    path:     /{actif}/{page}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:index, actif: actif, page: 1 }
     requirements:
-            actif: actif|inactif|tous
+        actif: actif|inactif|tous
 
 amie_offresemplois_ajouter:
     path:     /ajouter

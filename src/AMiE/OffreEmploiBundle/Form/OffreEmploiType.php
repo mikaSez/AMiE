@@ -16,34 +16,34 @@ class OffreEmploiType extends AbstractType
     {
         $departements = self::getDepartements();
         $builder
-            ->add('titre', 'text', array('label' => 'Titre *'))
-            ->add('descriptif', 'textarea', array('label' => 'Descriptif de l\'offre *'))
-            ->add('lieuTravail', 'text', array('label' => 'Adresse du lieu de travail *'))
-            ->add('departement', 'choice', array('choices' => array($departements), 'label' => 'Département *'))
+			->add('entreprise', 'text', array('max_length' => 255, 'required' => true))
+            ->add('titre', 'text', array('max_length' => 40, 'required' => true))
+            ->add('descriptif', 'textarea', array('required' => true))
+            ->add('lieuTravail', 'text', array('max_length' => 150, 'required' => true))
+            ->add('departement', 'choice', array('choices' => array($departements), 'required' => true))
             ->add('typePoste', 'choice', array('choices' =>  array(
                 'Temps plein' => 'Temps plein',
                 'Temps partiel' => 'Temps partiel'
-            ), 'label' => 'Type de poste *'))
+            ), 'required' => true))
             ->add('typeContrat', 'choice', array('choices' =>  array(
                 'CDI' => 'CDI',
                 'CDD' => 'CDD',
                 'VIE' => 'VIE',
                 'Stage' => 'Stage',
                 'Apprentissage' => 'Apprentissage'
-            ), 'label' => 'Type de contrat *'))
-            ->add('xpExigee', 'text', array('label' => 'Expérience exigée *'))
-            ->add('dureeValidite', 'text', array('label' => 'Pendant combien de temps cette offre est valide *'))
+            ), 'required' => true))
+            ->add('xpExigee', 'text', array('max_length' => 60, 'required' => true))
             ->add('urgence', 'choice', array('choices' =>  array(
                 'Peu pressé (6 mois ou +)' => 'Peu pressé (6 mois ou +)',
                 'Assez pressé (3 mois)' => 'Assez pressé (3 mois)',
                 'Pressé (entre 1 et 3 mois)' => 'Pressé (entre 1 et 3 mois)',
                 'Très pressé (- de 1 mois)' => 'Très pressé (- de 1 mois)',
                 'Immédiat (dès que possible)' => 'Immédiat (dès que possible)'
-            ), 'label' => 'Niveau d\'urgence de l\'offre *'))
-            ->add('salaire', 'number', array('required' => false, 'label' => 'Salaire estimé par an', 'pattern' => '^[1-9][0-9]+$'))
-            ->add('contactNom', 'text', array('label' => 'Nom de la personne à contacter *'))
-            ->add('contactMail', 'email', array('label' => 'Mail de la personne à contacter *'))
-            ->add('contactTel', 'number', array('required' => false, 'label' => 'Téléphone de la personne à contacter', 'pattern' => '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$'));
+            ), 'required' => true))
+            ->add('salaire', 'number', array('required' => false, 'pattern' => '^[1-9][0-9]+$'))
+            ->add('contactNom', 'text', array('max_length' => 255, 'required' => true))
+            ->add('contactMail', 'email', array('max_length' => 255, 'required' => true))
+            ->add('contactTel', 'number', array('required' => false, 'pattern' => '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$'));
     }
     
     /**

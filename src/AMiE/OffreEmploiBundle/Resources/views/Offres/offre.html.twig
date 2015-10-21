@@ -8,7 +8,8 @@
 <div class="card" id="profile-main">
     <div class="card-header bgm-orange">
         <h2>
-            {{ offre.titre|title }}
+            {{ offre.titre|title }}<br/>
+			{{ offre.entreprise }}
             <small>
                 Le <time>{{ offre.updatedDate|localizeddate('full', 'none') }}</time> par
                 <a href="{{ path('amie_entreprises_fiche', { 'id': offre.idEntreprise, 'slug': offre.nomEntreprise|slugify}) }}" title="Offre postée par {{ offre.nomEntreprise }}" style="color:#ffffff">
@@ -125,10 +126,6 @@
                         <dd>{{ offre.xpExigee }}</dd>
                     </dl>
                     <dl class="dl-horizontal">
-                        <dt>Durée de validité de l'offre</dt>
-                        <dd>{{ offre.dureeValidite }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
                         <dt>Urgence</dt>
                         <dd>{{ offre.urgence }}</dd>
                     </dl>
@@ -184,14 +181,6 @@
                             <dd>
                                 <div class="fg-line">
                                     <input name="xpexigee" type="text" class="form-control" placeholder="{{ offre.xpExigee }}">
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Durée de validité de l'offre</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="dureevalidite" type="text" class="form-control" placeholder="{{ offre.dureeValidite }}">
                                 </div>
                             </dd>
                         </dl>

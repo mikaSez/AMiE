@@ -34,6 +34,13 @@ class OffreEmploi
      * @ORM\Column(name="nomEntreprise", type="string", length=160)
      */
     private $nomEntreprise;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="entreprise", type="string", length=255)
+     */
+    private $entreprise;
 
     /**
      * @var string
@@ -90,14 +97,6 @@ class OffreEmploi
      * @Assert\NotBlank()
      */
     private $xpExigee;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="dureeValidite", type="string", length=60)
-     * @Assert\NotBlank()
-     */
-    private $dureeValidite;
 
     /**
      * @var string
@@ -220,6 +219,29 @@ class OffreEmploi
     public function setNomEntreprise($nomEntreprise)
     {
         $this->nomEntreprise = $nomEntreprise;
+    
+        return $this;
+    }
+
+    /**
+     * Get entreprise
+     *
+     * @return string 
+     */
+    public function getEntreprise()
+    {
+        return $this->entreprise;
+    }
+	
+	    /**
+     * Set entreprise
+     *
+     * @param string $nomEntreprise
+     * @return OffreEmploi
+     */
+    public function setEntreprise($entreprise)
+    {
+        $this->entreprise = $entreprise;
     
         return $this;
     }
@@ -393,29 +415,6 @@ class OffreEmploi
     public function getXpExigee()
     {
         return $this->xpExigee;
-    }
-
-    /**
-     * Set dureeValidite
-     *
-     * @param string $dureeValidite
-     * @return OffreEmploi
-     */
-    public function setDureeValidite($dureeValidite)
-    {
-        $this->dureeValidite = $dureeValidite;
-    
-        return $this;
-    }
-
-    /**
-     * Get dureeValidite
-     *
-     * @return string 
-     */
-    public function getDureeValidite()
-    {
-        return $this->dureeValidite;
     }
 
     /**
