@@ -15,31 +15,7 @@
 	<div class="col-lg-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-clock-o fa-fw"></i> Offres durant les sept derniers jours
-			</div>
-			<!-- /.panel-heading -->
-			<div class="panel-body">
-				<div class="list-group">
-					{% for offre in offres %}
-					<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" class="list-group-item">
-						{{ offre.titre|title }}
-						<span class="pull-right text-muted small"><em>{{ offre.updatedDate|localizeddate('full', 'none') }}</em>
-						</span>
-					</a>
-					{% else %}
-						Aucune offre postée actuellement.
-					{% endfor %}
-				</div>
-				<!-- /.list-group -->
-				<a href="{{ path('amie_offresemplois_offres') }}" class="btn btn-default btn-block">Voir toutes les offres</a>
-			</div>
-			<!-- /.panel-body -->
-		</div>
-		<!-- /.panel -->
-
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-clock-o fa-fw"></i> Actualités durant les sept derniers jours
+				<i class="fa fa-clock-o fa-fw"></i> Dernières actualités
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -56,6 +32,29 @@
 				</div>
 				<!-- /.list-group -->
 				<a href="{{ path('amie_actualites_news') }}" title="Voir toutes les actualités" class="btn btn-default btn-block">Voir toutes les actualités</a>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-clock-o fa-fw"></i> Dernières offres
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="list-group">
+					{% for offre in offres %}
+					<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" class="list-group-item">
+						{{ offre.titre|title }}
+						<span class="pull-right text-muted small"><em>{{ offre.updatedDate|localizeddate('full', 'none') }}</em>
+						</span>
+					</a>
+					{% else %}
+						Aucune offre postée actuellement.
+					{% endfor %}
+				</div>
+				<!-- /.list-group -->
+				<a href="{{ path('amie_offresemplois_offres') }}" class="btn btn-default btn-block">Voir toutes les offres</a>
 			</div>
 			<!-- /.panel-body -->
 		</div>

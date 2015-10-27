@@ -29,8 +29,8 @@ class HomeController extends CoreController
 		}
 
         $layout = $this->getLayout($em);
-        $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'), 4);
-        $offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'), 4);
+        $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'), 6);
+        $offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'), 6);
 
         return $this->render('AMiEHomeBundle:Home:index.html.twig', array(
             'layout'     => $layout,
