@@ -26,7 +26,7 @@ class OffresController extends CoreController
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
-		$maxPerPage = 2;
+		$maxPerPage = 1;
 		
 		// suppression des offres datant de plus d'un an
 		$dateOld = new \Datetime();

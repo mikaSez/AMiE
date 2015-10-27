@@ -53,20 +53,33 @@ class MiagistesController extends CoreController
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
-        //	$miagistes = $em->getRepository('AMiEMiagistesBundle:Formulaire')->findAll();
-        $graphContrat = $this->graphiqueTypeContrat();
-        $graphEmbauche = $this->graphiqueEmbauche();
-        $graphEntAccEmb = $this->graphiqueEntrepriseAccEmbauche();
-        $graphSalaire = $this->graphiqueSalaire();
+        $miagistes = $em->getRepository('AMiEMiagistesBundle:Formulaire')->findAll();
+		
+		if(!empty($miagistes))
+		{
+			$graphContrat = $this->graphiqueTypeContrat();
+			$graphEmbauche = $this->graphiqueEmbauche();
+			$graphEntAccEmb = $this->graphiqueEntrepriseAccEmbauche();
+			$graphSalaire = $this->graphiqueSalaire();
 
 
-        return $this->render('AMiEMiagistesBundle:Miagistes:graphiques.html.twig', array(
-            'layout' => $layout,
-            'graphContrat' => $graphContrat,
-            'graphEmbauche' => $graphEmbauche,
-            'graphEntAccEmb' => $graphEntAccEmb,
-            'graphSalaire' => $graphSalaire
-        ));
+			return $this->render('AMiEMiagistesBundle:Miagistes:graphiques.html.twig', array(
+				'layout' => $layout,
+				'graphContrat' => $graphContrat,
+				'graphEmbauche' => $graphEmbauche,
+				'graphEntAccEmb' => $graphEntAccEmb,
+				'graphSalaire' => $graphSalaire,
+				'miagistes' => $miagistes
+			));
+		}
+		else
+		{
+		
+			return $this->render('AMiEMiagistesBundle:Miagistes:graphiques.html.twig', array(
+				'layout' => $layout,
+				'miagistes' => $miagistes
+			));
+		}
     }
 
     public function ficheAction(Formulaire $formulaire)
@@ -129,8 +142,6 @@ class MiagistesController extends CoreController
         $em->flush();
 
         return $this->redirect($this->generateUrl('amie_miagistes_recherche'));
-
-
     }
 
     public function modifierformulaireAction(Formulaire $f)

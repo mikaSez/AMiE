@@ -5,73 +5,84 @@
 {% block head "Toutes les actualités" %}
 
 {% block adminActions %}{% if is_granted('ROLE_SUPER_ADMIN') %}
-    <ul class="actions">
-        <li><a href="{{ path('amie_actualites_news') }}" title="Voir les actualités actives"><i class="glyphicon glyphicon-eye-open" style="font-size:20px;{% if actif == 'actif' %}color: #000000;{% endif %}"></i></a></li>
-        <li><a href="{{ path('amie_actualites_news', { 'actif': 'inactif' }) }}" title="Voir les actualités désactivées"><i class="glyphicon glyphicon-eye-close" style="font-size:20px;{% if actif == 'inactif' %}color: #000000;{% endif %}"></i></a></li>
-    </ul>
+	<ul class="list-inline pull-right">
+		<li>
+			<a href="{{ path('amie_actualites_news') }}" title="Voir les offres actives">
+			<i class="fa fa-eye fa-fw" style="font-size:20px;{% if actif == 'actif' %}color: #000000;{% endif %}"></i>
+			</a>
+		</li>
+        <li>
+			<a href="{{ path('amie_actualites_news', { 'actif': 'inactif' }) }}" title="Voir les offres désactivées">
+			<i class="fa fa-eye-slash fa-fw" style="font-size:20px;{% if actif == 'inactif' %}color: #000000;{% endif %}"></i>
+			</a>
+		</li>
+	</ul>
 {% endif %}{% endblock %}
 
 {% block content %}
-{% if actualites is empty %}
-    Aucun résultat.
-{% else %}
-    {% for actualite in actualites %}
-    <div class="card">
-        <div class="card-header bgm-orange">
-            <h2>
-                <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Acceder à l'actualité" style="color:#ffffff">
-                    {{ actualite.titre|title }}
-                </a><small>Postée le <time>{{ actualite.addedDate|localizeddate('full', 'none') }}</time> par {{ actualite.addedBy }}
-            {% if actualite.updatedDate is not empty and actualite.updatedDate != actualite.addedDate %}| Modifiée le <time>{{ actualite.updatedDate|localizeddate('full', 'none') }}</time> par {{ actualite.updatedBy }}{% endif %}</small></h2>
+<div class="row">
+	<div class="col-lg-12">
+		{% if actualites is empty %}
+			Aucun résultat.
+		{% else %}
+			{% for actualite in actualites %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2>{{ actualite.titre|title }}
+						</h2>
+						<em style="display: block;">Postée le <time>{{ actualite.addedDate|localizeddate('full', 'none') }}</time> par {{ actualite.addedBy }}
+            {% if actualite.updatedDate is not empty and actualite.updatedDate != actualite.addedDate %}| Modifiée le <time>{{ actualite.updatedDate|localizeddate('full', 'none') }}</time> par {{ actualite.updatedBy }}{% endif %}</em>
+						<div class="btn-group pull-right">
+							<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-chevron-down fa-fw"></i>
+							</button>
+							<ul class="dropdown-menu slidedown">
+								<li>
+									<a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Afficher cette actualité" onclick="">
+										<i class="fa fa-upload fa-fw"></i> Afficher
+									</a>
+								</li>
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+								<li>
+									<a href="{{ path('amie_actualites_modifier', { 'id': actualite.id}) }}" title="Modifier cette actualité" onclick="">
+									<i class="fa fa-pencil fa-fw"></i> Modifier
+									</a>
+								</li>
 
-            <ul class="actions actions-alt">
-                <li class="dropdown">
-                    <a href="" data-toggle="dropdown" aria-expanded="false">
-                        <i class="glyphicon glyphicon-option-vertical"></i>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right">
-
-                        <li>
-                            <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Afficher cette actualité" onclick="">
-                                <i class="glyphicon glyphicon-upload"></i>&nbsp;&nbsp;Afficher
-                            </a>
-                        </li>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li>
-                            <a href="{{ path('amie_actualites_modifier', { 'id': actualite.id}) }}" title="Modifier cette actualité" onclick="">
-                            <i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;Modifier
-                            </a>
-                        </li>
-
-                        <li>
-                            {% if actualite.actif == 'A' %}
-                                <a href="{{ path('amie_actualites_desactiver', { 'id': actualite.id}) }}" title="Désactiver cette actualité" onclick="if(confirm('Êtes vous sûr de désactiver cette actualité ?')) return true; else return false;">
-                                    <i class="glyphicon glyphicon-eye-close"></i>&nbsp;&nbsp;Désactiver
-                                </a>
-                            {% else %}
-                                <a href="{{ path('amie_actualites_activer', { 'id': actualite.id}) }}" title="Ré-activer cette actualité" onclick="if(confirm('Êtes vous sûr de réactiver cette actualité ?')) return true; else return false;">
-                                    <i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Activer
-                                </a>
-                                <a href="{{ path('amie_actualites_supprimer', { 'id': actualite.id}) }}" title="Supprimer cette actualité" onclick="if(confirm('Êtes vous sûr de vouloir supprimer définitivement cette actualité ?')) return true; else return false;">
-                                    <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
-                                </a>
-                            {% endif %}
-                        </li>
-                        {% endif %}
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card-body card-padding">
-            <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Acceder à l'actualité">{{ actualite.contenu|length > 50 ? actualite.contenu|slice(0, 50) ~ '...' : actualite.contenu }}</a>
-        </div>
-
-    </div>
-    {% endfor %}
-	<div align="center" class="pagerfanta">
-		{{ pagerfanta(actualites) }}
+								<li>
+									{% if actualite.actif == 'A' %}
+										<a href="{{ path('amie_actualites_desactiver', { 'id': actualite.id}) }}" title="Désactiver cette actualité" onclick="if(confirm('Êtes vous sûr de désactiver cette actualité ?')) return true; else return false;">
+											<i class="fa fa-eye-slash fa-fw"></i> Désactiver
+										</a>
+									{% else %}
+										<a href="{{ path('amie_actualites_activer', { 'id': actualite.id}) }}" title="Ré-activer cette actualité" onclick="if(confirm('Êtes vous sûr de réactiver cette actualité ?')) return true; else return false;">
+											<i class="fa fa-eye fa-fw"></i> Activer
+										</a>
+										<a href="{{ path('amie_actualites_supprimer', { 'id': actualite.id}) }}" title="Supprimer cette actualité" onclick="if(confirm('Êtes vous sûr de vouloir supprimer définitivement cette actualité ?')) return true; else return false;">
+											<i class="fa fa-trash fa-fw"></i> Supprimer
+										</a>
+									{% endif %}
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+					<!-- /.panel-heading -->
+					<div class="panel-body">
+						{{ actualite.contenu|length > 150 ? actualite.contenu|slice(0, 150) ~ '...' : actualite.contenu }}
+						
+						<a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" class="btn btn-default btn-block">Lire la suite</a>
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			{% endfor %}
+		{% endif %}
 	</div>
-{% endif %}
+	<!-- /.col-lg-8 -->
+</div>
+<!-- /.row -->
+<div align="center" class="pagerfanta">
+	{{ pagerfanta(actualites) }}
+</div>
 {% endblock %}

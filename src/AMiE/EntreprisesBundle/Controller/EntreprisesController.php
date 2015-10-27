@@ -64,15 +64,28 @@ class EntreprisesController extends CoreController
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
+		$query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->searchAllEntreprises();
+        $entreprises = $query->getResult();
 
-        $graphSecteur = $this->graphiqueSecteur();
-        $graphNbOffre = $this->graphiqueNbOffre();
+		if(!empty($entreprises))
+		{
+			$graphSecteur = $this->graphiqueSecteur();
+			$graphNbOffre = $this->graphiqueNbOffre();
 
-        return $this->render('AMiEEntreprisesBundle:Entreprises:graphiques.html.twig', array(
-            'layout' => $layout,
-            'graphSecteur' => $graphSecteur,
-            'graphNbOffre' => $graphNbOffre
-        ));
+			return $this->render('AMiEEntreprisesBundle:Entreprises:graphiques.html.twig', array(
+				'layout' => $layout,
+				'graphSecteur' => $graphSecteur,
+				'graphNbOffre' => $graphNbOffre,
+				'entreprises' => $entreprises
+				));
+		}
+		else
+		{
+			return $this->render('AMiEEntreprisesBundle:Entreprises:graphiques.html.twig', array(
+				'layout' => $layout,
+				'entreprises' => $entreprises
+				));
+		}
     }
 
     public function ficheAction(User $entreprise)

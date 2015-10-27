@@ -1,587 +1,259 @@
 {% extends "AMiEHomeBundle::layout.html.twig" %}
 {% block title "Fiche" %}
-{% block head %}Consultation du formulaire de {{ formulaire.prenom }} {{ formulaire.nom }}{% endblock %}
+
+{% block head "Consultation d'un formulaire" %}
 
 {% block content %}
-<div class="card" id="profile-main">
-	<div class="card-header bgm-orange">
-		<h2>{{ formulaire.prenom }} {{ formulaire.nom }}</h2>
-		<dt>
-			Né(e) le {{ formulaire.dateNaissance|date("d/m/Y") }}
-		</dt>
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-		<ul class="actions actions-alt">
-			<li class="dropdown">
-				<a href="" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
-				<ul class="dropdown-menu dropdown-menu-right">
-					<li>
-						<a href="{{ path('amie_miagistes_supprimerformulaire', { 'id': formulaire.id}) }}"title="Supprimer ce miagiste"onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer</a>
-					</li>
-					<li>
-						<a href="{{ path('amie_miagistes_modifierformulaire', { 'id': formulaire.id}) }}"title="Modifier ce miagiste"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-		{% endif %}
-	</div>
-	<div class="clearfix">
-		<div class="pmb-block">
-			<div class="pmbb-header">
-				<h2><i class="glyphicon glyphicon-earphone m-r-5"></i>Coordonnées</h2>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+					<h2>{{ formulaire.prenom }} {{ formulaire.nom }}
+					<small style="display: block">Né(e) le {{ formulaire.dateNaissance|date("d/m/Y") }}</small>
+					</h2>
 				{% if is_granted('ROLE_SUPER_ADMIN') %}
-				<ul class="actions">
-					<li class="dropdown">
-						<a href="" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li>
-								<a data-pmb-action="edit" href=""><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				{% endif %}
-			</div>
-			<div class="pmbb-body p-l-30">
-				<div class="pmbb-view">
-					<dl class="dl-horizontal">
-						<dt>
-							Rue, voie
-						</dt>
-						<dd>
-							{{ formulaire.rue }}
-						</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>
-							Code postal
-						</dt>
-						<dd>
-							{{ formulaire.codePostal }}
-						</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>
-							Ville
-						</dt>
-						<dd>
-							{{ formulaire.ville }}
-						</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>
-							Numéro de téléphone
-						</dt>
-						<dd>
-							{{ formulaire.numero }}
-						</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>
-							Adresse email
-						</dt>
-						<dd>
-							{{ formulaire.mail }}
-						</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>
-							Année de promotion M2
-						</dt>
-						<dd>
-							{{ formulaire.anneePromo }}
-						</dd>
-					</dl>
+				<div class="btn-group pull-right">
+					<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-chevron-down fa-fw"></i>
+					</button>
+					<ul class="dropdown-menu slidedown">
+						<li>
+							<a href="{{ path('amie_miagistes_modifierformulaire', { 'id': formulaire.id}) }}"title="Modifier ce miagiste"><i class="fa fa-edit fa-fw"></i> Modifier</a>
+						</li>
+						<li>
+							<a href="{{ path('amie_miagistes_supprimerformulaire', { 'id': formulaire.id}) }}"title="Supprimer ce miagiste"onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;"><i class="fa fa-trash fa-fw"></i> Supprimer</a>
+						</li>
+					</ul>
 				</div>
-				<form action="{{ path('amie_miagistes_modifiercoordonnees', { 'id': formulaire.id}) }}" method="post">
-					<div class="pmbb-edit">
+				{% endif %}				
+			</div>
+			<!-- /.panel-heading -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-phone fa-fw"></i> Coordonnées</h4>
+					
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Rue, voie
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="rue" type="text" class="form-control" placeholder="{{ formulaire.rue }}">
-								</div>
+								{{ formulaire.rue }}
 							</dd>
 						</dl>
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Code postal
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="codePostal" type="text" class="form-control" placeholder="{{ formulaire.codePostal }}">
-								</div>
+								{{ formulaire.codePostal }}
 							</dd>
 						</dl>
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Ville
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="ville" type="text" class="form-control" placeholder="{{ formulaire.ville }}">
-								</div>
+								{{ formulaire.ville }}
 							</dd>
 						</dl>
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Numéro de téléphone
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="numero" type="text" class="form-control" placeholder="{{ formulaire.numero }}">
-								</div>
+								{{ formulaire.numero }}
 							</dd>
 						</dl>
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Adresse email
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="mail" type="email" class="form-control" placeholder="{{ formulaire.mail }}">
-								</div>
+								{{ formulaire.mail }}
 							</dd>
 						</dl>
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Année de promotion M2
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="anneePromo" type="text" class="form-control" placeholder="{{ formulaire.anneePromo }}">
-								</div>
+								{{ formulaire.anneePromo }}
 							</dd>
 						</dl>
-						<div class="m-t-10">
-							<button class="btn btn-primary btn-sm waves-effect">Sauvegarder</button>
-							<button data-pmb-action="reset" class="btn btn-link btn-sm waves-effect">Annuler</button>
-						</div>
 					</div>
-				</form>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
 			</div>
-		</div>
-		<div class="pmb-block">
-			<div class="pmbb-header">
-				<h2><i class="glyphicon glyphicon-globe m-r-5"></i>Insertion professionnelle</h2>
-				{% if is_granted('ROLE_SUPER_ADMIN') %}
-				<ul class="actions">
-					<li class="dropdown">
-						<a href="" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
-						<ul class="dropdown-menu dropdown-menu-right">
-							<li>
-								<a data-pmb-action="edit" href=""><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				{% endif %}
-			</div>
-			<div class="pmbb-body p-l-30">
-				<div class="pmbb-view">
-					<dl class="dl-horizontal">
+			<!-- /.clearfix -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-globe fa-fw"></i> Insertion professionnelle</h4>
+					
+						<dl class="dl-horizontal">
 						<dt>
 							Entreprise d'accueil durant l'apprentissage
 						</dt>
 						<dd>
 							{{ formulaire.entAccueil }}
 						</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>
-							Embauché (sous contrat de travail)
-						</dt>
-						<dd>
-							{{ formulaire.embauche }}
-						</dd>
-					</dl>
-					{% if formulaire.embauche == 'Oui' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Type de contrat
-						</dt>
-						<dd>
-							{{ formulaire.typeContrat }}
-						</dd>
-					</dl>
-					{% endif %}{% if formulaire.typeContratAutre == 'Autre' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Autre
-						</dt>
-						<dd>
-							{{ formulaire.typeContratAutre }}
-						</dd>
-					</dl>
-					{% endif %}{% if formulaire.entActuelle == 'Oui' or formulaire.entActuelle == 'Non' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Par l'entreprise d'accueil
-						</dt>
-						<dd>
-							{{ formulaire.entActuelle }}
-						</dd>
-					</dl>
-					{% endif %}{% if formulaire.entActuelle == 'Non' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Raisons si non embauché par l'entreprise d'accueil
-						</dt>
-						<dd>
-							{{ formulaire.raisonNonEmbauche }}
-						</dd>
-					</dl>
-					{% endif %}
-					{% if formulaire.raisonNonEmbauche == 'Autres raisons' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Autres raisons
-						</dt>
-						<dd>
-							{{ formulaire.raisonAutre }}
-						</dd>
-					</dl>
-					{% endif %}
-					{% if formulaire.entActuelle == 'Non' and formulaire.embauche == 'Oui' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Entreprise si embauché par une autre
-						</dt>
-						<dd>
-							{{ formulaire.entrepriseAutre }}
-						</dd>
-					</dl>
-					{% endif %}
-					{% if formulaire.embauche == 'Oui' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Niveau de salaire brut prévu (en €)
-						</dt>
-						<dd>
-							{{ formulaire.niveauSalaire }}
-						</dd>
-					</dl>
-					{% endif %}
-					{% if formulaire.embauche == 'Non' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Situation actuelle si non embauché
-						</dt>
-						<dd>
-							{{ formulaire.situationNonEmbauche }}
-						</dd>
-					</dl>
-					{% endif %}
-					{% if formulaire.situationNonEmbauche == 'Autre situation' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Autre situation
-						</dt>
-						<dd>
-							{{ formulaire.situationAutre }}
-						</dd>
-					</dl>
-					{% endif %}
-				</div>
-				<form action="{{ path('amie_miagistes_modifierinsertion', { 'id': formulaire.id}) }}" method="post">
-					<div class="pmbb-edit">
-						<dl class="dl-horizontal">
-							<dt class="p-t-10">
-								Entreprise d'accueil durant l'apprentissage
-							</dt>
-							<dd>
-								<div class="fg-line">
-									<input name="entAccueil" type="text" class="form-control" placeholder="{{ formulaire.entAccueil }}">
-								</div>
-							</dd>
 						</dl>
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Embauché (sous contrat de travail)
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="embauche" placeholder="{{ formulaire.embauche }}">
-											<option value="0"></option>
-											<option value="Oui">Oui</option>
-											<option value="Non">Non</option>
-										</select>
-									</div>
-								</div>
+								{{ formulaire.embauche }}
 							</dd>
 						</dl>
+						{% if formulaire.embauche == 'Oui' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Type de contrat
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="typeContrat" placeholder="{{ formulaire.typeContrat }}">
-											<option value="0"></option>
-											<option value="CDI">CDI</option>
-											<option value="CDD">CDD</option>
-											<option value="VIE">VIE</option>
-											<option value="Autre">Autre</option>
-										</select>
-									</div>
-								</div>
+								{{ formulaire.typeContrat }}
 							</dd>
 						</dl>
+						{% endif %}{% if formulaire.typeContratAutre == 'Autre' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Autre
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="typeContratAutre" type="text" class="form-control" placeholder="{{ formulaire.typeContratAutre }}">
-								</div>
+								{{ formulaire.typeContratAutre }}
 							</dd>
 						</dl>
+						{% endif %}{% if formulaire.entActuelle == 'Oui' or formulaire.entActuelle == 'Non' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Par l'entreprise d'accueil
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="entActuelle" placeholder="{{ formulaire.entActuelle }}">
-											<option value="0"></option>
-											<option value="Oui">Oui</option>
-											<option value="Non">Non</option>
-										</select>
-									</div>
-								</div>
+								{{ formulaire.entActuelle }}
 							</dd>
 						</dl>
+						{% endif %}{% if formulaire.entActuelle == 'Non' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Raisons si non embauché par l'entreprise d'accueil
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="raisonNonEmbauche" placeholder="{{ formulaire.raisonNonEmbauche }}">
-											<option value="0"></option>
-											<option value="Pas de programme d'embauche dans mon entreprise d'accueil">Pas de programme d'embauche dans mon entreprise d'accueil</option>
-											<option value="Pas de proposition pour moi dans mon entreprise d'accueil">Pas de proposition pour moi dans mon entreprise d'accueil</option>
-											<option value="Refus de ma part d'une proposition de mon entreprise d'accueil">Refus de ma part d'une proposition de mon entreprise d'accueil</option>
-											<option value="Autre(s) proposition(s) plus attractive(s) sur le plan financier">Autre(s) proposition(s) plus attractive(s) sur le plan financier</option>
-											<option value="Autre(s) proposition(s) plus attractive(s) sur le plan technique">Autre(s) proposition(s) plus attractive(s) sur le plan technique</option>
-											<option value="Autre(s) proposition(s) plus attractive(s) en terme de responsabilités">Autre(s) proposition(s) plus attractive(s) en terme de responsabilités</option>
-											<option value="Autres raisons">Autres raisons</option>
-										</select>
-									</div>
-								</div>
+								{{ formulaire.raisonNonEmbauche }}
 							</dd>
 						</dl>
+						{% endif %}
+						{% if formulaire.raisonNonEmbauche == 'Autres raisons' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Autres raisons
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="raisonAutre" type="textarea" class="form-control" placeholder="{{ formulaire.raisonAutre }}">
-								</div>
+								{{ formulaire.raisonAutre }}
 							</dd>
 						</dl>
+						{% endif %}
+						{% if formulaire.entActuelle == 'Non' and formulaire.embauche == 'Oui' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Entreprise si embauché par une autre
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="entrepriseAutre" type="text" class="form-control" placeholder="{{ formulaire.entrepriseAutre }}">
-								</div>
+								{{ formulaire.entrepriseAutre }}
 							</dd>
 						</dl>
+						{% endif %}
+						{% if formulaire.embauche == 'Oui' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Niveau de salaire brut prévu (en €)
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="niveauSalaire" type="text" class="form-control" placeholder="{{ formulaire.niveauSalaire }}">
-								</div>
+								{{ formulaire.niveauSalaire }}
 							</dd>
 						</dl>
+						{% endif %}
+						{% if formulaire.embauche == 'Non' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Situation actuelle si non embauché
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="situationNonEmbauche" placeholder="{{ formulaire.situationNonEmbauche }}">
-											<option value="0"></option>
-											<option value="Mon contrat de travail est en cours de finalisation">Mon contrat de travail est en cours de finalisation</option>
-											<option value="Je suis en recherche d'emploi">Je suis en recherche d'emploi</option>
-											<option value="Je suis à la recherche d'un VIE">Je suis à la recherche d'un VIE</option>
-											<option value="Je fais une poursuite d'études classique">Je fais une poursuite d'études classique</option>
-											<option value="Je fais une poursuite d'études par apprentissage">Je fais une poursuite d'études par apprentissage</option>
-											<option value="J'ai d'autres objectifs">J'ai d'autres objectifs</option>
-											<option value="Autre situation">Autre situation</option>
-										</select>
-									</div>
-								</div>
+								{{ formulaire.situationNonEmbauche }}
 							</dd>
 						</dl>
+						{% endif %}
+						{% if formulaire.situationNonEmbauche == 'Autre situation' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Autre situation
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="situationAutre" type="textarea" class="form-control" placeholder="{{ formulaire.situationAutre }}">
-								</div>
+								{{ formulaire.situationAutre }}
 							</dd>
 						</dl>
-						<div class="m-t-10">
-							<button class="btn btn-primary btn-sm waves-effect">Sauvegarder</button>
-							<button data-pmb-action="reset" class="btn btn-link btn-sm waves-effect">Annuler</button>
-						</div>
+						{% endif %}
 					</div>
-				</form>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
 			</div>
-		</div>
-		{% if formulaire.embauche == 'Oui' %}
-		<div class="pmb-block">
-			<div class="pmbb-header">
-				<h2><i class="glyphicon glyphicon-wrench m-r-5"></i>Embauché : son entreprise, son métier</h2>
-				{% if is_granted('ROLE_SUPER_ADMIN') %}
-				<ul class="actions">
-					<li class="dropdown">
-						<a href="" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li>
-										<a data-pmb-action="edit" href=""><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-									</li>
-								</ul>
-					</li>
-				</ul>
-				{% endif %}
-			</div>
-			<div class="pmbb-body p-l-30">
-				<div class="pmbb-view">
-					<dl class="dl-horizontal">
+			<!-- /.clearfix -->	
+			{% if formulaire.embauche == 'Oui' %}
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-briefcase fa-fw"></i> Embauché : son entreprise, son métier</h4>
+						
+						<dl class="dl-horizontal">
 						<dt>
 							Secteur d'activités de l'entreprise
 						</dt>
 						<dd>
 							{{ formulaire.secteur }}
 						<dd>
-					</dl>
-					{% if formulaire.secteur == 'Autre' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Autre
-						</dt>
-						<dd>
-							{{ formulaire.sectAutre }}
-						<dd>
-					</dl>
-					{% endif %}
-					<dl class="dl-horizontal">
-						<dt>
-							Métier dans l'entreprise
-						</dt>
-						<dd>
-							{{ formulaire.metier }}
-						<dd>
-					</dl>
-					{% if formulaire.metier == 'Autre' %}
-					<dl class="dl-horizontal">
-						<dt>
-							Autre
-						</dt>
-						<dd>
-							{{ formulaire.metAutre }}
-						<dd>
-					</dl>
-					{% endif %}
-				</div>
-				<form action="{{ path('amie_miagistes_modifierembauche', { 'id': formulaire.id}) }}" method="post">
-					<div class="pmbb-edit">
+						</dl>
+						{% if formulaire.secteur == 'Autre' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
-								Secteur d'activités de l'entreprise
+							<dt>
+								Autre
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="secteur" placeholder="{{ formulaire.secteur }}">
-											<option value="0"></option>
-											<option value="Assurance">Assurance</option>
-											<option value="Distribution">Distribution</option>
-											<option value="Services Informatiques">Services Informatiques</option>
-											<option value="Secteur public/administration">Secteur public/administration</option>
-											<option value="Banque">Banque</option>
-											<option value="Transports">Transports</option>
-											<option value="Industrie">Industrie</option>
-											<option value="Autre">Autre</option>
-										</select>
-									</div>
-								</div>
-							</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt class="p-t-10">
-								Autre secteur
-							</dt>
+								{{ formulaire.sectAutre }}
 							<dd>
-								<div class="fg-line">
-									<input name="sectAutre" type="text" class="form-control" placeholder="{{ formulaire.sectAutre }}">
-								</div>
-							</dd>
 						</dl>
+						{% endif %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
+							<dt>
 								Métier dans l'entreprise
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<div class="select">
-										<select class="form-control" name="metier" placeholder="{{ formulaire.metier }}">
-											<option value="0"></option>
-											<option value="Ingénieur réseau (Telecom) ou architecte réseau/télécom">Ingénieur réseau (Telecom) ou architecte réseau/télécom</option>
-											<option value="Consultant en progiciels (ou architecte de système applicatif)">Consultant en progiciels (ou architecte de système applicatif)</option>
-											<option value="Consultant/expert dans une SSII">Consultant/expert dans une SSII</option>
-											<option value="Chef de projet en entreprise">Chef de projet en entreprise</option>
-											<option value="Ingénieur d'études">Ingénieur d'études</option>
-											<option value="Administrateur de bases de données">Administrateur de bases de données</option>
-											<option value="Chef de projet dans une SSII">Chef de projet dans une SSII</option>
-											<option value="Ingénieur de développement">Ingénieur de développement</option>
-											<option value="Ingénieur système">Ingénieur système</option>
-											<option value="Architecte en système d'informations">Architecte en système d'informations</option>
-											<option value="Ingénieur technico-commercial">Ingénieur technico-commercial</option>
-											<option value="Autre">Autre</option>
-										</select>
-									</div>
-								</div>
-							</dd>
+								{{ formulaire.metier }}
+							<dd>
 						</dl>
+						{% if formulaire.metier == 'Autre' %}
 						<dl class="dl-horizontal">
-							<dt class="p-t-10">
-								Autre métier
+							<dt>
+								Autre
 							</dt>
 							<dd>
-								<div class="fg-line">
-									<input name="metAutre" type="text" class="form-control" placeholder="{{ formulaire.metAutre }}">
-								</div>
-							</dd>
+								{{ formulaire.metAutre }}
+							<dd>
 						</dl>
-						<div class="m-t-10">
-							<button class="btn btn-primary btn-sm waves-effect">Sauvegarder</button>
-							<button data-pmb-action="reset" class="btn btn-link btn-sm waves-effect">Annuler</button>
-						</div>
+						{% endif %}
 					</div>
-				</form>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
 			</div>
+			<!-- /.clearfix -->
+			{% endif %}
 		</div>
-		{% endif %}
+		<!-- /.panel -->
 	</div>
+	<!-- /.col-lg-12 -->
 </div>
+<!-- /.row -->
 {% endblock %}

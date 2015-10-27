@@ -2,20 +2,32 @@
 
 {% block title "Graphiques" %}
 
-    {% block head "Statistiques sur les entreprises dans le réseau AMiE" %}
-        {% block js %}
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-                    type="text/javascript"></script>
+{% block head "Quelques graphiques..." %}
+    {% block js %}
+		{% if entreprises %}
+	
 
-            <script src="//code.highcharts.com/4.0.1/highcharts.js"></script>
-            <script src="//code.highcharts.com/4.0.1/modules/exporting.js"></script>
-            <script type="text/javascript">
+		<script src="//code.highcharts.com/4.0.1/highcharts.js"></script>
+        <script src="//code.highcharts.com/4.0.1/modules/exporting.js"></script>
+		<script type="text/javascript">
                 {{ chart(graphSecteur) }}
                 {{ chart(graphNbOffre) }}
-            </script>
-        {% endblock %}
+		</script>
+		{% endif %}
+	{% endblock %}
 
-        {% block content %}
-            <div id="piechartSecteur" style="width: 494px; height: 400px; margin: 10px 6px; float: left;"></div>
-            <div id="barchartNbOffre" style="width: 1000px; height: 400px; margin: 10px 6px; float: left;"></div>
-        {% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-lg-14">
+		{% if entreprises %}
+            <div id="piechartSecteur" style="width: auto; height: 400px; margin: 10px 6px; float: left;"></div>
+            <div id="barchartNbOffre" style="width: auto; height: 400px; margin: 10px 6px; float: left;"></div>
+		{% else %}
+			Il n'existe actuellement aucune donnée exploitable.
+		{% endif %}
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+{% endblock %}

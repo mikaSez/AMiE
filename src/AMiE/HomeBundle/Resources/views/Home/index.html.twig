@@ -3,47 +3,128 @@
 {% block title "Accueil" %}
 
 {% block head %}
-{% if app.user is empty %}Bienvenue sur AMiE !
+{% if app.user is empty %}
+	Bienvenue sur AMiE !
 {% else %}
-Bienvenue sur AMiE, {{ app.user.username|title }} !
+	Bienvenue sur AMiE, {{ app.user.username|title }} !
 {% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header bgm-orange">
-        <h2 style="color:#ffffff">Dernières offres publiées sur le site</h2>
-    </div>
-    <div class="card-body card-padding">
-        {% for offre in offres %}
-            <h3>
-                <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" title="Acceder à l'offre">{{ offre.titre|title }}</a>
-                <small>
-                    Le <time>{{ offre.updatedDate|localizeddate('full', 'none') }}</time> par <a href="{{ path('amie_entreprises_fiche', { 'id': offre.idEntreprise, 'slug': offre.nomEntreprise|slugify}) }}" title="Offre posté par {{ offre.nomEntreprise }}">{{ offre.nomEntreprise }}</a>
-                </small>
-            </h3>
-            <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" title="Acceder à l'offre">{{ offre.descriptif|length > 50 ? offre.descriptif|slice(0, 50) ~ '...' : offre.descriptif }}</a>
-        {% else %}
-			Aucune offre postée actuellement.
-		{% endfor %}
-    </div>
+<div class="row">
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-clock-o fa-fw"></i> Offres durant les sept derniers jours
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="list-group">
+					{% for offre in offres %}
+					<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" class="list-group-item">
+						{{ offre.titre|title }}
+						<span class="pull-right text-muted small"><em>{{ offre.updatedDate|localizeddate('full', 'none') }}</em>
+						</span>
+					</a>
+					{% else %}
+						Aucune offre postée actuellement.
+					{% endfor %}
+				</div>
+				<!-- /.list-group -->
+				<a href="{{ path('amie_offresemplois_offres') }}" class="btn btn-default btn-block">Voir toutes les offres</a>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-clock-o fa-fw"></i> Actualités durant les sept derniers jours
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="list-group">
+					{% for actualite in actualites %}
+					<a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Accéder à l'actualité" class="list-group-item">
+						{{ actualite.titre|title }}
+						<span class="pull-right text-muted small"><em>{{ actualite.updatedDate|localizeddate('full', 'none') }}</em>
+						</span>
+					</a>
+					{% else %}
+						Aucune actualité postée actuellement.
+					{% endfor %}
+				</div>
+				<!-- /.list-group -->
+				<a href="{{ path('amie_actualites_news') }}" title="Voir toutes les actualités" class="btn btn-default btn-block">Voir toutes les actualités</a>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-8 -->
+	
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-bell fa-fw"></i> Notifications Panel
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="list-group">
+					<a href="#" class="list-group-item">
+						<i class="fa fa-comment fa-fw"></i> New Comment
+						<span class="pull-right text-muted small"><em>4 minutes ago</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-twitter fa-fw"></i> 3 New Followers
+						<span class="pull-right text-muted small"><em>12 minutes ago</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-envelope fa-fw"></i> Message Sent
+						<span class="pull-right text-muted small"><em>27 minutes ago</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-tasks fa-fw"></i> New Task
+						<span class="pull-right text-muted small"><em>43 minutes ago</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-upload fa-fw"></i> Server Rebooted
+						<span class="pull-right text-muted small"><em>11:32 AM</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-bolt fa-fw"></i> Server Crashed!
+						<span class="pull-right text-muted small"><em>11:13 AM</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-warning fa-fw"></i> Server Not Responding
+						<span class="pull-right text-muted small"><em>10:57 AM</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+						<span class="pull-right text-muted small"><em>9:49 AM</em>
+						</span>
+					</a>
+					<a href="#" class="list-group-item">
+						<i class="fa fa-money fa-fw"></i> Payment Received
+						<span class="pull-right text-muted small"><em>Yesterday</em>
+						</span>
+					</a>
+				</div>
+				<!-- /.list-group -->
+				<a href="#" class="btn btn-default btn-block">View All Alerts</a>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-4 -->
 </div>
-<div class="card">
-    <div class="card-header bgm-orange">
-        <h2 style="color:#ffffff">Dernières actualités publiées sur le site</h2>
-    </div>
-    <div class="card-body card-padding">
-        {% for actualite in actualites %}
-            <h3>
-                <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Acceder à l'actualité">{{ actualite.titre|title }}</a>
-                <small>
-                    Le <time>{{ actualite.updatedDate|localizeddate('full', 'none') }}</time>
-                </small>
-            </h3>
-            <a href="{{ path('amie_actualites_actualite', { 'id': actualite.id, 'slug': actualite.titre|slugify}) }}" title="Acceder à l'actualité">{{ actualite.contenu|length > 50 ? actualite.contenu|slice(0, 50) ~ '...' : actualite.contenu }}</a>
-        {% else %}
-			Aucune annonce postée actuellement.
-		{% endfor %}
-    </div>
-</div>
+<!-- /.row -->
 {% endblock %}

@@ -2,304 +2,128 @@
 
 {% block title "Offre" %}
 
-{% block head %}Consultation de l'offre {{ offre.titre|title }}{% endblock %}
+{% block head %}Consultation d'une offre{% endblock head %}
 
 {% block content %}
-<div class="card" id="profile-main">
-    <div class="card-header bgm-orange">
-        <h2>
-            {{ offre.titre|title }}<br/>
-			{{ offre.entreprise }}
-            <small>
-                Le <time>{{ offre.updatedDate|localizeddate('full', 'none') }}</time> par
-                <a href="{{ path('amie_entreprises_fiche', { 'id': offre.idEntreprise, 'slug': offre.nomEntreprise|slugify}) }}" title="Offre postée par {{ offre.nomEntreprise }}" style="color:#ffffff">
-                    {{ offre.nomEntreprise }}
-                </a>
-            </small>
-        </h2>
-
-        {% if is_granted('ROLE_SUPER_ENT') or is_granted('ROLE_SUPER_ADMIN') %}
-        <ul class="actions actions-alt">
-            <li class="dropdown">
-                <a href="" data-toggle="dropdown" aria-expanded="false">
-                    <i class="glyphicon glyphicon-option-vertical"></i>
-                </a>
-                
-                <ul class="dropdown-menu dropdown-menu-right">
-                    {% if app.user.id == offre.idEntreprise %}
-                    <li>
-                        <a href="{{ path('amie_offresemplois_modifier', { 'id': offre.id}) }}" title="Modifier cette offre">
-                            <i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li>
-                        <a href="{{ path('amie_offresemplois_supprimer', { 'id': offre.id}) }}" title="Supprimer cette offre" onclick="if(confirm('Etes vous sûr de vouloir supprimer cette offre ?')) return true; else return false;">
-                            <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        {% endif %}
-    </div>
-
-    <div class="clearfix">
-        <div class="pmb-block">
-            <div class="pmbb-header">
-                <h2>
-                    <i class="glyphicon glyphicon-globe m-r-5"></i>
-                    Descriptif de l'offre
-                </h2>
-                {% if is_granted('ROLE_SUPER_ENT') or is_granted('ROLE_SUPER_ADMIN') %}
-                <ul class="actions">
-                    <li class="dropdown">
-                        <a href="" data-toggle="dropdown" aria-expanded="false">
-                            <i class="glyphicon glyphicon-option-vertical"></i>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
-                                <a data-pmb-action="edit" href=""><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                {% endif %}
-            </div>
-            <div class="pmbb-body p-l-30">
-                <div class="pmbb-view">{{ offre.descriptif|nl2br }}</div>
-
-                <form action="{{ path('amie_offresemplois_modifierdescriptif', { 'id': offre.id}) }}" method="post">
-                <div class="pmbb-edit">
-                    <div class="fg-line">
-                        <textarea name="descriptif" class="form-control" rows="5" placeholder="Summary...">{{ offre.descriptif }}</textarea>
-                    </div>
-                    <div class="m-t-10">
-                        <button class="btn btn-primary btn-sm waves-effect">Sauvegarder</button>
-                        <button data-pmb-action="reset" class="btn btn-link btn-sm waves-effect">Annuler</button>
-                    </div>
-                </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Informations complémentaires -->
-        <div class="pmb-block">
-            <div class="pmbb-header">
-                <h2>
-                    <i class="glyphicon glyphicon-wrench m-r-5"></i>
-                    Informations complémentaires
-                </h2>
-                {% if is_granted('ROLE_SUPER_ENT') or is_granted('ROLE_SUPER_ADMIN') %}
-                <ul class="actions">
-                    <li class="dropdown">
-                        <a href="" data-toggle="dropdown" aria-expanded="false">
-                            <i class="glyphicon glyphicon-option-vertical"></i>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
-                                <a data-pmb-action="edit" href=""><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                {% endif %}
-            </div>
-            <div class="pmbb-body p-l-30">
-                <div class="pmbb-view">
-                    <dl class="dl-horizontal">
-                        <dt>Lieu de travail</dt>
-                        <dd>{{ offre.lieuTravail }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Type de poste</dt>
-                        <dd>{{ offre.typePoste }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Type de contrat</dt>
-                        <dd>{{ offre.typeContrat }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Expérience exigée</dt>
-                        <dd>{{ offre.xpExigee }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Urgence</dt>
-                        <dd>{{ offre.urgence }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Salaire</dt>
-                        <dd>{{ offre.salaire }}</dd>
-                    </dl>
-                </div>
-
-                <form action="{{ path('amie_offresemplois_modifiertype', { 'id': offre.id}) }}" method="post">
-                    <div class="pmbb-edit">
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Lieu de travail</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="lieu" type="text" class="form-control" placeholder="{{ offre.lieuTravail }}">
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Type de poste</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <div class="select">
-                                        <select class="form-control" name="typeposte">
-                                            <option value="0">Selectionnez le nouveau type de poste</option>
-                                            <option value="Temps plein">Temps plein</option>
-                                            <option value="Temps partiel">Temps partiel</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Type de contrat</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <div class="select">
-                                        <select class="form-control" name="typecontrat">
-                                            <option value="0">Selectionnez le nouveau type de contrat</option>
-                                            <option value="CDI">CDI</option>
-                                            <option value="CDD">CDD</option>
-                                            <option value="VIE">VIE</option>
-                                            <option value="Stage">Stage</option>
-                                            <option value="Apprentissage">Apprentissage</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Expérience exigée</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="xpexigee" type="text" class="form-control" placeholder="{{ offre.xpExigee }}">
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Urgence</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <div class="select">
-                                        <select class="form-control" name="urgence">
-                                            <option value="0">Selectionnez la nouvelle urgence</option>
-                                            <option value="Peu pressé (6 mois ou +)">Peu pressé (6 mois ou +)</option>
-                                            <option value="Assez pressé (3 mois)">Assez pressé (3 mois)</option>
-                                            <option value="Pressé (entre 1 et 3 mois)">Pressé (entre 1 et 3 mois)</option>
-                                            <option value="Très pressé (- de 1 mois)">Très pressé (- de 1 mois)</option>
-                                            <option value="Immédiat (dès que possible)">Immédiat (dès que possible)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Salaire</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="salaire" type="text" class="form-control" placeholder="{{ offre.salaire }}">
-                                </div>
-                            </dd>
-                        </dl>
-
-                        <div class="m-t-10">
-                            <button class="btn btn-primary btn-sm waves-effect">Sauvegarder</button>
-                            <button data-pmb-action="reset" class="btn btn-link btn-sm waves-effect">Annuler</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Contact Entreprise -->
-        <div class="pmb-block">
-            <div class="pmbb-header">
-                <h2>
-                    <i class="glyphicon glyphicon-earphone m-r-5"></i>
-                    Informations du contact
-                </h2>
-                {% if is_granted('ROLE_SUPER_ENT') or is_granted('ROLE_SUPER_ADMIN') %}
-                <ul class="actions">
-                    <li class="dropdown">
-                        <a href="" data-toggle="dropdown" aria-expanded="false">
-                            <i class="glyphicon glyphicon-option-vertical"></i>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
-                                <a data-pmb-action="edit" href=""><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                {% endif %}
-            </div>
-            <div class="pmbb-body p-l-30">
-                <div class="pmbb-view">
-                    <dl class="dl-horizontal">
-                        <dt>Nom</dt>
-                        <dd>{{ offre.contactNom }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Mail</dt>
-                        <dd>{{ offre.contactMail }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Téléphone</dt>
-                        <dd>{{ offre.contactTel }}</dd>
-                    </dl>
-                </div>
-
-                <form action="{{ path('amie_offresemplois_modifiercontact', { 'id': offre.id}) }}" method="post">
-                    <div class="pmbb-edit">
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Nom</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="contactNom" type="text" class="form-control" placeholder="{{ offre.contactNom }}">
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Mail</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="contactMail" type="text" class="form-control" placeholder="{{ offre.contactMail }}">
-                                </div>
-                            </dd>
-                        </dl>
-                        <dl class="dl-horizontal">
-                            <dt class="p-t-10">Téléphone</dt>
-                            <dd>
-                                <div class="fg-line">
-                                    <input name="contactTel" type="text" class="form-control" placeholder="{{ offre.contactTel }}">
-                                </div>
-                            </dd>
-                        </dl>
-                        <div class="m-t-10">
-                            <button class="btn btn-primary btn-sm waves-effect">Sauvegarder</button>
-                            <button data-pmb-action="reset" class="btn btn-link btn-sm waves-effect">Annuler</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-			<div class="row">
-                <div class="col-sm-offset-8 col-sm-4">
-					<button type="submit" name="submitAction" value="postuler" class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float"
-						onClick="window.location='mailto:{{ offre.contactMail }}?subject=[Postulation] {{ offre.titre|title }}';" value="contact">
-                        Postuler à cette offre par mail
-                    </button>
-                </div>
-           </div> 
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>{{ offre.titre|title }}
+					<small style="display: block">{{ offre.entreprise }}</small>
+				</h2>
+				<div class="btn-group pull-right">
+					<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-chevron-down fa-fw"></i>
+					</button>
+					<ul class="dropdown-menu slidedown">
+					{% if ( app.user and app.user.id == offre.idEntreprise ) or is_granted('ROLE_SUPER_ADMIN') %}
+						<li>
+							<a href="{{ path('amie_offresemplois_modifier', { 'id': offre.id}) }}" title="Modifier cette offre">
+								<i class="fa fa-pencil fa-fw"></i> Modifier
+							</a>
+						</li>
+						<li>
+							{% if offre.actif == 'A' %}
+								<a href="{{ path('amie_offresemplois_desactiver', { 'id': offre.id}) }}" title="Désactiver cette offre" onclick="if(confirm('Etes vous sûr de vouloir désactiver cette offre ?')) return true; else return false;">
+									<i class="fa fa-eye-slash fa-fw"></i> Désactiver
+								</a>
+							{% else %}
+								<a href="{{ path('amie_offresemplois_activer', { 'id': offre.id}) }}" title="Ré-activer cette offre" onclick="if(confirm('Êtes vous sûr de réactiver cette offre ?')) return true; else return false;">
+									<i class="fa fa-eye fa-fw"></i> Activer
+								</a>
+								<a href="{{ path('amie_offresemplois_supprimer', { 'id': offre.id}) }}" title="Supprimer cette offre" onclick="if(confirm('Êtes vous sûr de vouloir supprimer définitivement cette offre ?')) return true; else return false;">
+									<i class="fa fa-trash fa-fw"></i> Supprimer
+								</a>
+							{% endif %}
+						</li>
+					{% endif %}
+					</ul>
+				</div>			
+			</div>
+			<!-- /.panel-heading -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-globe fa-fw"></i> Descriptif de l'offre</h4>
+						
+						<p>
+							{{ offre.descriptif|nl2br }}
+						</p>
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-briefcase fa-fw"></i> Informations complémentaires</h4>
+					
+					    <dl class="dl-horizontal">
+							<dt>Lieu de travail</dt>
+							<dd>{{ offre.lieuTravail }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Type de poste</dt>
+							<dd>{{ offre.typePoste }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Type de contrat</dt>
+							<dd>{{ offre.typeContrat }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Expérience exigée</dt>
+							<dd>{{ offre.xpExigee }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Urgence</dt>
+							<dd>{{ offre.urgence }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Salaire</dt>
+							<dd>{{ offre.salaire }}</dd>
+						</dl>
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-phone fa-fw"></i> Contact</h4>
+					
+						<dl class="dl-horizontal">
+							<dt>Nom</dt>
+							<dd>{{ offre.contactNom }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Mail</dt>
+							<dd>{{ offre.contactMail }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Téléphone</dt>
+							<dd>{{ offre.contactTel }}</dd>
+						</dl>
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->
 		</div>
-    </div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
+	<div class="col-sm-offset-8 col-sm-1">
+		<button type="submit" name="submitAction" value="postuler" class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float"
+			onClick="window.location='mailto:{{ offre.contactMail }}?subject=[Postulation] {{ offre.titre|title }}';" value="contact">
+				Postuler à cette offre par mail
+		</button>
+	</div>
 </div>
+<!-- /.row -->
 {% endblock %}

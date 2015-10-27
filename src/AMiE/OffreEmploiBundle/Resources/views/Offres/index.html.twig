@@ -4,159 +4,175 @@
 
 {% block head "Toutes les offres d'emplois" %}
 
-{% block adminActions %}{% if is_granted('ROLE_SUPER_ADMIN') %}
-    <ul class="actions">
-        <li><a href="{{ path('amie_offresemplois_offres') }}" title="Voir les offres actives"><i class="glyphicon glyphicon-eye-open" style="font-size:20px;{% if actif == 'actif' %}color: #000000;{% endif %}"></i></a></li>
-        <li><a href="{{ path('amie_offresemplois_offres', { 'actif': 'inactif' }) }}" title="Voir les offres désactivées"><i class="glyphicon glyphicon-eye-close" style="font-size:20px;{% if actif == 'inactif' %}color: #000000;{% endif %}"></i></a></li>
-    </ul>
-{% endif %}{% endblock %}
+{% block adminActions %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+	<ul class="list-inline pull-right">
+		<li>
+			<a href="{{ path('amie_offresemplois_offres') }}" title="Voir les offres actives">
+			<i class="fa fa-eye fa-fw" style="font-size:20px;{% if actif == 'actif' %}color: #000000;{% endif %}"></i>
+			</a>
+		</li>
+        <li>
+			<a href="{{ path('amie_offresemplois_offres', { 'actif': 'inactif' }) }}" title="Voir les offres désactivées">
+			<i class="fa fa-eye-slash fa-fw" style="font-size:20px;{% if actif == 'inactif' %}color: #000000;{% endif %}"></i>
+			</a>
+		</li>
+	</ul>
+{% endif %}
+{% endblock %}
 
 {% block content %}
-	<form action="{{ path('amie_offresemplois_recherche') }}" method="post">
-	<div class="card">
-		<div class="card-header bgm-orange">
-			<h2><i class="glyphicon glyphicon-search" style="display: inline;color:#ffffff"></i>&nbsp;&nbsp;Recherche avancée</h2>
-		</div>
-		<div class="card-body card-padding">
-			<div class="row">
-				<div class="col-xs-4">
-					<div class="form-group">
-						<div class="fg-line">
-							<input type="text" class="form-control input-lg" name="titre" placeholder="Titre">
+<form action="{{ path('amie_offresemplois_recherche') }}" method="POST">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3><i class="fa fa-search fa-fw" style="display: inline"></i> Recherche avancée</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<strong>Rechercher par titre</strong>
+								<input type="text" class="form-control" name="titre" placeholder="Titre">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<strong>Rechercher par entreprise</strong>
+								<input type="text" class="form-control" name="entreprise" placeholder="Entreprise">
+							</div>
+						</div>						
+						<div class="col-sm-4">
+							<strong>Rechercher par date</strong>
+							<div class="form-group input-group">
+								<span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+								<input type="text" class="form-control date-picker" name="date_ajout" data-toggle="dropdown" placeholder="A partir de quand ?" aria-expanded="false">
+							</div>
+						</div>						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<strong>Rechercher par lieu</strong>
+								<input type="text" class="form-control" name="lieu" placeholder="Lieu">
+							</div>
+						</div>						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<strong>Rechercher par type de contrat</strong>
+								<div class="select">
+									<select class="form-control" name="typecontrat">
+										<option value="0">Type de contrat</option>
+										<option value="cdi">CDI</option>
+										<option value="cdd">CDD</option>
+										<option value="vie">VIE</option>
+										<option value="stage">Stage</option>
+										<option value="apprentissage">Apprentissage</option>
+									</select>
+								</div>
+							</div>
+						</div>						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<strong>Rechercher par type de poste</strong>
+								<div class="select">
+									<select class="form-control" name="typeposte">
+										<option value="0">Type de poste</option>
+										<option value="temps_plein">Temps plein</option>
+										<option value="temps_partiel">Temps partiel</option>
+									</select>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-xs-4">
-					<div class="form-group">
-						<div class="fg-line">
-							<input type="text" class="form-control input-lg" name="entreprise" placeholder="Entreprise">
-						</div>
+					<!-- /.row (nested) -->
+					<div class="col-sm-offset-9 col-sm-4">
+                        <button type="submit" name="submitAction" value="rechercher" class="btn btn-primary">
+							Rechercher
+                        </button>
 					</div>
 				</div>
-				<div class="col-xs-4">
-					<div class="input-group form-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-						<div class="dtp-container dropdown fg-line">
-							<input type="text" class="form-control date-picker" name="date_ajout" data-toggle="dropdown" placeholder="A partir de quand ?" aria-expanded="false">
-						</div>
-					</div>
-				</div>
+				<!-- /.panel-body -->
 			</div>
-			<div class="row">
-				<div class="col-xs-4">
-					<div class="form-group">
-						<div class="fg-line">
-							<input type="text" class="form-control input-lg" name="lieu" placeholder="Lieu">
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-4">
-					<div class="form-group">
-						<div class="fg-line">
-							<div class="select">
-								<select class="form-control" name="typecontrat">
-									<option value="0">Type de contrat</option>
-									<option value="cdi">CDI</option>
-									<option value="cdd">CDD</option>
-									<option value="vie">VIE</option>
-									<option value="stage">Stage</option>
-									<option value="apprentissage">Apprentissage</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-4">
-					<div class="form-group">
-						<div class="fg-line">
-							<div class="select">
-								<select class="form-control" name="typeposte">
-									<option value="0">Type de poste</option>
-									<option value="temps_plein">Temps plein</option>
-									<option value="temps_partiel">Temps partiel</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-							<div class="col-sm-offset-9 col-sm-4">
-								<button type="submit"
-										class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
-									Rechercher
-								</button>
-							</div>
-						</div>
+			<!-- /.panel -->
 		</div>
+		<!-- /.col-lg-12 -->
 	</div>
-	</form>
-{% if offres is empty %}
-    Aucun résultat.
-{% else %}
-	{% for offre in offres %}
-	<div class="card">
-		<div class="card-header bgm-orange">
-			<h2>
-				<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" title="Acceder à l'offre" style="color:#ffffff">
-					{{ offre.titre|title }}
-				</a><br/>
-				{{ offre.entreprise }}
-				<small>
-					Le <time>{{ offre.updatedDate|localizeddate('full', 'none') }}</time> par
-					<a href="{{ path('amie_entreprises_fiche', { 'id': offre.idEntreprise, 'slug': offre.nomEntreprise|slugify}) }}" title="Offre postée par {{ offre.nomEntreprise }}" style="color:#ffffff">
-						{{ offre.nomEntreprise }}
-					</a>
-				</small>
-			</h2>
+	<!-- /.row -->
+</form>
+<!-- /.form -->
 
-			{% if is_granted('ROLE_SUPER_ENT') or is_granted('ROLE_SUPER_ADMIN') %}
-			<ul class="actions actions-alt">
-				<li class="dropdown">
-					<a href="" data-toggle="dropdown" aria-expanded="false">
-						<i class="glyphicon glyphicon-option-vertical"></i>
-					</a>
-					
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li>
-							<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" title="Afficher cette offre" onclick="">
-								<i class="glyphicon glyphicon-upload"></i>&nbsp;&nbsp;Afficher
-							</a>
-						</li>
-						{% if app.user.id == offre.idEntreprise or is_granted('ROLE_SUPER_ADMIN') %}
-						<li>
-							<a href="{{ path('amie_offresemplois_modifier', { 'id': offre.id}) }}" title="Modifier cette offre">
-								<i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;Modifier
-							</a>
-						</li>
-						<li>
-							{% if offre.actif == 'A' %}
-								<a href="{{ path('amie_offresemplois_desactiver', { 'id': offre.id}) }}" title="Désactiver cette offre" onclick="if(confirm('Etes vous sûr de vouloir désactiver cette offre ?')) return true; else return false;">
-									<i class="glyphicon glyphicon-eye-close"></i>&nbsp;&nbsp;Désactiver
-								</a>
-							{% else %}
-								<a href="{{ path('amie_offresemplois_activer', { 'id': offre.id}) }}" title="Ré-activer cette offre" onclick="if(confirm('Êtes vous sûr de réactiver cette offre ?')) return true; else return false;">
-									<i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;Activer
-								</a>
-								<a href="{{ path('amie_offresemplois_supprimer', { 'id': offre.id}) }}" title="Supprimer cette offre" onclick="if(confirm('Êtes vous sûr de vouloir supprimer définitivement cette offre ?')) return true; else return false;">
-									<i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Supprimer
-								</a>
-							{% endif %}
-						</li>
-						{% endif %}
-					</ul>
-				</li>
-			</ul>
-			{% endif %}
-		</div>
+<div class="row">
+	<div class="col-lg-12">
+		{% if offres is empty %}
+			Aucun résultat.
+		{% else %}
+			{% for offre in offres %}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2>{{ offre.titre|title }}
+							<small style="display: block">{{ offre.entreprise }}</small>
+						</h2>
+						<div class="btn-group pull-right">
+							<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-chevron-down fa-fw"></i>
+							</button>
+							<ul class="dropdown-menu slidedown">
+								{% if ( app.user and app.user.id == offre.idEntreprise ) or is_granted('ROLE_SUPER_ADMIN') %}
+								<li>
+									<a href="{{ path('amie_offresemplois_modifier', { 'id': offre.id}) }}" title="Modifier cette offre">
+										<i class="fa fa-pencil fa-fw"></i> Modifier
+									</a>
+								</li>
+								<li>
+									{% if offre.actif == 'A' %}
+										<a href="{{ path('amie_offresemplois_desactiver', { 'id': offre.id}) }}" title="Désactiver cette offre" onclick="if(confirm('Etes vous sûr de vouloir désactiver cette offre ?')) return true; else return false;">
+											<i class="fa fa-eye-slash fa-fw"></i> Désactiver
+										</a>
+									{% else %}
+										<a href="{{ path('amie_offresemplois_activer', { 'id': offre.id}) }}" title="Ré-activer cette offre" onclick="if(confirm('Êtes vous sûr de réactiver cette offre ?')) return true; else return false;">
+											<i class="fa fa-eye fa-fw"></i> Activer
+										</a>
+										<a href="{{ path('amie_offresemplois_supprimer', { 'id': offre.id}) }}" title="Supprimer cette offre" onclick="if(confirm('Êtes vous sûr de vouloir supprimer définitivement cette offre ?')) return true; else return false;">
+											<i class="fa fa-trash fa-fw"></i> Supprimer
+										</a>
+									{% endif %}
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+					<!-- /.panel-heading -->
+					<div class="panel-body">
+						{{ offre.descriptif|length > 50 ? offre.descriptif|slice(0, 100) ~ '...' : offre.descriptif }}
+						
+						<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" class="btn btn-default btn-block">Lire la suite</a>
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			{% endfor %}
+		{% endif %}
+	</div>
+	<!-- /.col-lg-8 -->
+</div>
+<!-- /.row -->
+<div align="center" class="dataTables_paginate paging_simple_numbers">
+	<ul class="pagination">
+	{{ pagerfanta(offres) }}
+	</ul>
+</div>
 
-		<div class="card-body card-padding">
-			<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}" title="Acceder à l'offre">{{ offre.descriptif|length > 50 ? offre.descriptif|slice(0, 50) ~ '...' : offre.descriptif }}</a>
-		</div>
-	</div>
-	{% endfor %}
-	<div align="center" class="pagerfanta">
-		{{ pagerfanta(offres) }}
-	</div>
-{% endif %}
+<div class="dataTables_paginate paging_simple_numbers" id="dataTables-miagistes_paginate">
+	<ul class="pagination">
+		<li class="paginate_button previous disabled" aria-controls="dataTables-miagistes" tabindex="0" id="dataTables-miagistes_previous">
+			<a href="#">Précédente</a>
+		</li>
+		<li class="paginate_button active" aria-controls="dataTables-miagistes" tabindex="0">
+			<a href="#">1</a>
+		</li>
+		<li class="paginate_button next disabled" aria-controls="dataTables-miagistes" tabindex="0" id="dataTables-miagistes_next">
+			<a href="#">Suivante</a>
+		</li>
+	</ul>
+</div>
 {% endblock %}

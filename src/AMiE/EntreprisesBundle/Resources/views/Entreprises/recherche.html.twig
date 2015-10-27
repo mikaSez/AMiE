@@ -2,33 +2,38 @@
 
 {% block title "Entreprises" %}
 
-{% block head "Recherche Entreprises" %}
+{% block css %}
+    <!-- DataTables CSS -->
+    <link href="{{ asset('bundles/amiehome/css/plugins/dataTables.bootstrap.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block head "Toutes les Entreprises" %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-body m-t-0">
-            <table class="table table-inner table-vmiddle">
-                <thead>
-                <tr>
-                    <th><h4><strong>Nom</strong></h4></th>
-                    <th><h4><strong>Siret</strong></h4></th>
-                    <th><h4><strong>Mail</strong></h4></th>
-                    <th><h4><strong>Ville</strong></h4></th>
-                    <th><h4><strong>Secteur d'activité</strong></h4></th>
-                    <th><h4></h4></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for entreprise in entreprises %}
-                    <tr>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="dataTables-entreprises">
+				<thead>
+					<tr>
+						<th>Nom</th>
+                        <th>Siret</th>
+						<th>Mail</th>
+						<th>Ville</th>
+						<th>Secteur d'activités</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for entreprise in entreprises %}
+					<tr>
                         <td>{{ entreprise.nom }}</td>
                         <td>{{ entreprise.siret }}</td>
                         <td>{{ entreprise.email }}</td>
                         <td>{{ entreprise.ville }}</td>
                         <td>{{ entreprise.secteur }}</td>
-
-                        <td>
-                            <ul class="actions">
+						<td>
+							<ul class="list-inline">
                                 <li>
                                     <a href="{{ path('amie_entreprises_fiche', { 'id': entreprise.id, 'slug': entreprise.nom|slugify}) }}"
                                        title="Afficher cette entreprise" onclick="">
@@ -44,71 +49,111 @@
                                         </a>
                                     </li>
                                 {%  endif %}
-                            </ul>
+							</ul>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+        <!-- /.table-responsive -->
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
 
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="6">Aucun résultat.</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+			
+<form action="{{ path('amie_entreprises_recherche') }}" method="POST">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3><i class="glyphicon glyphicon-search" style="display: inline"></i> Recherche avancée</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								{{ form_label(formRech.nom, 'Rechercher par nom') }}
+								{{ form_widget(formRech.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								{{ form_label(formRech.siret, 'Rechercher par numéro siret') }}
+								{{ form_widget(formRech.siret, { 'attr': {'class': 'form-control', 'placeholder': 'Siret'} }) }}
+							</div>
+						</div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+								{{ form_label(formRech.ville, 'Rechercher par ville') }}
+								{{ form_widget(formRech.ville, { 'attr': {'class': 'form-control', 'placeholder' : 'Ville'} }) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+								{{ form_label(formRech.secteur, 'Rechercher par secteur') }}
+								{{ form_widget(formRech.secteur, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+					</div>
+					<!-- /.row (nested) -->
+					<div class="col-sm-offset-9 col-sm-4">
+                        <button type="submit" name="submitAction" value="rechercher" class="btn btn-primary">
+							Rechercher
+                        </button>
+						<button type="submit" name="submitAction" value="exporter" class="btn btn-primary">
+							Exporter
+						</button>
+					</div>
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+</form>
+<!-- /.form -->
 
-    <div class="card">
-        <div class="card-header bgm-orange">
-            <h2><i class="glyphicon glyphicon-search" style="display: inline"></i> Recherche avancée</h2>
-        </div>
-        <form action="{{ path('amie_entreprises_recherche') }}" method="POST">
-            <div class="card-body card-padding">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <div class="fg-line">
-                            {{ form_label(formRech.nom, 'Rechercher par nom', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                            {{ form_widget(formRech.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <div class="fg-line">
-                            {{ form_label(formRech.siret, 'Rechercher par numéro siret', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                            {{ form_widget(formRech.siret, { 'attr': {'class': 'form-control', 'placeholder': 'Siret'} }) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <div class="fg-line">
-                            {{ form_label(formRech.ville, 'Rechercher par ville', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                            {{ form_widget(formRech.ville, { 'attr': {'class': 'form-control', 'placeholder' : 'Ville'} }) }}
-                        </div>
-                    </div>
-                </div>
-                    <div class="form-group">
-                        <div class="fg-line">
-                            {{ form_label(formRech.secteur, 'Rechercher par secteur', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                            {{ form_widget(formRech.secteur, { 'attr': {'class': 'form-control'} }) }}
-                        </div>
-                    </div>
-                </div>
-            <div class="row">
-                <div class="col-sm-offset-9 col-sm-4">
-					<button type="submit" name="submitAction" value="rechercher"
-                      class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
-                        Rechercher
-                    </button>
-					<button type="submit" name="submitAction" value="exporter"
-                       class="btn btn-primary btn-file m-r-10 waves-effect waves-button waves-float">
-                         Exporter
-                   </button>
-                </div>
-            </div>
-        </form>
-        <br/>
-    </div>
+	{% block js %}
+		<!-- DataTables JavaScript -->
+		<script src="{{ asset('bundles/amiehome/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+		<script src="{{ asset('bundles/amiehome/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+		
+		<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+		<script>
+		$(document).ready( function() {
+			$('#dataTables-entreprises').dataTable( {
+				"searching": false,
+				"lengthMenu": [ 10, 25, 50, 75, 100 ],
+				 "language": {
+					"emptyTable": "Aucun résultat.",
+					"decimal":        "",
+					"info":           "_START_ sur _TOTAL_ entreprise(s) inscrite(s)",
+					"infoEmpty":      "",
+					"infoFiltered":   "(filtered from _MAX_ total entries)",
+					"infoPostFix":    "",
+					"thousands":      ",",
+					"lengthMenu":     "Voir _MENU_ résultats par page",
+					"loadingRecords": "Chargement...",
+					"processing":     "Chargement...",
+					"search":         "Recherche :",
+					"zeroRecords":    "Pas de résultat correspondant trouvé.",
+					"paginate": {
+						"first":      "Première",
+						"last":       "Dernière",
+						"next":       "Suivante",
+						"previous":   "Précédente"
+					},
+					"aria": {
+						"sortAscending":  ": activate to sort column ascending",
+						"sortDescending": ": activate to sort column descending"
+					}
+				},
+			});
+		});
+		</script>
+	{% endblock %}
 {% endblock %}
-
