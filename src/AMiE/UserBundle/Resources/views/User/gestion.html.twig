@@ -41,36 +41,36 @@
                                 </li>
                                 <li>
                                     <a href="{{ path('amie_user_responsable', {'id': utilisateur.id}) }}"
-                                       title="Passer cet utilisateur responsable" onclick="">
+                                       title="Passer cet utilisateur responsable" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
                                         <i class="fa fa-star fa-fw"></i>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ path('amie_user_etudiant', {'id': utilisateur.id}) }}"
-                                       title="Passer cet utilisateur étudiant" onclick="">
+                                       title="Passer cet utilisateur étudiant" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
                                         <i class="fa fa-graduation-cap fa-fw"></i>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ path('amie_user_entreprise', {'id': utilisateur.id}) }}"
-                                       title="Passer cet utilisateur entreprise" onclick="">
+                                       title="Passer cet utilisateur entreprise" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
                                         <i class="fa fa-briefcase fa-fw"></i>
                                     </a>
                                 </li>
                                 {% if utilisateur.enabled == '1' %}
-                                    <a href="{{ path('amie_user_desactiver', { 'id': utilisateur.id}) }}" title="Désactiver cet utilisateur" onclick="if(confirm('Êtes vous sûr de désactiver cet utilisateur ?')) return true; else return false;">
+                                    <a href="{{ path('amie_user_desactiver', { 'id': utilisateur.id}) }}" title="Désactiver cet utilisateur" onclick="if(confirm('Confirmer la désactivation de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
                                         <i class="fa fa-eye-slash fa-fw"></i>
                                     </a>
                                 {% else %}
                                     <li>
-                                        <a href="{{ path('amie_user_activer', { 'id': utilisateur.id}) }}" title="Ré-activer cet utilisateur" onclick="if(confirm('Êtes vous sûr de réactiver cet utilisateur ?')) return true; else return false;">
+                                        <a href="{{ path('amie_user_activer', { 'id': utilisateur.id}) }}" title="Activer cet utilisateur" onclick="if(confirm('Confirmer l\'activation de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
                                             <i class="fa fa-eye fa-fw"></i>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ path('amie_user_supprimeruser', { 'id': utilisateur.id}) }}"
-                                           title="Supprimer cette utilisateur"
-                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+                                           title="Supprimer cet utilisateur"
+                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
                                             <i class="fa fa-trash fa-fw"></i>
                                         </a>
                                     </li>

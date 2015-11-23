@@ -5,10 +5,5 @@
 {% block head "Compte enregistré" %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
-    {% if app.session is not empty %}
-        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-        {% if targetUrl is not empty %}<p><a
-                    href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
-    {% endif %}
+Votre compte a bien été enregistré. Veuillez attendre qu'un responsable procède à sa validation. Un mail vous sera alors envoyé.
 {% endblock fos_user_content %}

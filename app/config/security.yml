@@ -52,6 +52,7 @@ security:
     access_control:
         - { path: ^/connexion$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/inscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/inscription/confirmed/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/compte, role: ROLE_ADMIN }

@@ -1,122 +1,123 @@
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="post"
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST"
       class="fos_user_registration_register">
-    <div class="card">
-        <div class="card-header"><h2>Informations de connexion</h2></div>
-        <div class="card-body card-padding">
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.username, 'Nom d\'utilisateur *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.username, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Nom d\'utilisateur'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.email, 'Adresse email *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.email, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Email'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.plainPassword.children['first'], 'Mot de passe *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.plainPassword.children['first'], { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Mot de passe'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.plainPassword.children['second'], 'Vérification du mot de passe *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.plainPassword.children['second'], { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Répéter mot de passe'} }) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header"><h2>Coordonnées</h2></div>
-        <div class="card-body card-padding">
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.typeUt, 'Type de compte *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.typeUt, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Type'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.nom, 'Nom *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.nom, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Nom'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.prenom, 'Prénom (seulement profil étudiant)', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.prenom, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Prénom'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.siret, 'Siret (seulement profil entreprise)', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.siret, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Siret'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.rue, 'Rue, voie *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.rue, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Rue'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.codePostal, 'Code postal *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.codePostal, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'CP'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.ville, 'Ville *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.ville, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Ville'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.numero, 'Numéro de téléphone *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.numero, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Numéro'} }) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header"><h2>Secteur, métier</h2></div>
-        <div class="card-body card-padding">
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.secteur, 'Secteur d\'activités *', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.secteur, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Secteur'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.sectAutre, 'Si autre, précisez', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.sectAutre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Autre secteur'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.metier, 'Métier dans l\'entreprise (seulement profil étudiant)', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.metier, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Métier'} }) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="fg-line">
-                    {{ form_label(form.metAutre, 'Si autre, précisez', { 'attr': {'class': 'c-black f-500 m-b-20'} }) }}
-                    {{ form_widget(form.metAutre, { 'attr': {'class': 'form-control input-lg', 'placeholder': 'Autre métier'} }) }}
-                </div>
-            </div>
-        </div>
-    </div>
-    {{ form_rest(form) }}
-    <div class="row">
-        <div class="col-sm-offset-10 col-sm-1">
-            <button type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}"
-                    class="btn btn-primary btn-sm m-t-10 waves-effect waves-button waves-float">Enregistrer
-            </button>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4><i class="fa fa-power-off fa-fw"></i> Informations de connexion</h4>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.username, 'Nom d\'utilisateur *') }}
+								{{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.email, 'Adresse email *') }}
+								{{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.plainPassword.children['first'], 'Mot de passe *') }}
+								{{ form_widget(form.plainPassword.children['first'], { 'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.plainPassword.children['second'], 'Vérification du mot de passe *') }}
+								{{ form_widget(form.plainPassword.children['second'], { 'attr': {'class': 'form-control', 'placeholder': 'Répéter mot de passe'} }) }}
+							</div>
+						</div>
+						<!-- /.col-lg-12 -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4><i class="fa fa-phone fa-fw"></i> Coordonnées</h4>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.typeUt, 'Type de compte *') }}
+								{{ form_widget(form.typeUt, { 'attr': {'class': 'form-control', 'placeholder': 'Type'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.nom, 'Nom *') }}
+								{{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.prenom, 'Prénom (seulement profil étudiant)') }}
+								{{ form_widget(form.prenom, { 'attr': {'class': 'form-control', 'placeholder': 'Prénom'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.siret, 'Siret (seulement profil entreprise)') }}
+								{{ form_widget(form.siret, { 'attr': {'class': 'form-control', 'placeholder': 'Siret'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.rue, 'Rue, voie *') }}
+								{{ form_widget(form.rue, { 'attr': {'class': 'form-control', 'placeholder': 'Rue'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.codePostal, 'Code postal *') }}
+								{{ form_widget(form.codePostal, { 'attr': {'class': 'form-control', 'placeholder': 'CP'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.ville, 'Ville *') }}
+								{{ form_widget(form.ville, { 'attr': {'class': 'form-control', 'placeholder': 'Ville'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.numero, 'Numéro de téléphone *') }}
+								{{ form_widget(form.numero, { 'attr': {'class': 'form-control', 'placeholder': 'Numéro'} }) }}
+							</div>
+						</div>
+						<!-- /.col-lg-12 -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4><i class="fa fa-briefcase fa-fw"></i> Secteur, métier</h4>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="form-group">
+								{{ form_label(form.secteur, 'Secteur d\'activités *') }}
+								{{ form_widget(form.secteur, { 'attr': {'class': 'form-control', 'placeholder': 'Secteur'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.sectAutre, 'Si autre, précisez') }}
+								{{ form_widget(form.sectAutre, { 'attr': {'class': 'form-control', 'placeholder': 'Autre secteur'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.metier, 'Métier dans l\'entreprise (seulement profil étudiant)') }}
+								{{ form_widget(form.metier, { 'attr': {'class': 'form-control', 'placeholder': 'Métier'} }) }}
+							</div>
+							<div class="form-group">
+								{{ form_label(form.metAutre, 'Si autre, précisez') }}
+								{{ form_widget(form.metAutre, { 'attr': {'class': 'form-control', 'placeholder': 'Autre métier'} }) }}
+							</div>
+						</div>
+						<!-- /.col-lg-12 -->
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+			{{ form_rest(form) }}
+		</div>
+		<!-- /.col-lg-12 -->
+		<div class="col-sm-offset-10 col-sm-1">
+			<button type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}">Valider</button>
+		</div>
+	</div>
+	<!-- /.row -->
 </form>
+<!-- /.form -->

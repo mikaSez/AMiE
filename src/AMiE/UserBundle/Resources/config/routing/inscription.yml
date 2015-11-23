@@ -12,12 +12,12 @@ fos_user_registration_check_email:
 
 fos_user_registration_confirm: 
     pattern: /confirm/{token}
-    defaults : { _controller :FOSUserBundle:Registration:confirm }
+    defaults : { _controller :AMiEUserBundle:Registration:confirm }
     requirements: 
         _method: GET|POST
 
 fos_user_registration_confirmed: 
     pattern: /confirmed 
-    defaults : { _controller :FOSUserBundle:Registration:confirmed }
+    defaults : { _controller :AMiEUserBundle:Registration:confirmed }
     requirements: 
         _method: GET

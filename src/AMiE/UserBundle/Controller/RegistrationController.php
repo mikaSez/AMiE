@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use AMiE\HomeBundle\Entity\Notification;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Controller managing the registration
@@ -44,29 +46,30 @@ class RegistrationController extends BaseController
                 $route = 'fos_user_registration_check_email';
             } else {
                 $authUser = true;
-                $route = 'fos_user_registration_confirmed';
+				$user->setEnabled(false);
+				$this->container->get('fos_user.user_manager')->updateUser($user);
+				
+				$notification = new Notification();
+				$notification->setAction('Nouvel utilisateur')
+                ->setDescriptif('Un nouvel utilisateur s\'est inscrit');
+				$this->getDoctrine()->getManager()->persist($notification);
+				$this->getDoctrine()->getManager()->flush();
+				
+				// envoi d'un mail
+				
+               $route = 'fos_user_registration_confirmed';
             }
 
-            $this->setFlash('fos_user_success', 'L\'utilisateur a bien été enregistré.');
             $url = $this->container->get('router')->generate($route);
             $response = new RedirectResponse($url);
-
-            if ($authUser) {
-                $this->authenticateUser($user, $response);
-            }
 
             return $response;
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.' . $this->getEngine(), array(
+        return $this->container->get('templating')->renderResponse('AMiEUserBundle:Registration:register.html.twig', array(
             'form' => $form->createView(),
         ));
 
-        /*$response = parent::registerAction();
-
-        // do custom stuff
-
-        return $response; */
     }
 
 
@@ -100,7 +103,7 @@ class RegistrationController extends BaseController
         }
 
         $user->setConfirmationToken(null);
-        $user->setEnabled(true);
+     //   $user->setEnabled(true);
         $user->setLastLogin(new \DateTime());
 
         $this->container->get('fos_user.user_manager')->updateUser($user);
@@ -115,14 +118,13 @@ class RegistrationController extends BaseController
      */
     public function confirmedAction()
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+       /* $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
-        }
+        } */
 
-        return $this->container->get('templating')->renderResponse('AMiEUserBundle:Registration:confirmed.html.' . $this->getEngine(), array(
-            'user' => $user,
-        ));
+        return $this->container->get('templating')->renderResponse('AMiEUserBundle:Registration:confirmed.html.twig'
+        );
     }
 
     /**
