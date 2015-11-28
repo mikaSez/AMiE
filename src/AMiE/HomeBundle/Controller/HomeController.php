@@ -3,6 +3,7 @@ namespace AMiE\HomeBundle\Controller;
 
 use AMiE\HomeBundle\Entity\Message;
 use AMiE\HomeBundle\Entity\Conversation;
+use AMiE\HomeBundle\Entity\Notification;
 
 class HomeController extends CoreController
 {
@@ -272,6 +273,17 @@ class HomeController extends CoreController
             'actualites'    => $actualites,
             'formulaires'   => $formulaires
         ));
+    }
+	
+	public function supprimernotificationsAction(Notification $notif)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $layout = $this->getLayout($em);
+        $em->remove($notif);
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('amie_home_notifications'));
     }
 
     public function supprimermessageAction($idConversation)

@@ -20,25 +20,41 @@
 				<div class="panel-body">
 				{% for notification in notifications %}
 					{% if "utilisateur" in notification.action %}
-					<div class="alert alert-success alert-dismissable">						
+					<div class="alert alert-success alert-dismissable">
+						<a href="{{ path('amie_home_supprimernotifications', { 'id': notification.id}) }}" title="Supprimer une notification"
+                                onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;" class="close">
+							<i class="fa fa-trash fa-fw"></i>
+						</a>				
 						{{ notification.descriptif }}.
 						<span class="pull-right text-muted small"><em>{{ notification.postedDate|date("d/m/Y") }}</em>
 						</span>
 					</div>
 					{% elseif "formulaire" in notification.action %}
-					<div class="alert alert-info alert-dismissable">						
+					<div class="alert alert-info alert-dismissable">
+						<a href="{{ path('amie_home_supprimernotifications', { 'id': notification.id}) }}" title="Supprimer une notification"
+                                onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;" class="close">
+							<i class="fa fa-trash fa-fw"></i>
+						</a>					
 						{{ notification.descriptif }}.
 						<span class="pull-right text-muted small"><em>{{ notification.postedDate|date("d/m/Y") }}</em>
 						</span>
 					</div>
 					{% elseif "offre" in notification.action %}
-					<div class="alert alert-warning alert-dismissable">						
+					<div class="alert alert-warning alert-dismissable">
+						<a href="{{ path('amie_home_supprimernotifications', { 'id': notification.id}) }}" title="Supprimer une notification"
+                                onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;" class="close">
+							<i class="fa fa-trash fa-fw"></i>
+						</a>					
 						{{ notification.descriptif }}.
 						<span class="pull-right text-muted small"><em>{{ notification.postedDate|date("d/m/Y") }}</em>
 						</span>
 					</div>
 					{% elseif "actualité" in notification.action %}
-					<div class="alert alert-danger alert-dismissable">						
+					<div class="alert alert-danger alert-dismissable">		
+						<a href="{{ path('amie_home_supprimernotifications', { 'id': notification.id}) }}" title="Supprimer une notification"
+                                onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;" class="close">
+							<i class="fa fa-trash fa-fw"></i>
+						</a>					
 						{{ notification.descriptif }}.
 						<span class="pull-right text-muted small"><em>{{ notification.postedDate|date("d/m/Y") }}</em>
 						</span>

@@ -31,3 +31,9 @@ amie_home_messagerie_supprimer:
 amie_home_notifications:
     path:     /notifications
     defaults: { _controller: AMiEHomeBundle:Home:notifications }
+
+amie_home_supprimernotifications:
+    path:    /notifications/supprimer/{id}
+    defaults: { _controller: AMiEHomeBundle:Home:supprimernotifications }
+    requirements:
+        id: \d+
