@@ -4,25 +4,19 @@ AMiE : Anciens Miagistes d'Evry
 A Symfony project created on April 9, 2015, 7:36 am.
 
 Dans le cadre du projet Recherce & Développement de l'année de Master 2 MIAGE.
-Nous poursuivons le develloppement d'un site web.
-Ce site web permet de créer un réseau d’anciens miagiste de l’université d’Evry.
+Poursuite du projet commencé en Master 1 MIAGE.
 
-Fonctionnalités:
+Objectif :
+-	Avoir un site permettant un suivi des anciens miagistes de l’université d’Evry, et propose des offres d'emploi.
 
-La première version du site permettait de :
+License :
 
--	Remplir un formulaire de fin d'études afin d'alimenter la base de données SQL
--	Le responsable avait la possibilité de visualiser des reportings sous forme de graphique 
--	S'inscrire sur le site en tant que Miagiste, Entreprise
-
-Licence:
-
--	Licence MIT
+-	License MIT
 
 Compatibilité :
 
--	Sur tous les supports multimédia puisque l’application est responsive
--	Utilisation de l’application sur n’importe quel navigateur internet
+-	Tous les supports multimédia (responsive)
+-	Tous les navigateurs
 
 Contributeurs :
 
