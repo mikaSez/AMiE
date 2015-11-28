@@ -59,14 +59,14 @@ amie_user_afficheruser:
     requirements:
         id: \d+
 
-amie_user_desactiver:
+amie_user_desactiveruser:
     path:     /activer/{id}
-    defaults: { _controller: AMiEUserBundle:User:desactiver }
+    defaults: { _controller: AMiEUserBundle:User:desactiveruser }
     requirements:
         id: \d+
 
-amie_user_activer:
+amie_user_activeruser:
     path:     /desactiver/{id}
-    defaults: { _controller: AMiEUserBundle:User:activer }
+    defaults: { _controller: AMiEUserBundle:User:activeruser }
     requirements:
         id: \d+

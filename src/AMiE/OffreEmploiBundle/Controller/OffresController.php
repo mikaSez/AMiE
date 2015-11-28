@@ -427,7 +427,9 @@ class OffresController extends CoreController
         $em->persist($offre);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('amie_offresemplois_offres'));
+        //return $this->redirect($this->generateUrl('amie_offresemplois_offres'));
+        $referer = $this->getRequest()->headers->get('referer');
+		return $this->redirect($referer);
     }
 
     public function activerAction(OffreEmploi $offre)
@@ -439,9 +441,12 @@ class OffresController extends CoreController
         $em->persist($offre);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('amie_offresemplois_offres', array(
+     /*   return $this->redirect($this->generateUrl('amie_offresemplois_offres', array(
             'actif'    => 'inactif'
-        )));
+        ))); */
+		
+		$referer = $this->getRequest()->headers->get('referer');
+		return $this->redirect($referer);
     }
 
     public function supprimerAction(OffreEmploi $offre)
@@ -457,7 +462,9 @@ class OffresController extends CoreController
 
         $em->flush();
 
-        return $this->redirect($this->generateUrl('amie_offresemplois_offres'));
+        // return $this->redirect($this->generateUrl('amie_offresemplois_offres'));
+		$referer = $this->getRequest()->headers->get('referer');
+		return $this->redirect($referer);
     }
 }
 ?>

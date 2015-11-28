@@ -2,8 +2,6 @@
 namespace AMiE\UserBundle\Controller;
 
 use AMiE\HomeBundle\Controller\CoreController;
-use AMiE\UserBundle\Entity\UserSearch;
-use AMiE\UserBundle\Form\Type\UserSearchType;
 use AMiE\UserBundle\Form\Type\ProfileFormType;
 use AMiE\UserBundle\Entity\User;
 use AMiE\UserBundle\Entity\UserRepository;
@@ -13,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use AMiE\OffreEmploiBundle\Entity\OffreEmploi;
+use AMiE\OffreEmploiBundle\Entity\OffreEmploiRepository;
 
 class UserController extends CoreController
 {
@@ -20,18 +20,16 @@ class UserController extends CoreController
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
-        $recherche = new UserSearch();
-        $formRech = $this->createForm(new UserSearchType(), $recherche);
-        $requete = $this->get('request');
-
 
         $query = $this->getDoctrine()->getRepository('AMiEUserBundle:User')->searchAllUsers();
         $users = $query->getResult();
+		
+		$offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findAll();
 
         return $this->render('AMiEUserBundle:User:gestion.html.twig', array(
             'layout' => $layout,
             'utilisateurs' => $users,
-            'formRech' => $formRech->createView()
+			'offres'   => $offres
         ));
     }
 
@@ -44,8 +42,6 @@ class UserController extends CoreController
         $em->flush();
 
         return $this->redirect($this->generateUrl('amie_user_gestion'));
-
-
     }
 
     public function afficheruserAction(User $user)
@@ -130,7 +126,7 @@ class UserController extends CoreController
 
     }
 
-    public function desactiverAction(User $user)
+    public function desactiveruserAction(User $user)
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
@@ -142,7 +138,7 @@ class UserController extends CoreController
         return $this->redirect($this->generateUrl('amie_user_gestion'));
     }
 
-    public function activerAction(User $user)
+    public function activeruserAction(User $user)
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
@@ -152,8 +148,41 @@ class UserController extends CoreController
         $em->flush();
 
         return $this->redirect($this->generateUrl('amie_user_gestion'));
+    }
+	
+	public function desactiveroffreAction(OffreEmploi $offre)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $layout = $this->getLayout($em);
 
+        $offre->setActif('F');
+        $em->persist($offre);
+        $em->flush();
 
+        return $this->redirect($this->generateUrl('amie_user_gestion'));
+    }
+
+    public function activeroffreAction(OffreEmploi $offre)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $layout = $this->getLayout($em);
+
+        $offre->setActif('A');
+        $em->persist($offre);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('amie_user_gestion'));
+    }
+	
+	public function supprimeroffreAction(OffreEmploi $offre)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $layout = $this->getLayout($em);
+        $em->remove($offre);
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('amie_user_gestion'));
     }
 
 }
