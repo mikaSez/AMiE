@@ -208,7 +208,7 @@ class OffresController extends CoreController
 
             $notification = new Notification();
             $notification->setAction('Ajout d\'une offre')
-                         ->setDescriptif('L\'entreprise '.$user->getUsername().' a posté une offre : '.$offre->getTitre())
+                         ->setDescriptif('Nouvelle offre : '.$offre->getTitre())
                          ->setIdUser($user->getId())
                          ->setIdOffre($offre->getId());
             $em->persist($notification);
@@ -394,7 +394,8 @@ class OffresController extends CoreController
                     $offre->setIdEntreprise($user->getId())
                           ->setNomEntreprise($user->getNom())
                           ->setAddedBy($user->getUsername())
-                          ->setUpdatedBy($user->getUsername());
+                          ->setUpdatedBy($user->getUsername())
+						  ->setActif('F');
                 }else{
                     // cas de la modification
                     $offre->setUpdatedBy($user->getUsername())
