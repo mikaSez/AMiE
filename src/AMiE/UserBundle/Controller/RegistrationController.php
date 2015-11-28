@@ -55,9 +55,18 @@ class RegistrationController extends BaseController
 				$this->getDoctrine()->getManager()->persist($notification);
 				$this->getDoctrine()->getManager()->flush();
 				
-				// envoi d'un mail
-				
                $route = 'fos_user_registration_confirmed';
+			   
+			   
+			   	// envoi d'un mail
+			/*	$message = \Swift_Message::newInstance();
+				$message->setSubject("Bienvenue");
+				$message->setFrom('alison.demolle@gmail.com');
+				$message->setTo('demolle.alison@orange.fr');
+				$message->setBody('corps du message');
+				
+				$this->container->get('mailer')->send($message); */
+
             }
 
             $url = $this->container->get('router')->generate($route);
