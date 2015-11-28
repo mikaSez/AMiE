@@ -16,11 +16,12 @@ use Pagerfanta\Exception\NotValidCurrentPageException;
 
 class NewsController extends CoreController
 {
-    public function indexAction($actif, $page)
+    public function indexAction($actif, $page, $maxPerPage)
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
-		$maxPerPage = 2;
+		
+		//$maxPerPage = 2;
         switch ($actif){
             case 'actif':
                 $actualites = $em->getRepository('AMiEActualitesBundle:Actualite')->findBy(array('actif' => 'A'), array('updatedDate' => 'DESC'));
@@ -92,6 +93,7 @@ class NewsController extends CoreController
             'images'                => $imagesArray
         ));
     }
+	
     public function actualiteAction(Actualite $actualite)
     {
         $em = $this->getDoctrine()->getManager();

@@ -4,6 +4,11 @@
 
 {% block head "Toutes les actualités" %}
 
+{% block css %}
+    <!-- DataTables CSS -->
+    <link href="{{ asset('bundles/amiehome/css/plugins/dataTables.bootstrap.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block adminActions %}{% if is_granted('ROLE_SUPER_ADMIN') %}
 	<ul class="list-inline pull-right">
 		<li>
@@ -12,7 +17,7 @@
 			</a>
 		</li>
         <li>
-			<a href="{{ path('amie_actualites_news', { 'actif': 'inactif' }) }}" title="Voir les offres désactivées">
+			<a href="{{ path('amie_actualites_news', { 'actif': 'inactif', 'maxPerPage': '10' }) }}" title="Voir les offres désactivées">
 			<i class="fa fa-eye-slash fa-fw" style="font-size:20px;{% if actif == 'inactif' %}color: #000000;{% endif %}"></i>
 			</a>
 		</li>
@@ -21,6 +26,21 @@
 
 {% block content %}
 <div class="row">
+	<div class="col-sm-6">
+		<label>
+		<div class="form-group">
+			<select class="form-control input-sm" name="selectPage">
+				<option value="2" onclick="location.href='{{ path('amie_actualites_news', {'maxPerPage': '2'}) }}';">2</option>
+				<option value="10" onclick="location.href='{{ path('amie_actualites_news', {'maxPerPage': '10'}) }}';">10</option>
+				<option value="25" onclick="location.href='{{ path('amie_actualites_news', {'maxPerPage': '10'}) }}';">25</option>
+				<option value="50" onclick="location.href='{{ path('amie_actualites_news', {'maxPerPage': '10'}) }}';">50</option>
+				<option value="75" onclick="location.href='{{ path('amie_actualites_news', {'maxPerPage': '10'}) }}';">75</option>
+				<option value="100" onclick="location.href='{{ path('amie_actualites_news', {'maxPerPage': '10'}) }}';">100</option>
+			</select> 
+résultats par page
+		</div>
+		</label>
+	</div>
 	<div class="col-lg-12">
 		{% if actualites is empty %}
 			Aucun résultat.
@@ -82,7 +102,10 @@
 	<!-- /.col-lg-8 -->
 </div>
 <!-- /.row -->
-<div align="center" class="pagerfanta">
-	{{ pagerfanta(actualites) }}
+<div align="center" class="paginate">
+	<ul class="pagination">
+	{{ pagerfanta(actualites, 'twitter_bootstrap3') }}
+	</ul>
 </div>
+
 {% endblock %}

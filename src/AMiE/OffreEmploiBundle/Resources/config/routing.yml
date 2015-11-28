@@ -1,6 +1,6 @@
 amie_offresemplois_offres:
-    path:     /{actif}/{page}
-    defaults: { _controller: AMiEOffreEmploiBundle:Offres:index, actif: actif, page: 1 }
+    path:     /{actif}/{page}/{maxPerPage}
+    defaults: { _controller: AMiEOffreEmploiBundle:Offres:index, actif: actif, page: 1, maxPerPage: 2 }
     requirements:
         actif: actif|inactif|tous
 

@@ -22,11 +22,11 @@ use Pagerfanta\Exception\NotValidCurrentPageException;
 
 class OffresController extends CoreController
 {
-    public function indexAction($actif, $page)
+    public function indexAction($actif, $page, $maxPerPage)
     {
         $em = $this->getDoctrine()->getManager();
         $layout = $this->getLayout($em);
-		$maxPerPage = 1;
+		// $maxPerPage = 1;
 		
 		// suppression des offres datant de plus d'un an
 		$dateOld = new \Datetime();
