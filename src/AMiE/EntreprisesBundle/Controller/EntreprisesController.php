@@ -9,6 +9,9 @@ use AMiE\UserBundle\Entity\User;
 use AMiE\UserBundle\Entity\UserRepository;
 use Ob\HighchartsBundle\Highcharts\Highchart;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use AMiE\EntreprisesBundle\Entity\Partenaire;
+use AMiE\EntreprisesBundle\Entity\PartenaireRepository;
+use AMiE\EntreprisesBundle\Form\Type\PartenaireType;
 
 class EntreprisesController extends CoreController
 {
@@ -266,6 +269,18 @@ class EntreprisesController extends CoreController
 
         return $response;
 	}
+	
+	public function supprimerpartenaireAction(Partenaire $part)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($part);
+
+        $em->flush();
+
+		$referer = $this->getRequest()->headers->get('referer');
+		return $this->redirect($referer);
+    }
 	
 }
 

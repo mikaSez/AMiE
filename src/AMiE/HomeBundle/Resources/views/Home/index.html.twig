@@ -61,33 +61,24 @@
 		<!-- /.panel -->
 	</div>
 	<!-- /.col-lg-8 -->
+
 	
 	<div class="col-lg-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-bell fa-fw"></i> Notifications
+				<i class="fa fa-globe fa-fw"></i> Partenaires
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div class="list-group">
-					{% for notification in layout.notifications %}
-					{% if "ajout" in layout.notification.action %}
-						<a href="#" class="list-group-item">
-							<i class="fa fa-plus fa-fw"></i> {{ layout.notification.action }}
-							<span class="pull-right text-muted small"><em>{{ layout.notification.postedDate|date("d/m/Y") }}</em>
-							</span>
+					{% for partenaire in partenaires %}
+						<a href="{{ partenaire.url }}" target="_blank" class="list-group-item">
+							{{ partenaire.nom }}
 						</a>
-					{% elseif "modification" in layout.notification.action %}
-						<a href="#" class="list-group-item">
-							<i class="fa fa-edit fa-fw"></i> {{ layout.notification.action }}
-							<span class="pull-right text-muted small"><em>{{ layout.notification.postedDate|date("d/m/Y") }}</em>
-							</span>
-						</a>
-					{% endif %}
+					{% else %}
 					{% endfor %}
 				</div>
-				<!-- /.list-group -->
-				<a href="{{ path('amie_home_notifications') }}" title="Notifications" class="btn btn-default btn-block">Voir toutes les notifications</a>
+					<a href="{{ path('amie_home_partenaires') }}" title="Partenaires" class="btn btn-default btn-block">Voir tous les partenaires</a>
 			</div>
 			<!-- /.panel-body -->
 		</div>

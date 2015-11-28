@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use AMiE\OffreEmploiBundle\Entity\OffreEmploi;
 use AMiE\OffreEmploiBundle\Entity\OffreEmploiRepository;
+use AMiE\EntreprisesBundle\Entity\Partenaire;
+use AMiE\EntreprisesBundle\Entity\PartenaireRepository;
+use AMiE\EntreprisesBundle\Form\Type\PartenaireType;
 
 class UserController extends CoreController
 {
@@ -25,11 +28,30 @@ class UserController extends CoreController
         $users = $query->getResult();
 		
 		$offres = $em->getRepository('AMiEOffreEmploiBundle:OffreEmploi')->findAll();
+		$partenaires = $em->getRepository('AMiEEntreprisesBundle:Partenaire')->findAll();
+		
+		$partenaire = new Partenaire();
+        $formPart = $this->createForm(new PartenaireType(), $partenaire);
+        $requete = $this->get('request');
+
+        if ($requete->getMethod() == 'POST') {
+
+            $formPart->handleRequest($requete);
+            $partenaire = $formPart->getData();
+            $em->persist($partenaire);
+            $em->flush();
+			
+			$referer = $this->getRequest()->headers->get('referer');
+			
+			return $this->redirect($referer);
+        }
 
         return $this->render('AMiEUserBundle:User:gestion.html.twig', array(
             'layout' => $layout,
             'utilisateurs' => $users,
-			'offres'   => $offres
+			'offres'   => $offres,
+			'formPart' => $formPart->createView(),
+			'partenaires' => $partenaires
         ));
     }
 

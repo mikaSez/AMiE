@@ -17,3 +17,9 @@ amie_entreprises_supprimerentreprise:
     defaults: { _controller: AMiEEntreprisesBundle:Entreprises:supprimerentreprise }
     requirements:
         id: \d+
+
+amie_entreprises_supprimerpartenaire:
+    path:    /partenaire/{id}
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:supprimerpartenaire }
+    requirements:
+        id: \d+

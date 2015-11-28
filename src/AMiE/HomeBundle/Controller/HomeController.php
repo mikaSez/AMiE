@@ -4,12 +4,15 @@ namespace AMiE\HomeBundle\Controller;
 use AMiE\HomeBundle\Entity\Message;
 use AMiE\HomeBundle\Entity\Conversation;
 use AMiE\HomeBundle\Entity\Notification;
+use AMiE\EntreprisesBundle\Entity\Partenaire;
 
 class HomeController extends CoreController
 {
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+		
+		$partenaires = $em->getRepository('AMiEEntreprisesBundle:Partenaire')->findAll();
 
         $notifications = $em->getRepository('AMiEHomeBundle:Notification')->findBy(array('vue' => 0));
         foreach($notifications as $notification) {
@@ -36,7 +39,8 @@ class HomeController extends CoreController
         return $this->render('AMiEHomeBundle:Home:index.html.twig', array(
             'layout'     => $layout,
             'actualites' => $actualites,
-            'offres'     => $offres
+            'offres'     => $offres,
+			'partenaires' => $partenaires
         ));
     }
 
@@ -303,4 +307,18 @@ class HomeController extends CoreController
 
         return $this->redirect($this->generateUrl('amie_home_messagerie_sans_conversation'));
     }
+	
+	public function partenairesAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$layout = $this->getLayout($em);
+		
+		$partenaires = $em->getRepository('AMiEEntreprisesBundle:Partenaire')->findAll();
+
+
+        return $this->render('AMiEHomeBundle:Home:partenaire.html.twig', array(
+            'layout'     => $layout,
+			'partenaires' => $partenaires
+        ));
+	}
 }
