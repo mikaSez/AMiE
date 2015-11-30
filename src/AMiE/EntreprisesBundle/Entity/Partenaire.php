@@ -26,6 +26,11 @@ class Partenaire
      * @ORM\Column(type="string", length=255)
      */
     protected $url;
+	
+	/**
+     * @ORM\Column(type="string", length=455)
+     */
+    protected $description;
 
 
     public function getId()
@@ -53,5 +58,15 @@ class Partenaire
 	public function setUrl($url)
 	{
 		$this->url = $url;
+	}
+	
+	public function getDescription()
+	{
+		return $this->description;
+	}
+	
+	public function setDescription($description)
+	{
+		$this->description = $description;
 	}
 }

@@ -12,6 +12,13 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use AMiE\EntreprisesBundle\Entity\Partenaire;
 use AMiE\EntreprisesBundle\Entity\PartenaireRepository;
 use AMiE\EntreprisesBundle\Form\Type\PartenaireType;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use FOS\UserBundle\Model\UserInterface;
 
 class EntreprisesController extends CoreController
 {
@@ -281,6 +288,48 @@ class EntreprisesController extends CoreController
 		$referer = $this->getRequest()->headers->get('referer');
 		return $this->redirect($referer);
     }
+	
+	public function partenairesAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$layout = $this->getLayout($em);
+		
+		$partenaires = $em->getRepository('AMiEEntreprisesBundle:Partenaire')->findAll();
+
+
+        return $this->render('AMiEEntreprisesBundle:Entreprises:partenaires.html.twig', array(
+            'layout'     => $layout,
+			'partenaires' => $partenaires
+        ));
+	}
+	
+	public function modifierpartenaireAction(Partenaire $p)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$layout = $this->getLayout($em);
+		
+	
+        $formPartModif = $this->createForm(new PartenaireType(), $p);
+
+        $requete = $this->get('request');
+
+        if ($requete->getMethod() == 'POST') {
+            $formPartModif->handleRequest($requete);
+            //  if($formPartModif->isValid()){
+            $p = $formPartModif->getData();
+            $em->persist($p);
+            $em->flush();
+
+			return $this->redirect($this->generateUrl('amie_user_gestion'));
+            // } 
+        }
+
+        return $this->render('AMiEEntreprisesBundle:Entreprises:modifierpartenaire.html.twig', array(
+            'layout' => $layout,
+            'id' => $p->getId(),
+            'formPartModif' => $formPartModif->createView(),
+        ));
+	}
 	
 }
 

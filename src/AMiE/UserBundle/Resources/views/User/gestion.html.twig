@@ -11,190 +11,258 @@
 
 {% block content %}
 <div class="row">
-<h2>Utilisateurs</h2>
 	<div class="col-lg-12">
-		<div class="table-responsive">
-			<table class="table table-striped table-bordered table-hover" id="dataTables-users">
-				<thead>
-					<tr>
-						<th>Nom</th>
-                        <th>Prénom</th>
-						<th>Mail</th>
-						<th>Type utilisateur</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for utilisateur in utilisateurs %}
-					<tr>
-						<td>{{ utilisateur.prenom }}</td>
-						<td>{{ utilisateur.nom }}</td>
-						<td>{{ utilisateur.email }}</td>
-						<td>{{ utilisateur.typeUt }}</td>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>Utilisateurs</h2>			
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover" id="dataTables-users">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>Prénom</th>
+								<th>Mail</th>
+								<th>Type utilisateur</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for utilisateur in utilisateurs %}
+							<tr>
+								<td>{{ utilisateur.prenom }}</td>
+								<td>{{ utilisateur.nom }}</td>
+								<td>{{ utilisateur.email }}</td>
+								<td>{{ utilisateur.typeUt }}</td>
+								<td>
+									<ul class="list-inline">							
+										<li>
+											<a href="{{ path('amie_user_afficheruser', { 'id': utilisateur.id}) }}"
+											   title="Afficher cet utilisateur" onclick="">
+												<i class="fa fa-upload fa-fw"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ path('amie_user_responsable', {'id': utilisateur.id}) }}"
+											   title="Passer cet utilisateur responsable" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
+												<i class="fa fa-star fa-fw"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ path('amie_user_etudiant', {'id': utilisateur.id}) }}"
+											   title="Passer cet utilisateur étudiant" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
+												<i class="fa fa-graduation-cap fa-fw"></i>
+											</a>
+										</li>
+										<li>
+											<a href="{{ path('amie_user_entreprise', {'id': utilisateur.id}) }}"
+											   title="Passer cet utilisateur entreprise" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
+												<i class="fa fa-briefcase fa-fw"></i>
+											</a>
+										</li>
+										{% if utilisateur.enabled == '1' %}
+											<a href="{{ path('amie_user_desactiveruser', { 'id': utilisateur.id}) }}" title="Désactiver cet utilisateur" onclick="if(confirm('Confirmer la désactivation de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
+												<i class="fa fa-eye-slash fa-fw"></i>
+											</a>
+										{% else %}
+											<li>
+												<a href="{{ path('amie_user_activeruser', { 'id': utilisateur.id}) }}" title="Activer cet utilisateur" onclick="if(confirm('Confirmer l\'activation de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
+													<i class="fa fa-eye fa-fw"></i>
+												</a>
+											</li>
+											<li>
+												<a href="{{ path('amie_user_supprimeruser', { 'id': utilisateur.id}) }}"
+												   title="Supprimer cet utilisateur"
+												   onclick="if(confirm('Attention action irréversible ! Confirmer la suppression de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
+													<i class="fa fa-trash fa-fw"></i>
+												</a>
+											</li>
+										{% endif %}
+									</ul>
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<!-- /.table-responsive -->
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
+	
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2>Offres d'emploi</h2>			
+			</div>
+			<!-- /.panel-heading -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover" id="dataTables-offres">
+							<thead>
+								<tr>
+									<th>Entreprise</th>
+									<th>Titre</th>
+									<th>Lieu</th>
+									<th>Type de contrat</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for offre in offres %}
+								<tr>
+									<td>{{ offre.entreprise }}</td>
+									<td>{{ offre.titre }}</td>
+									<td>{{ offre.lieuTravail }}</td>
+									<td>{{ offre.typeContrat }}</td>
 
-						<td>
-							<ul class="list-inline">							
-								<li>
-                                    <a href="{{ path('amie_user_afficheruser', { 'id': utilisateur.id}) }}"
-                                       title="Afficher cet utilisateur" onclick="">
-                                        <i class="fa fa-upload fa-fw"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('amie_user_responsable', {'id': utilisateur.id}) }}"
-                                       title="Passer cet utilisateur responsable" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
-                                        <i class="fa fa-star fa-fw"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('amie_user_etudiant', {'id': utilisateur.id}) }}"
-                                       title="Passer cet utilisateur étudiant" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
-                                        <i class="fa fa-graduation-cap fa-fw"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('amie_user_entreprise', {'id': utilisateur.id}) }}"
-                                       title="Passer cet utilisateur entreprise" onclick="if(confirm('Confirmer le changement de rôle de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
-                                        <i class="fa fa-briefcase fa-fw"></i>
-                                    </a>
-                                </li>
-                                {% if utilisateur.enabled == '1' %}
-                                    <a href="{{ path('amie_user_desactiveruser', { 'id': utilisateur.id}) }}" title="Désactiver cet utilisateur" onclick="if(confirm('Confirmer la désactivation de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
-                                        <i class="fa fa-eye-slash fa-fw"></i>
-                                    </a>
-                                {% else %}
-                                    <li>
-                                        <a href="{{ path('amie_user_activeruser', { 'id': utilisateur.id}) }}" title="Activer cet utilisateur" onclick="if(confirm('Confirmer l\'activation de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
-                                            <i class="fa fa-eye fa-fw"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('amie_user_supprimeruser', { 'id': utilisateur.id}) }}"
-                                           title="Supprimer cet utilisateur"
-                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression de cet utilisateur ? Un mail lui sera envoyé.')) return true; else return false;">
-                                            <i class="fa fa-trash fa-fw"></i>
-                                        </a>
-                                    </li>
-                                {% endif %}
-							</ul>
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+									<td>
+										<ul class="list-inline">							
+											<li>
+												<a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}"
+												   title="Afficher cette offre" onclick="">
+													<i class="fa fa-upload fa-fw"></i>
+												</a>
+											</li>
+											<li>
+												<a href="{{ path('amie_offresemplois_modifier', { 'id': offre.id}) }}"
+												   title="Modifier offre">
+													<i class="fa fa-pencil fa-fw"></i>
+												</a>
+											</li>
+											{% if offre.actif == 'A' %}
+												<a href="{{ path('amie_offresemplois_desactiver', { 'id': offre.id}) }}" title="Désactiver cette offre" onclick="if(confirm('Confirmer la désactivation de cette offre ?')) return true; else return false;">
+													<i class="fa fa-eye-slash fa-fw"></i>
+												</a>
+											{% else %}
+												<li>
+													<a href="{{ path('amie_offresemplois_activer', { 'id': offre.id}) }}" title="Activer cette offre" onclick="if(confirm('Confirmer l\'activation de cette offre ?')) return true; else return false;">
+														<i class="fa fa-eye fa-fw"></i>
+													</a>
+												</li>
+												<li>
+													<a href="{{ path('amie_offresemplois_supprimer', { 'id': offre.id}) }}"
+													   title="Supprimer cet utilisateur"
+													   onclick="if(confirm('Attention action irréversible ! Confirmer la suppression de cette offre ?')) return true; else return false;">
+														<i class="fa fa-trash fa-fw"></i>
+													</a>
+												</li>
+											{% endif %}
+										</ul>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<!-- /.table-responsive -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->
 		</div>
-        <!-- /.table-responsive -->
+		<!-- /.panel -->
 	</div>
 	<!-- /.col-lg-12 -->
-	<br/><br/>
-	<h2>Offres d'emploi</h2>
+	
 	<div class="col-lg-12">
-		<div class="table-responsive">
-			<table class="table table-striped table-bordered table-hover" id="dataTables-offres">
-				<thead>
-					<tr>
-						<th>Entreprise</th>
-                        <th>Titre</th>
-						<th>Lieu</th>
-						<th>Type de contrat</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for offre in offres %}
-					<tr>
-						<td>{{ offre.entreprise }}</td>
-						<td>{{ offre.titre }}</td>
-						<td>{{ offre.lieuTravail }}</td>
-						<td>{{ offre.typeContrat }}</td>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+					<h2>Partenaires</h2>			
+			</div>
+			<!-- /.panel-heading -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover" id="dataTables-partenaires">
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for partenaire in partenaires %}
+								<tr>
+									<td>{{ partenaire.nom }}</td>
+									<td>
+										<ul class="list-inline">
+											<li>
+												<a href="{{ path('amie_entreprises_partenaires') }}"
+												   title="Afficher les partenaires" onclick="">
+													<i class="fa fa-upload fa-fw"></i>
+												</a>
+											</li>
+											<li>
+												<a href="{{ path('amie_entreprises_modifierpartenaire', { 'id': partenaire.id}) }}"
+												   title="Modifier partenaire">
+													<i class="fa fa-pencil fa-fw"></i>
+												</a>
+											</li>
+											<li>
+												<a href="{{ path('amie_entreprises_supprimerpartenaire', { 'id': partenaire.id}) }}"
+													   title="Supprimer cet utilisateur"
+													   onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
+													<i class="fa fa-trash fa-fw"></i>
+												</a>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<!-- /.table-responsive -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
 
-						<td>
-							<ul class="list-inline">							
-								<li>
-                                    <a href="{{ path('amie_offresemplois_offre', { 'id': offre.id, 'slug': offre.titre|slugify}) }}"
-                                       title="Afficher cette offre" onclick="">
-                                        <i class="fa fa-upload fa-fw"></i>
-                                    </a>
-                                </li>
-                                {% if offre.actif == 'A' %}
-                                    <a href="{{ path('amie_offresemplois_desactiver', { 'id': offre.id}) }}" title="Désactiver cette offre" onclick="if(confirm('Confirmer la désactivation de cette offre ?')) return true; else return false;">
-                                        <i class="fa fa-eye-slash fa-fw"></i>
-                                    </a>
-                                {% else %}
-                                    <li>
-                                        <a href="{{ path('amie_offresemplois_activer', { 'id': offre.id}) }}" title="Activer cette offre" onclick="if(confirm('Confirmer l\'activation de cette offre ?')) return true; else return false;">
-                                            <i class="fa fa-eye fa-fw"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('amie_offresemplois_supprimer', { 'id': offre.id}) }}"
-                                           title="Supprimer cet utilisateur"
-                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression de cette offre ?')) return true; else return false;">
-                                            <i class="fa fa-trash fa-fw"></i>
-                                        </a>
-                                    </li>
-                                {% endif %}
-							</ul>
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-        <!-- /.table-responsive -->
-	</div>
-	<!-- /.col-lg-12 -->
-		<br/><br/>
-	<h2>Partenaires</h2>
 	<div class="col-lg-12">
-		<div class="table-responsive">
-			<table class="table table-striped table-bordered table-hover" id="dataTables-partenaires">
-				<thead>
-					<tr>
-						<th>Nom</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for partenaire in partenaires %}
-					<tr>
-						<td>{{ partenaire.nom }}</td>
-						<td>
-							<ul class="list-inline">							
-									<a href="{{ path('amie_entreprises_supprimerpartenaire', { 'id': partenaire.id}) }}"
-                                           title="Supprimer cet utilisateur"
-                                           onclick="if(confirm('Attention action irréversible ! Confirmer la suppression ?')) return true; else return false;">
-										<i class="fa fa-trash fa-fw"></i>
-									</a>
-                                </li>
-							</ul>
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+	<form action="{{ path('amie_user_gestion') }}" method="POST" {{ form_enctype(formPart) }}>	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+					<h2>Ajouter une entreprise partenaire</h2>			
+			</div>
+			<!-- /.panel-heading -->
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<div class="form-group">
+						{{ form_label(formPart.nom, 'Nom de l\'entreprise partenaire') }}
+						{{ form_widget(formPart.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(formPart.url, 'Site officiel de l\'entreprise partenaire') }}
+							{{ form_widget(formPart.url, { 'attr': {'class': 'form-control', 'placeholder': 'Lien'} }) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(formPart.description, 'Description') }}
+							{{ form_widget(formPart.description, { 'attr': {'class': 'form-control', 'placeholder': 'Description'} }) }}
+						</div>
+					</div>
+					<div class="col-sm-offset-10 col-sm-1">
+						<button type="submit" class="btn btn-primary">Valider</button>
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->
 		</div>
-        <!-- /.table-responsive -->
-	</div>
-	<!-- /.col-lg-12 -->
-<br/><br/>
-	<h2>Ajouter une entreprise partenaire</h2>
-	<div class="col-lg-12">
-		<div class="panel-body">
-			<form action="{{ path('amie_user_gestion') }}" method="POST" {{ form_enctype(formPart) }}>
-				<div class="form-group">
-					{{ form_label(formPart.nom, 'Nom de l\'entreprise partenaire') }}
-					{{ form_widget(formPart.nom, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
-				</div>
-				<div class="form-group">
-					{{ form_label(formPart.url, 'Site officiel de l\'entreprise partenaire') }}
-					{{ form_widget(formPart.url, { 'attr': {'class': 'form-control', 'placeholder': 'Lien'} }) }}
-				</div>
-				<div class="col-sm-offset-10 col-sm-1">
-					<button type="submit" class="btn btn-primary">Valider</button>
-				</div>
-			</form>
-		</div>
+		<!-- /.panel -->
+	</form>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>

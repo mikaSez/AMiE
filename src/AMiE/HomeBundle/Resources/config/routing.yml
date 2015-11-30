@@ -37,7 +37,3 @@ amie_home_supprimernotifications:
     defaults: { _controller: AMiEHomeBundle:Home:supprimernotifications }
     requirements:
         id: \d+
-
-amie_home_partenaires:
-    path:    /partenaires
-    defaults: { _controller: AMiEHomeBundle:Home:partenaires }

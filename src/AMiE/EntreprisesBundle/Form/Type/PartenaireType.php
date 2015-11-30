@@ -11,7 +11,8 @@ class PartenaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', 'text', array('max_length' => 255, 'required' => true))
-            ->add('url', 'text', array('max_length' => 255, 'required' => true));
+            ->add('url', 'text', array('max_length' => 255, 'required' => true))
+			->add('description', 'textarea', array('max_length' => 455, 'required' => true));
     }
 
 

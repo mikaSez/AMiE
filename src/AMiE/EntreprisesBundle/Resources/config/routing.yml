@@ -23,3 +23,13 @@ amie_entreprises_supprimerpartenaire:
     defaults: { _controller: AMiEEntreprisesBundle:Entreprises:supprimerpartenaire }
     requirements:
         id: \d+
+
+amie_entreprises_partenaires:
+    path:    /partenaires
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:partenaires }
+
+amie_entreprises_modifierpartenaire:
+    path:    /partenaire/modifier/{id}
+    defaults: { _controller: AMiEEntreprisesBundle:Entreprises:modifierpartenaire }
+    requirements:
+        id: \d+
