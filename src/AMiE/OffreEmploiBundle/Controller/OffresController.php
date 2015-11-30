@@ -190,10 +190,13 @@ class OffresController extends CoreController
         }
 
         $layout = $this->getLayout($em);
+		
+		$document = $em->getRepository('AMiEOffreEmploiBundle:DocumentJoint')->findOneBy(array('idOffreEmploi' => $offre->getId()));
 
         return $this->render('AMiEOffreEmploiBundle:Offres:offre.html.twig', array(
             'layout' => $layout,
-            'offre'  => $offre
+            'offre'  => $offre,
+			'document' => $document
         ));
     }
 

@@ -46,7 +46,6 @@
 				<div class="panel-body">
 					<div class="row">
 						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-globe fa-fw"></i> Descriptif de l'offre</h4>
-						
 						<p>
 							{{ offre.descriptif|nl2br }}
 						</p>
@@ -114,6 +113,30 @@
 				<!-- /.panel-body -->
 			</div>
 			<!-- /.clearfix -->
+			{% if document is not null %}
+			<div class="clearfix">
+				<div class="panel-body">
+					<div class="row">
+						<h4 style="padding-left: 20px; display: inline;"><i class="fa fa-file fa-fw"></i> Document joint</h4>
+						<dl class="dl-horizontal">
+							<dt>Titre</dt>
+							<dd>{{ document.titre }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Descriptif</dt>
+							<dd>{{ document.descriptif }}</dd>
+						</dl>
+						<dl class="dl-horizontal">
+							<dt>Accéder au document</dt>
+							<dd><a href="{{ asset('uploads/documents/' ~ document.path) }}"><i class="fa fa-upload fa-fw"></i></a></dd>
+						</dl>
+					</div>
+					<!-- /.row (nested) -->
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.clearfix -->			
+			{% endif %}
 		</div>
 		<!-- /.panel -->
 	</div>

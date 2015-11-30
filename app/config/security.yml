@@ -65,6 +65,7 @@ security:
         - { path: ^/actualites/actualite/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/entreprises/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/entreprises/fiche/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/entreprises/partenaires, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/entreprises/graphiques, role: ROLE_SUPER_ADMIN }
         - { path: ^/entreprises/.*, role: ROLE_ADMIN }
         - { path: ^/miagistes/graphiques, role: ROLE_SUPER_ADMIN }
